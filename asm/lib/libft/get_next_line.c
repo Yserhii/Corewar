@@ -3,86 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/06 16:45:46 by yhliboch          #+#    #+#             */
-/*   Updated: 2019/03/06 16:45:48 by yhliboch         ###   ########.fr       */
+/*   Created: 2018/11/17 14:34:52 by yserhii           #+#    #+#             */
+/*   Updated: 2018/12/11 14:25:22 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char			*ft_new_line(char *str)
+static char		*ft_strndupp(const char *s1, size_t n)
 {
-	int			i;
-	int			len;
-	char		*new;
+	char *tmp;
 
-	i = 0;
-	len = 0;
-	while (str[len++])
-		;
-	if (!(new = (char *)malloc(sizeof(*new) * len + 1)))
+	if (!(tmp = ft_strnew(n)))
 		return (NULL);
-	while (i < len && str[i] != '\n')
-	{
-		new[i] = str[i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
+	ft_strncpy(tmp, s1, n);
+	return (tmp);
 }
 
-static char		*ft_clean(char *str)
+static t_list	*ft_checkfd(t_list **list, int fd)
 {
-	char		*new;
-	int			i;
+	t_list	*tmp;
 
-	i = 0;
-	while (str[i] != '\n' && str[i])
-		i++;
-	if ((str[i] && !str[i + 1]) || !str[i])
+	tmp = *list;
+	while (tmp)
 	{
-		ft_strdel(&str);
-		return (NULL);
+		if ((int)tmp->content_size == fd)
+			return (tmp);
+		tmp = tmp->next;
 	}
-	new = ft_strdup(str + i + 1);
-	ft_strdel(&str);
-	return (new);
-}
-
-static int		other_func(char **new, char ***line)
-{
-	**line = ft_new_line(*new);
-	*new = ft_clean(*new);
-	return (1);
+	tmp = ft_lstnew("\0", fd);
+	ft_lstadd(list, tmp);
+	return (tmp);
 }
 
 int				get_next_line(const int fd, char **line)
 {
-	char		buff[BUFF_SIZE + 1];
-	int			ret;
-	static char	*new;
-	char		*str;
+	static t_list	*list;
+	t_list			*head;
+	char			*buf;
+	int				i;
+	char			*tmp;
 
-	if (!new)
-		new = ft_strnew(1);
-	if (BUFF_SIZE < 0 || !line || fd < 0)
+	buf = (char *)malloc(sizeof(char) * BUFF_SIZE + 1);
+	if (BUFF_SIZE <= 0 || fd < 0 || read(fd, buf, 0) < 0 || buf == 0)
 		return (-1);
-	ret = 2;
-	while (!(ft_strchr(new, '\n')))
-	{
-		ret = read(fd, buff, BUFF_SIZE);
-		if (ret == -1)
-			return (-1);
-		buff[ret] = '\0';
-		str = new;
-		new = ft_strjoin(new, buff);
-		free(str);
-		if (ret == 0 && *new == '\0')
-			return (0);
-		if (ret == 0)
-			break ;
-	}
-	return (other_func(&new, &line));
+	head = list;
+	list = ft_checkfd(&head, fd);
+	while (!(ft_strchr(list->content, '\n')) && (i = read(fd, buf, BUFF_SIZE)))
+		list->content = ft_strnjoin(list->content, buf, i);
+	free(buf);
+	i = 0;
+	while (((char *)list->content)[i] && ((char *)list->content)[i] != '\n')
+		++i;
+	*line = ft_strndupp(list->content, i);
+	if (((char *)list->content)[i] == '\n')
+		++i;
+	tmp = list->content;
+	list->content = ft_strdup(&((char *)(list->content))[i]);
+	free(tmp);
+	list = head;
+	return (i == 0 ? 0 : 1);
 }

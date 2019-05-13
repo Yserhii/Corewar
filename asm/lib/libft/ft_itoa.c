@@ -3,61 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/29 15:16:18 by yhliboch          #+#    #+#             */
-/*   Updated: 2018/11/04 17:10:34 by yhliboch         ###   ########.fr       */
+/*   Created: 2018/11/09 12:35:27 by yserhii           #+#    #+#             */
+/*   Updated: 2018/12/11 14:12:18 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			ft_size(long long n)
+static int	ft_len(int n)
 {
-	int			size;
-	long long	nbr;
+	int		a;
+	size_t	i;
 
-	size = 0;
-	nbr = n;
-	if (n == '\0')
+	a = n;
+	i = 0;
+	if (n == 0)
 		return (1);
-	if (nbr < 0)
-		size++;
-	while (nbr != 0)
+	if (n < 0)
+		i++;
+	while (a != 0)
 	{
-		nbr = nbr / 10;
-		size++;
+		a /= 10;
+		i++;
 	}
-	return (size);
+	return (i);
 }
 
-static long long	ft_abs(long long n)
+static int	ft_abs(int n)
 {
 	return (n < 0 ? -n : n);
 }
 
-char				*ft_itoa(long long n)
+char		*ft_itoa(int n)
 {
-	int		size;
-	char	*res;
+	int		len;
+	char	*tmp;
 
-	size = ft_size(n) - 1;
-	if ((res = ft_strnew(ft_size(n))) != NULL)
+	len = ft_len(n) - 1;
+	if ((tmp = ft_strnew(ft_len(n))) != NULL)
 	{
 		if (n < 0)
-			res[0] = 45;
+			tmp[0] = '-';
 		if (n == 0)
 		{
-			res[size] = '0';
-			return (res);
+			tmp[0] = n + '0';
+			return (tmp);
 		}
 		while (n != 0)
 		{
-			res[size] = ft_abs(n % 10) + 48;
-			n = n / 10;
-			size--;
+			tmp[len] = ft_abs(n % 10) + '0';
+			n /= 10;
+			len--;
 		}
-		return (res);
+		return (tmp);
 	}
 	return (NULL);
 }

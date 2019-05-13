@@ -3,81 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/04 13:30:11 by yhliboch          #+#    #+#             */
-/*   Updated: 2019/02/08 16:58:55 by yhliboch         ###   ########.fr       */
+/*   Created: 2018/12/23 12:47:55 by yserhii           #+#    #+#             */
+/*   Updated: 2018/12/23 12:47:56 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_print(t_list **list)
+int				ft_strlen_for_print(char *s)
 {
-	t_list	*temp;
-	int		res;
-	char	*tmp;
 	int		i;
 
-	res = 0;
-	while (*list != NULL)
+	i = 0;
+	if (s == NULL)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
+}
+
+static int		ft_end(t_allstr *all)
+{
+	int		count;
+
+	ft_putstr_fd(all->allstr, all->fd);
+	count = ft_strlen_for_print(all->allstr) + all->count;
+	free(all->allstr);
+	free(all);
+	return (count);
+}
+
+static void		ft_print_format(char *str, t_allstr *all, va_list argc)
+{
+	while (*str != '\0')
 	{
-		i = 0;
-		res += (int)ft_strlen((*list)->content);
-		tmp = (*list)->content;
-		while (tmp[i])
+		*str == '{' ? str = ft_collor(str, all) : 0;
+		if (*str == '%' && *(str + 1) == '\0')
+			break ;
+		if (*str == '%' && *(str + 1) != '%')
+			str = ft_print_con(str, all, argc);
+		else if (*str == '%' && *(str + 1) == '%' &&
+			(all->allstr = ft_strnjoin(all->allstr, str, 1)))
+			str += 2;
+		else
 		{
-			if (tmp[i] == -42)
-				write(1, "\0", 1);
-			else
-				write(1, &tmp[i], 1);
-			i++;
+			all->allstr = ft_strnjoin(all->allstr, str, 1);
+			str++;
 		}
-		temp = *list;
-		*list = (*list)->next;
-		ft_strdel(&tmp);
-		free(temp);
 	}
-	return (res);
 }
 
-char	*no_change(char *fmt, t_list **list)
+int				ft_printf(const char *format, ...)
 {
-	char	*res;
+	t_allstr	*all;
+	va_list		argc;
+	char		*str;
+	int			count;
 
-	if (ft_strchr(fmt, '%') != NULL)
-	{
-		res = ft_strnew(ft_strchr(fmt, '%') - fmt);
-		res = ft_strncpy(res, fmt, (ft_strchr(fmt, '%') - fmt));
-		make_new_fmt(list, res);
-		fmt += ft_strlen(res);
-	}
-	else
-	{
-		res = ft_strnew(ft_strchr(fmt, '\0') - fmt);
-		res = ft_strncpy(res, fmt, (ft_strchr(fmt, '\0') - fmt));
-		make_new_fmt(list, res);
-		fmt += ft_strlen(res);
-	}
-	ft_strdel(&res);
-	return (fmt);
-}
-
-int		ft_printf(const char *format, ...)
-{
-	va_list			ap;
-	char			*fmt;
-	static t_list	*list;
-
-	va_start(ap, format);
-	fmt = (char *)format;
-	while (*fmt)
-	{
-		if (*fmt == '%')
-			fmt = check_change(fmt, ap, &list);
-		else if (*fmt != '%' && *fmt)
-			fmt = no_change(fmt, &list);
-	}
-	va_end(ap);
-	return (ft_print(&list));
+	va_start(argc, format);
+	str = (char *)format;
+	all = ft_memalloc(sizeof(t_allstr));
+	all->fd = 1;
+	ft_print_format(str, all, argc);
+	count = (*(char *)format != '\0' ? ft_end(all) : 0);
+	va_end(argc);
+	return (count);
 }

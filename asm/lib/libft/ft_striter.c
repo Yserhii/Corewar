@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/27 16:02:17 by yhliboch          #+#    #+#             */
-/*   Updated: 2018/11/03 17:53:19 by yhliboch         ###   ########.fr       */
+/*   Created: 2018/11/02 18:26:43 by yserhii           #+#    #+#             */
+/*   Updated: 2018/12/11 14:20:52 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ void	ft_striter(char *s, void (*f)(char *))
 	int i;
 
 	i = 0;
-	if (s != NULL && f != NULL)
+	if (s == NULL || f == NULL)
+		return ;
+	while (s[i])
 	{
-		while (s[i])
-		{
-			(*f)(&s[i]);
-			i++;
-		}
+		f(&s[i]);
+		i++;
 	}
 }

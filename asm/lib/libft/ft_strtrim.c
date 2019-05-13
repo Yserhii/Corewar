@@ -3,50 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/28 11:17:07 by yhliboch          #+#    #+#             */
-/*   Updated: 2018/11/09 18:04:55 by yhliboch         ###   ########.fr       */
+/*   Created: 2018/11/03 15:52:56 by yserhii           #+#    #+#             */
+/*   Updated: 2018/12/11 14:23:31 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char	*ft_trim(char *str, char *s, size_t i, size_t j)
+char	*ft_strtrim(char const *s)
 {
-	size_t str_i;
-
-	str_i = 0;
-	while (i <= j)
-		str[str_i++] = s[i++];
-	str[str_i] = '\0';
-	return (str);
-}
-
-char		*ft_strtrim(char const *s)
-{
+	char	*tmp;
 	size_t	i;
-	size_t	j;
-	size_t	temp;
-	char	*str;
+	size_t	len;
 
 	i = 0;
 	if (s == NULL)
 		return (NULL);
-	j = ft_strlen(s);
-	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+	len = ft_strlen(s);
+	while (s[i] == ' ' || s[i] == '\t' || s[i] == '\n')
 		i++;
 	if (s[i] == '\0')
 	{
-		str = (char *)malloc(sizeof(char));
-		str[0] = '\0';
-		return (str);
+		tmp = (char *)malloc(sizeof(char));
+		tmp[0] = '\0';
+		return (tmp);
 	}
-	while (s[j] == '\0' || s[j] == '\n' || s[j] == ' ' || s[j] == '\t')
-		j--;
-	temp = ft_strlen(s) - j - 1;
-	if (!(str = (char *)malloc(sizeof(char) * (ft_strlen(s) - i - temp) + 1)))
+	while (s[len - 1] == ' ' || s[len - 1] == '\t' || s[len - 1] == '\n')
+		len--;
+	if (!(tmp = (char*)malloc(sizeof(char) * (len - i + 1))))
 		return (NULL);
-	str = ft_trim(str, (char *)s, i, j);
-	return (str);
+	ft_strncpy(tmp, &s[i], (len - i));
+	tmp[len - i] = '\0';
+	return (tmp);
 }

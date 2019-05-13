@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/27 15:30:20 by yhliboch          #+#    #+#             */
-/*   Updated: 2018/11/09 18:34:22 by yhliboch         ###   ########.fr       */
+/*   Created: 2018/10/30 16:35:27 by yserhii           #+#    #+#             */
+/*   Updated: 2018/12/11 14:20:03 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_strdel(char **ap)
+void	ft_strdel(char **as)
 {
-	if (ap != NULL)
+	if (as)
 	{
-		free(*ap);
-		*ap = NULL;
+		free(*as);
+		*as = NULL;
 	}
 }

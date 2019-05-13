@@ -3,40 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/29 19:45:34 by yhliboch          #+#    #+#             */
-/*   Updated: 2018/11/03 17:03:42 by yhliboch         ###   ########.fr       */
+/*   Created: 2018/10/31 13:38:03 by yserhii           #+#    #+#             */
+/*   Updated: 2018/12/11 14:21:28 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t n)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
-	size_t	j;
-	size_t	d;
-	size_t	s;
+	size_t	lensrc;
+	size_t	lendst;
 
-	j = 0;
 	i = 0;
-	d = ft_strlen(dst);
-	s = ft_strlen(src);
-	if (n == 0)
-		return (s);
-	if (n < d + 1)
-		return (n + s);
-	else
+	lendst = ft_strlen(dst);
+	lensrc = ft_strlen(src);
+	if (dstsize <= lendst)
+		return (lensrc + dstsize);
+	while (dst[i] && (dstsize - 1))
+		i++;
+	while ((dstsize - 1) > i && *src)
 	{
-		while (dst[i] && i < n - 1)
-			i++;
-		while (i + j < n - 1 && src[j])
-		{
-			dst[i + j] = src[j];
-			j++;
-		}
-		dst[i + j] = '\0';
+		dst[i] = *src++;
+		i++;
 	}
-	return (d + s);
+	dst[i] = '\0';
+	return (lendst + lensrc);
 }

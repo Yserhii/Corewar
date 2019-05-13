@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/27 11:51:30 by yhliboch          #+#    #+#             */
-/*   Updated: 2018/11/03 17:48:02 by yhliboch         ###   ########.fr       */
+/*   Created: 2018/10/28 16:30:15 by yserhii           #+#    #+#             */
+/*   Updated: 2018/12/11 14:10:43 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 int	ft_atoi(const char *str)
 {
-	unsigned long int	i;
-	int					true_false;
+	int					check;
+	int					i;
+	unsigned long int	nbr;
 
+	check = 0;
 	i = 0;
-	true_false = 1;
-	while (*str == 32 || (*str >= 9 && *str <= 13))
-		str++;
-	if (*str == 45 || *str == 43)
+	nbr = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		if (*str == 45)
-			true_false = 0;
-		str++;
+		if (str[i] == '-')
+			check = 1;
+		i++;
 	}
-	while (*str == '0')
-		str++;
-	while (*str >= 48 && *str <= 57)
+	while (str[i] >= 48 && str[i] <= 57)
 	{
-		i = i * 10 + *str - 48;
-		if (i >= 9223372036854775807 && true_false == 1)
+		nbr = nbr * 10 + str[i] - 48;
+		if (nbr >= 9223372036854775807 && check == 0)
 			return (-1);
-		else if (i > 9223372036854775807 && true_false == 0)
+		else if (nbr > 9223372036854775807 && check == 1)
 			return (0);
-		str++;
+		i++;
 	}
-	return (true_false ? i : -i);
+	return (check ? -nbr : nbr);
 }

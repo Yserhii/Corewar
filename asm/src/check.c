@@ -13,28 +13,6 @@
 #include "op.h"
 #include "asm.h"
 
-void	new_file(t_asm *head, char *file)
-{
-	char	*name;
-	// char	*del;
-	int		i;
-	int		j;
-
-	j = ft_strrchr(file, '.') - file + 1;
-	name = ft_strnew(j);
-	i = 0;
-	while (file[i] && i != j)
-	{
-		name[i] = file[i];
-		i++;
-	}
-	// del = name;
-	name = ft_strjoin(name, "cor");
-	// free(del);
-	head->fd_cor = open(name, O_CREAT | O_TRUNC | O_WRONLY, 0666);
-	// записать magic header
-}
-
 void	check_file(char *file)
 {
 	int	i;
@@ -57,7 +35,7 @@ int		empty_line(char *line)
 	return (1);
 }
 
-void	check_name(char	*line, t_asm *head)
+void	check_name_comment(char	*line, t_asm *head)
 {
 	int	i;
 
@@ -73,6 +51,14 @@ void	check_name(char	*line, t_asm *head)
 		error("Syntax error", line);
 	while (line[++i] && line[i] != '"')
 		;
+	if (line[i] == '\0')
+	{
+		free(line);
+		get_next_line(head->fd_s, &line);
+		i = 0;
+		while (line[++i] && line[i] != '"')
+		;
+	}
 	if (line[i] != '"')
 		error("Syntax error", line);
 	while (line [++i] && line[i] == ' ')
@@ -85,23 +71,103 @@ int		check_line(char	*line)
 {
 	if (empty_line(line))
 		return (1);
-	if (ft_strstr(line, NAME_CMD_STRING))
-		check_name(line);
-	// else if (ft_strstr(line, COMMENT_CMD_STRING))
-		// check_comment(line);
+	if (ft_strstr(line, NAME_CMD_STRING) || ft_strstr(line, COMMENT_CMD_STRING))
+		return (1);
 	else
 		return (0);
 	return (1);
 }
 
-void	give_name_comment(t_asm *head)
+char	*save_name(char *line, t_asm *head)
+{
+	int		i;
+	int		j;
+
+	head->name = ft_strnew(PROG_NAME_LENGTH);
+	i = 0;
+	j = 0;
+	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
+		i++;
+	if (ft_strncmp(line + i, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)))
+		error("Syntax error", line);
+	i += ft_strlen(NAME_CMD_STRING);
+	while (line[i] && line[i] != '"')
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			error("Syntax error", line);
+		i++;
+	}
+	while (line[++i] != '"')
+	{
+		if (line[i] == '\0')
+		{
+			free(line);
+			get_next_line(head->fd_s, &line);
+			head->name[j++] = '\n';
+			i = 0;
+		}
+		head->name[j] = line[i];
+		j++;
+	}
+	while (line [++i])
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			error("Syntax error", line);
+	}
+	return (line);
+}
+
+char	*save_comment(char *line, t_asm *head)
+{
+	int		i;
+	int		j;
+
+	head->comment = ft_strnew(COMMENT_LENGTH);
+	i = 0;
+	j = 0;
+	while (line[i] && (line[i] == ' ' || line[i] == '\t'))
+		i++;
+	if (ft_strncmp(line + i, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING)))
+		error("Syntax error", line);
+	i += ft_strlen(COMMENT_CMD_STRING);
+	while (line[i] && line[i] != '"')
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			error("Syntax error", line);
+		i++;
+	}
+	while (line[++i] != '"')
+	{
+		if (line[i] == '\0')
+		{
+			free(line);
+			get_next_line(head->fd_s, &line);
+			head->comment[j++] = '\n';
+			i = 0;
+		}
+		head->comment[j] = line[i];
+		j++;
+	}
+	while (line [++i])
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			error("Syntax error", line);
+	}
+	return (line);
+}
+
+char	*read_name_comment(t_asm *head)
 {
 	char	*line;
 
-	get_next_line(head->fd_s, &line);
-	check_line(line);
-	// while (get_next_line(head->fd_s, &line) && check_line(line))
-	// {
-	// 	if (ft_strstr())
-	// }
+	while (get_next_line(head->fd_s, &line) && check_line(line))
+	{
+		if (ft_strstr(line, NAME_CMD_STRING))
+			line = save_name(line, head);
+		if (ft_strstr(line, COMMENT_CMD_STRING))
+			save_comment(line, head);
+		free(line);
+	}
+	printf("[%s]\n[%s]\n", head->name, head->comment);
+	return (line);
 }

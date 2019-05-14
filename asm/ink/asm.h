@@ -26,7 +26,9 @@ typedef struct		s_asm
 void	check_file(char *file);
 void	error(char *str, char *line);
 void	new_file(t_asm *head, char *file);
-void	give_name_comment(t_asm *head);
+char	*read_name_comment(t_asm *head);
+void	write_magic(char *data, int32_t pos, int32_t value, size_t size);
+
 
 // void	write_magic(int32_t pos, int32_t value,size_t size, t_asm *head);
 

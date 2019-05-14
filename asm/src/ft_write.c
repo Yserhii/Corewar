@@ -13,13 +13,11 @@
 #include "op.h"
 #include "asm.h"
 
-void	write_magic(int32_t pos, int32_t value,size_t size, t_asm *head)
+void	write_magic(char *data, int32_t pos, int32_t value, size_t size)
 {
 	int8_t		i;
-	char		*data;
 
 	i = 0;
-	data = ft_strnew(4);
 	while (size)
 	{
 		data[pos + size - 1] = (uint8_t)((value >> i) & 0xFF);

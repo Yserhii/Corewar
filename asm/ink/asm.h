@@ -28,6 +28,9 @@ void	error(char *str, char *line);
 void	new_file(t_asm *head, char *file);
 char	*read_name_comment(t_asm *head);
 void	write_magic(char *data, int32_t pos, int32_t value, size_t size);
+void	write_file(t_asm *parser);
+int		check_line(char	*line);
+
 
 
 // void	write_magic(int32_t pos, int32_t value,size_t size, t_asm *head);

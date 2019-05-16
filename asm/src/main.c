@@ -37,7 +37,7 @@ void	error(char *str, char *line)
 		ft_printf("%s", str);
 	else
 		ft_printf("%s [%s]\n", str, line);
-	system("leaks asm > pip.txt");
+	// system("leaks asm > pip.txt");
 	exit(0);
 }
 
@@ -45,13 +45,16 @@ int		main(int argc, char **argv)
 {
 	t_asm	head;
 
+	head.token = NULL;
+	head.b_pos = 0;
+	head.label = NULL;
 	if (argc != 2)
 		error("Usage: ./asm <sourcefile.s>\n", NULL);
 	check_file(argv[1]);
 	head.fd_s = open(argv[1], O_RDONLY);
 	new_file(&head, argv[1]);
-	read_name_comment(&head);
+	parse_code(&head, read_name_comment(&head));
 	write_file(&head);
-	system("leaks asm > pip.txt");
+	// system("leaks asm > pip.txt");
 	return (0);
 }

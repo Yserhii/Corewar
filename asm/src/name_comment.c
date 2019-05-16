@@ -86,6 +86,5 @@ char	*read_name_comment(t_asm *head)
 		error("Champion name too long (Max length 128)\n", NULL);
 	if (ft_strlen(head->comment) > COMMENT_LENGTH)
 		error("Comment too long (Max length 2048\n", NULL);
-	printf("line: %s\n", line);
 	return (line);
 }

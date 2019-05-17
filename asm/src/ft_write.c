@@ -46,7 +46,8 @@ void	write_file(t_asm *head)
 	ft_memcpy(&res[i], head->comment, ft_strlen(head->comment));
 	i += COMMENT_LENGTH;
 	i += 4;
-	// ft_memcpy(&res[i], head->code, (size_t)head->i);
+	printf("[%s]\n", head->hex_code);
+	ft_memcpy(&res[i], head->hex_code, (size_t)head->b_pos);
 	write(head->fd_cor, res, (size_t)size);
 	free(res);
 }

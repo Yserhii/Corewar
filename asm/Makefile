@@ -17,7 +17,7 @@ OBJ_DIR := ./obj/
 LIB_DIR := ./lib/
 INK_DIR := ./ink/
 
-SRC := main.c check.c ft_write.c name_comment.c parse_code.c tokens.c
+SRC := main.c check.c ft_write.c name_comment.c parse_code.c tokens.c hex_converter.c live.c hex_code.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 

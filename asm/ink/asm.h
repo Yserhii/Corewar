@@ -49,6 +49,7 @@ typedef struct		s_asm
 	char			*name;
 	char			*comment;
 	int				b_pos;
+	char			*hex_code;
 }					t_asm;
 
 void	check_file(char *file);
@@ -63,5 +64,9 @@ int		is_label(char *line);
 int		empty_line(char *line);
 void	make_tokens(t_asm *head, char *line);
 int		check_dir_reg(char *str);
+char	*hex_con(int32_t num, int size);
+void	code_to_hex(t_asm *head);
+void	live(t_token *tmp_token, t_asm *head);
+int		label_pos(t_asm *head, char *label);
 
 #endif

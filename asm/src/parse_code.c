@@ -1,6 +1,21 @@
 #include "op.h"
 #include "asm.h"
 
+int		label_pos(t_asm *head, char *label)
+{
+	t_label	*tmp_label;
+
+	tmp_label = head->label;
+	while (tmp_label)
+	{
+		if (ft_strequ(label + 2, tmp_label->name))
+			return (tmp_label->pos);
+		tmp_label = tmp_label->next;
+	}
+	error("Nonexistent label", label);
+	return (0);
+}
+
 void	make_lab_token(char *name, t_asm *head, char *str)
 {
 	t_token	*tmp_token;

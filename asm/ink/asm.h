@@ -62,5 +62,6 @@ void	parse_code(t_asm *head, char *line);
 int		is_label(char *line);
 int		empty_line(char *line);
 void	make_tokens(t_asm *head, char *line);
+int		check_dir_reg(char *str);
 
 #endif

@@ -40,7 +40,7 @@ void	write_file(t_asm *head)
 	ft_memcpy(&res[i], head->name, ft_strlen(head->name));
 	i += PROG_NAME_LENGTH;
 	i += 4;
-	// write_magic(res, i, head->i, 4);
+	write_magic(res, i, head->b_pos, 4);
 	// i += 4;
 	i += 4;
 	ft_memcpy(&res[i], head->comment, ft_strlen(head->comment));

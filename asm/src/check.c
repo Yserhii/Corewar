@@ -63,3 +63,17 @@ int		is_label(char *line)
 	}
 	return (1);
 }
+
+int		check_dir_reg(char *str)
+{
+	int	i;
+
+	i = 1;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			error ("invalid register/direct ", str);
+		i++;
+	}
+	return (1);
+}

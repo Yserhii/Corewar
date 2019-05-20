@@ -4,52 +4,143 @@
 
 void	live(t_token *tmp_token, t_asm *head)
 {
-	// char÷	*res;
 	int		n;
+	t_token	*op;
 
 	n = 0;
+	op = tmp_token;
 	if (tmp_token->next->type == DIR)
-		n = ft_atoi(tmp_token->next->name +1);
+		n = ft_atoi(tmp_token->next->name + 1);
 	else if (tmp_token->next->type == DIR_L)
-		n = head->b_pos - label_pos(head, tmp_token->next->name) + 1;//p_pos - lavel->pos + 1;
+		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
 	else
-		error ("Bat argument for operation live", tmp_token->next->name);
+		error("Bat argument for operation live", tmp_token->next->name);
 	head->hex_code = ft_strjoin(head->hex_code, hex_con(1, 1));
 	head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 4));
 }
 
-// static void		ft_live_2(t_token **token, int *n)
-// {
-// 	char		*tmp;
+void	ft_and_or(t_token *tmp_token, t_asm *head, int nb)
+{
+	int	n;
+	int	i;
+	t_token *op;
 
-// 	tmp = (*token)->value;
-// 	(*token)->value = ft_strsub((*token)->value, 1,
-// 	(int)(ft_strlen((*token)->value) - 1));
-// 	ft_strdel(&tmp);
-// 	(*n) = ft_atoi((*token)->value);
-// }
+	i = -1;
+	op = tmp_token;
+	head->hex_code = ft_strjoin(head->hex_code, hex_con(nb, 1));
+	// head->hex_code = ft_strjoin(head->hex_code, hex_code(arg_code() , 1))
+	//del
+	head->hex_code = ft_strjoin(head->hex_code, hex_con(0, 1));
+	while (++i < 2)
+	{
+		if (tmp_token->next->type == REG)
+		{
+			n = ft_atoi(tmp_token->next->name + 1);
+			head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 1));
+		}
+		else if (tmp_token->next->type == DIR || tmp_token->next->type == DIR_L)
+		{
+			if (tmp_token->next->type == DIR)
+				n = ft_atoi(tmp_token->next->name + 1);
+			else
+				n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+			head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 4));
+		}
+		else if (tmp_token->next->type == IND || tmp_token->next->type == IND_L)
+		{
+			if (tmp_token->next->type == IND)
+				n = ft_atoi(tmp_token->next->name);
+			else
+				n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+			head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 2));
+		}
+		else
+			error("Bat argument for operation and", tmp_token->next->name);
+		tmp_token = tmp_token->next;
+	}
+	//исправить еррор под разные операции!!!!!!!
+}
 
-// void			ft_live(t_token **token, t_label **labels, int fd2)
-// {
-// 	char	*res;
-// 	int		n;
+void	ldi(t_token *tmp_token, t_asm *head, int nb)
+{
+	int	n;
+	t_token	*op;
 
-// 	n = 0;
-// 	if ((*token)->next)
-// 		(*token) = (*token)->next;
-// 	g_byte_pos++;
-// 	if ((*token)->type != 2 && (*token)->type != 5)
-// 		ft_death("Bad argument for live!!!");
-// 	if ((*token)->type == 2)
-// 		ft_live_2(token, &n);
-// 	else
-// 	{
-// 		n = ft_get_label_val((*token)->value + 1, labels);
-// 		n = n - g_byte_pos + 1;
-// 	}
-// 	g_byte_pos += 4;
-// 	res = ft_hex_conv(1, 1);
-// 	ft_write(fd2, &res, 1);
-// 	res = ft_hex_conv(n, 4);
-// 	ft_write(fd2, &res, 4);
-// }
+	op = tmp_token;
+	head->hex_code = ft_strjoin(head->hex_code, hex_con(nb, 1));
+	//head->hex_code = ft_strjoin(head->hex_code, hex_con(arg_cod, 1));
+	//del
+	head->hex_code = ft_strjoin(head->hex_code, hex_con(0, 1));
+	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)
+		n = ft_atoi(tmp_token->next->name + 1);
+	else if (tmp_token->next->type == IND)
+		n = ft_atoi(tmp_token->next->name);
+	else if (tmp_token->next->type == DIR_L)
+		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+	else if (tmp_token->next->type == IND_L)
+		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+	else
+		error("Bat argument for operation ldi", tmp_token->next->name);
+	if (tmp_token->next->type == REG)
+		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 1));
+	else
+		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 2));
+	tmp_token = tmp_token->next;
+	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)
+		n = ft_atoi(tmp_token->next->name + 1);
+	else if (tmp_token->next->type == DIR_L)
+		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+	else
+		error("Bat argument for operation ldi", tmp_token->next->name);
+	if (tmp_token->next->type == REG)
+		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 1));
+	else
+		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 2));
+	if (tmp_token->next->next->type != REG)
+		error("Bat argument for operation ldi", tmp_token->next->name);
+	n = ft_atoi(tmp_token->next->next->name + 1);
+	head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 1));
+}
+
+void	sti(t_token *tmp_token, t_asm *head)
+{
+	int	n;
+	t_token	*op;
+
+	op = tmp_token;
+	head->hex_code = ft_strjoin(head->hex_code, hex_con(11, 1));
+	//head->hex_code = ft_strjoin(head->hex_code, hex_con(arg_cod, 1));
+	//del
+	head->hex_code = ft_strjoin(head->hex_code, hex_con(0, 1));
+	if (tmp_token->next->type != REG)
+		error("Bat argument for operation sti", tmp_token->next->name);
+	n = ft_atoi(tmp_token->next->name + 1);
+	head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 1));
+	tmp_token = tmp_token->next;
+	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)
+		n = ft_atoi(tmp_token->next->name + 1);
+	else if (tmp_token->next->type == IND)
+		n = ft_atoi(tmp_token->next->name);
+	else if (tmp_token->next->type == DIR_L)
+		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+	else if (tmp_token->next->type == IND_L)
+		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+	else
+		error("Bat argument for operation sti", tmp_token->next->name);
+	if (tmp_token->next->type == REG)
+		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 1));
+	else
+		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 2));
+	printf("pip: %d\n", n);
+	tmp_token = tmp_token->next;
+	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)
+		n = ft_atoi(tmp_token->next->name + 1);
+	else if (tmp_token->next->type == DIR_L)
+		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+	else
+		error("Bat argument for operation sti", tmp_token->next->name);
+	if (tmp_token->next->type == REG)
+		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 1));
+	else
+		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 2));
+}

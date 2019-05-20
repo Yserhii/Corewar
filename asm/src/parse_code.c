@@ -8,7 +8,7 @@ int		label_pos(t_asm *head, char *label)
 	tmp_label = head->label;
 	while (tmp_label)
 	{
-		if (ft_strequ(label + 2, tmp_label->name))
+		if (ft_strequ(label + 1, tmp_label->name))
 			return (tmp_label->pos);
 		tmp_label = tmp_label->next;
 	}
@@ -76,13 +76,13 @@ void	make_label(t_asm *head, char *line)
 
 void	parse_code(t_asm *head, char *line)
 {
-	t_label	*tmp;
-	t_token	*tmp2;
+	// t_label	*tmp;
+	// t_token	*tmp2;
 
 	if (is_label(line))
 		make_label(head, line);
 	else if (!empty_line(line))
-		printf("not label\n");
+		make_tokens(head, line);
 	free(line);
 	while (get_next_line(head->fd_s, &line))
 	{
@@ -92,18 +92,18 @@ void	parse_code(t_asm *head, char *line)
 			make_tokens(head, line);
 		free(line);
 	}
-	tmp = head->label;
-	printf("-----------labels------------\n");
-	while (tmp)
-	{
-		printf("%s %d\n", tmp->name, tmp->pos);
-		tmp = tmp->next;
-	}
-	printf("-----------tokens------------\n");
-	tmp2 = head->token;
-	while (tmp2)
-	{
-		printf("%s %d\n", tmp2->name, tmp2->type);
-		tmp2 = tmp2->next;
-	}
+// 	tmp = head->label;
+// 	printf("-----------labels------------\n");
+// 	while (tmp)
+// 	{
+// 		printf("%s %d\n", tmp->name, tmp->pos);
+// 		tmp = tmp->next;
+// 	}
+// 	printf("-----------tokens------------\n");
+// 	tmp2 = head->token;
+// 	while (tmp2)
+// 	{
+// 		printf("%s %d [%d]\n", tmp2->name, tmp2->type, tmp2->pos);
+// 		tmp2 = tmp2->next;
+// 	}
 }

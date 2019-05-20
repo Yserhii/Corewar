@@ -37,6 +37,7 @@ typedef struct		s_token
 {
 	enum e_type		type;
 	char			*name;
+	int				pos;
 	struct s_token	*next;
 }					t_token;
 
@@ -66,7 +67,21 @@ void	make_tokens(t_asm *head, char *line);
 int		check_dir_reg(char *str);
 char	*hex_con(int32_t num, int size);
 void	code_to_hex(t_asm *head);
+//
 void	live(t_token *tmp_token, t_asm *head);
+void	st(t_token *tmp_token, t_asm *head);
+void	ld(t_token *tmp_token, t_asm *head, int nb);
+void	add(t_token *tmp_token, t_asm *head);
+void	sub(t_token *tmp_token, t_asm *head);
+void	ft_and_or(t_token *tmp_token, t_asm *head, int nb);
+void	zjmp(t_token *tmp_token, t_asm *head);
+void	ldi(t_token *tmp_token, t_asm *head, int nb);
+void	sti(t_token *tmp_token, t_asm *head);
+void	ft_fork(t_token *tmp_token, t_asm *head, int nb);
+void	aff(t_token *tmp_token, t_asm *head);
+
+
+//
 int		label_pos(t_asm *head, char *label);
 
 #endif

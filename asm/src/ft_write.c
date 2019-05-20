@@ -33,7 +33,7 @@ void	write_file(t_asm *head)
 	char	*res;
 
 	i = 0;
-	size = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4;
+	size = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4 + head->b_pos;
 	res = ft_strnew((size_t)size);
 	write_magic(res, i, COREWAR_EXEC_MAGIC, 4);
 	i += 4;

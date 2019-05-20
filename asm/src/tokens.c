@@ -41,20 +41,16 @@ int		what_arg(char *str, t_asm *head)
 		return (1);
 	}
 	if (str[0] == DIRECT_CHAR && ft_strchr(str, LABEL_CHAR))
-	{
-		//check_dir_l;
 		return (5);
-	}
 	if (str[0] == DIRECT_CHAR)
 	{
 		check_dir_reg(str);
 		return (2);
 	}
-	if (ft_strchr(str, LABEL_CHAR)) //check int_l
+	if (ft_strchr(str, LABEL_CHAR))
 		return (6);
 	else
-		//check_ind(str);
-	return (3);
+		return (3);
 }
 
 void	new_token(char	*str, t_asm *head, char *op)
@@ -84,12 +80,13 @@ void	op_token(t_asm *head, char **str)
 	t_token	*tmp_token;
 
 	head->b_pos++;
-	cod_operetion(*str, head);
 	if (head->token == NULL)
 	{
 		head->token = ft_memalloc(sizeof(t_token));
 		head->token->name = ft_strndup(*str, ft_strchr(*str, ' ') - *str);
 		head->token->type = OP;
+		head->token->pos = head->b_pos - 1;
+		cod_operetion(*str, head);
 		*str = ft_strdup(*str + ft_strlen(head->token->name));
 		return ;
 	}
@@ -99,6 +96,8 @@ void	op_token(t_asm *head, char **str)
 	tmp_token->next = ft_memalloc(sizeof(t_token));
 	tmp_token->next->name = ft_strndup(*str, ft_strchr(*str, ' ') - *str);
 	tmp_token->next->type = OP;
+	tmp_token->next->pos = head->b_pos - 1;
+	cod_operetion(*str, head);
 	*str = ft_strdup(*str + ft_strlen(tmp_token->next->name));
 }
 

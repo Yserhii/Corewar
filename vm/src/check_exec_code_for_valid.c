@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_allalpha.c                                      :+:      :+:    :+:   */
+/*   check_exec_code_for_valid.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/23 13:01:43 by yserhii           #+#    #+#             */
-/*   Updated: 2019/04/23 13:01:46 by yserhii          ###   ########.fr       */
+/*   Created: 2019/05/22 19:30:18 by yserhii           #+#    #+#             */
+/*   Updated: 2019/05/22 19:30:21 by yserhii          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "vm.h"
 
-int		ft_allalpha(char *str)
+void	check_exec_code_for_valid(t_bot *bot)
 {
-	if (!str)
-		return (0);
-	while ((*str >= 'a' && 'z' <= *str) || (*str >= 'A' && 'Z' <= *str))
-		str++;
-	if (*str)
-		return (1);
-	else
-		return (0);
+
 }

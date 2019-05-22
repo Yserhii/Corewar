@@ -15,12 +15,12 @@
 int		ft_allsumbl(char *str)
 {
 	if (!str)
-		return (1);
+		return (0);
 	while ((*str >= 'a' && 'z' <= *str) || (*str >= 'A' && 'Z' <= *str)
 												|| (*str >= '0' && '9' <= *str))
 		str++;
 	if (*str)
-		return (0);
-	else
 		return (1);
+	else
+		return (0);
 }

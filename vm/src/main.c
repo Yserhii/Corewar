@@ -12,16 +12,17 @@
 
 #include "vm.h"
 
-void	fun_for_help()
+void	fun_for_help(void)
 {
-		exit(ft_printf("{yellow}NADA NAPISAT ZDES9 USEGE!!!!!!!!!{eoc}\n"));
+	exit(ft_printf("{yellow}NADA NAPISAT ZDES9 USEGE!!!!!!!!!{eoc}\n"));
 }
 
 int		main(int ac, char **av)
 {
 	t_vm	*vm;
 
-	vm = ft_memalloc(sizeof(t_vm));
+	if (!(vm = (t_vm*)ft_memalloc(sizeof(t_vm))))
+		exit(ft_printf("{red}Malloc error{eoc}\n"));
 	read_valid_av(ac, av, vm);
 	read_valid_bot(vm);
 

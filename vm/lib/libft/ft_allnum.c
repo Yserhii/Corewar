@@ -15,11 +15,11 @@
 int		ft_allnum(char *str)
 {
 	if (!str)
-		return (1);
+		return (0);
 	while (*str >= '0' && *str <= '9')
 		str++;
 	if (!*str)
-		return (0);
-	else
 		return (1);
+	else
+		return (0);
 }

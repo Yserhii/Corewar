@@ -14,7 +14,7 @@
 
 int		ft_allsumbl(char *str)
 {
-	if (!*str)
+	if (!str)
 		return (1);
 	while ((*str >= 'a' && 'z' <= *str) || (*str >= 'A' && 'Z' <= *str)
 												|| (*str >= '0' && '9' <= *str))

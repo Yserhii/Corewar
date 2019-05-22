@@ -14,7 +14,7 @@
 
 int		ft_allalpha(char *str)
 {
-	if (!*str)
+	if (!str)
 		return (1);
 	while ((*str >= 'a' && 'z' <= *str) || (*str >= 'A' && 'Z' <= *str))
 		str++;

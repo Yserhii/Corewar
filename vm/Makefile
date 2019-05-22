@@ -29,7 +29,7 @@ LIB_DIR :=			./lib/
 
 # project source files
 
-SRC =				main.c read_valid_av.c
+SRC =				main.c read_valid_av.c read_valid_bot.c
 
 #SRC_V =				ft_visual.c ft_visual_main.c finish.c
 

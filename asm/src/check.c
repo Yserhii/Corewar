@@ -45,3 +45,35 @@ int		check_line(char *line)
 		return (0);
 	return (1);
 }
+
+int		is_label(char *line)
+{
+	int	i;
+
+	i = -1;
+	if (ft_strchr(line, LABEL_CHAR) == NULL)
+		return (0);
+	while (line[++i] == ' ' || line[i] == '\t')
+		;
+	while (line[i] != LABEL_CHAR)
+	{
+		if (ft_strchr(LABEL_CHARS, line[i]) == NULL)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int		check_dir_reg(char *str)
+{
+	int	i;
+
+	i = 1;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			error ("invalid register/direct ", str);
+		i++;
+	}
+	return (1);
+}

@@ -33,20 +33,21 @@ void	write_file(t_asm *head)
 	char	*res;
 
 	i = 0;
-	size = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4;
+	size = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4 + head->b_pos;
 	res = ft_strnew((size_t)size);
 	write_magic(res, i, COREWAR_EXEC_MAGIC, 4);
 	i += 4;
 	ft_memcpy(&res[i], head->name, ft_strlen(head->name));
 	i += PROG_NAME_LENGTH;
 	i += 4;
-	// write_magic(res, i, head->i, 4);
+	write_magic(res, i, head->b_pos, 4);
 	// i += 4;
 	i += 4;
 	ft_memcpy(&res[i], head->comment, ft_strlen(head->comment));
 	i += COMMENT_LENGTH;
 	i += 4;
-	// ft_memcpy(&res[i], head->code, (size_t)head->i);
+	printf("[%s]\n", head->hex_code);
+	ft_memcpy(&res[i], head->hex_code, (size_t)head->b_pos);
 	write(head->fd_cor, res, (size_t)size);
 	free(res);
 }

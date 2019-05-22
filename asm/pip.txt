@@ -1,20 +1,19 @@
-Process:         asm [77908]
-Path:            /Users/yhliboch/Desktop/corewar/asm/asm
-Load Address:    0x10b92c000
+Process:         asm [3949]
+Path:            /Users/Valera/Desktop/corewar/asm/asm
+Load Address:    0x100f74000
 Identifier:      asm
 Version:         ???
 Code Type:       X86-64
-Parent Process:  zsh [49126]
+Parent Process:  bash [3876]
 
-Date/Time:       2019-05-15 18:06:35.077 +0300
-Launch Time:     2019-05-15 18:06:34.853 +0300
-OS Version:      Mac OS X 10.13.3 (17D47)
+Date/Time:       2019-05-16 11:59:37.350 +0300
+Launch Time:     2019-05-16 11:59:37.255 +0300
+OS Version:      Mac OS X 10.11.6 (15G22010)
 Report Version:  7
-Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
-Analysis Tool Version:  Xcode 9.2 (9C40b)
+Analysis Tool:   /usr/bin/leaks
 ----
 
 leaks Report Version:  2.0
-Process 77908: 165 nodes malloced for 20 KB
-Process 77908: 1 leak for 16 total leaked bytes.
-Leak: 0x7fe24a4027c0  size=16  zone: DefaultMallocZone_0x10b939000  length: 10  "player.cor"
+Process 3949: 190 nodes malloced for 25 KB
+Process 3949: 1 leak for 16 total leaked bytes.
+Leak: 0x7fdef0c03260  size=16  zone: DefaultMallocZone_0x100f80000  length: 10  "player.cor"

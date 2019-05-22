@@ -2,12 +2,12 @@
 #include "op.h"
 #include "asm.h"
 
-char	*hex_con(int32_t num, int size)
+void	hex_con(int32_t nbr, int size, t_asm *head)
 {
-	unsigned int	n;
+	unsigned int	tmp;
 	int				i;
 	unsigned int	max;
-	char			*str;
+	char			*res;
 
 	if (size == 1)
 		max = 255;
@@ -15,16 +15,18 @@ char	*hex_con(int32_t num, int size)
 		max = 65535;
 	if (size == 4)
 		max = 4294967295;
-	if (num < 0)
-		n = max + num + 1;
+	if (nbr < 0)
+		tmp = max + nbr + 1;
 	else
-		n = num;
-	str = ft_strnew(size);
+		tmp = nbr;
+	if (!(res = (char *)malloc(sizeof(char) * size)))
+		printf("lo\n");
 	i = size;
 	while (--i >= 0)
 	{
-		str[i] = n % 256;
-		n /= 256;
+		res[i] = tmp % 256;
+		tmp /= 256;
 	}
-	return (str);
+	write(head->fd_cor, res, size);
+	free(res);
 }

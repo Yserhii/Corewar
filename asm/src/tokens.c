@@ -123,6 +123,7 @@ void	make_tokens(t_asm *head, char *line)
 		new_token(split[i], head, op);
 		i++;
 	}
+	free(op);
 	i = -1;
 	while (split[++i])
 		free(split[i]);

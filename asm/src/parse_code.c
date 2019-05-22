@@ -76,9 +76,6 @@ void	make_label(t_asm *head, char *line)
 
 void	parse_code(t_asm *head, char *line)
 {
-	// t_label	*tmp;
-	// t_token	*tmp2;
-
 	if (is_label(line))
 		make_label(head, line);
 	else if (!empty_line(line))
@@ -92,18 +89,5 @@ void	parse_code(t_asm *head, char *line)
 			make_tokens(head, line);
 		free(line);
 	}
-// 	tmp = head->label;
-// 	printf("-----------labels------------\n");
-// 	while (tmp)
-// 	{
-// 		printf("%s %d\n", tmp->name, tmp->pos);
-// 		tmp = tmp->next;
-// 	}
-// 	printf("-----------tokens------------\n");
-// 	tmp2 = head->token;
-// 	while (tmp2)
-// 	{
-// 		printf("%s %d [%d]\n", tmp2->name, tmp2->type, tmp2->pos);
-// 		tmp2 = tmp2->next;
-// 	}
+	free(line);
 }

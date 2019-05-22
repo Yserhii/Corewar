@@ -8,19 +8,19 @@ void	ld(t_token *tmp_token, t_asm *head, int nb)
 	t_token	*op;
 
 	op = tmp_token;
-	head->hex_code = ft_strjoin(head->hex_code, hex_con(nb, 1));
+	hex_con(nb, 1, head);
 	n = 0;
 	if (tmp_token->next->type != DIR && tmp_token->next->type != DIR_L)
-		head->hex_code = ft_strjoin(head->hex_code, hex_con(208, 1));
+		hex_con(208, 1, head);
 	else
-		head->hex_code = ft_strjoin(head->hex_code, hex_con(144, 1));
+		hex_con(144, 1, head);
 	if (tmp_token->next->type == DIR)
 	{
 		if (tmp_token->next->type == DIR_L)
 			n = label_pos(head, tmp_token->next->name + 1) - op->pos;
 		else
 			n = ft_atoi(tmp_token->next->name + 1);
-		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 4));
+		hex_con(n, 4, head);
 	}
 	else if (tmp_token->next->type == IND || tmp_token->next->type == IND_L)
 	{
@@ -28,7 +28,7 @@ void	ld(t_token *tmp_token, t_asm *head, int nb)
 			n = label_pos(head, tmp_token->next->name + 1) - op->pos;
 		else
 			n = ft_atoi(tmp_token->next->name);
-		head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 2));
+		hex_con(n, 2, head);
 	}
 	else
 		error("Bat argument for operation ld", tmp_token->next->name);
@@ -36,5 +36,5 @@ void	ld(t_token *tmp_token, t_asm *head, int nb)
 	if (tmp_token->next->type != REG)
 		error("Bat argument for operation ld", tmp_token->next->name);
 	n = ft_atoi(tmp_token->next->name + 1);
-	head->hex_code = ft_strjoin(head->hex_code, hex_con(n, 1));
+	hex_con(n, 1, head);
 }

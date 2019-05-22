@@ -1,19 +1,49 @@
-Process:         asm [3949]
+Process:         asm [27675]
 Path:            /Users/Valera/Desktop/corewar/asm/asm
-Load Address:    0x100f74000
+Load Address:    0x100331000
 Identifier:      asm
 Version:         ???
 Code Type:       X86-64
-Parent Process:  bash [3876]
+Parent Process:  bash [27645]
 
-Date/Time:       2019-05-16 11:59:37.350 +0300
-Launch Time:     2019-05-16 11:59:37.255 +0300
+Date/Time:       2019-05-22 16:26:14.738 +0300
+Launch Time:     2019-05-22 16:26:14.622 +0300
 OS Version:      Mac OS X 10.11.6 (15G22010)
 Report Version:  7
 Analysis Tool:   /usr/bin/leaks
 ----
 
 leaks Report Version:  2.0
-Process 3949: 190 nodes malloced for 25 KB
-Process 3949: 1 leak for 16 total leaked bytes.
-Leak: 0x7fdef0c03260  size=16  zone: DefaultMallocZone_0x100f80000  length: 10  "player.cor"
+Process 27675: 236 nodes malloced for 29 KB
+Process 27675: 19 leaks for 304 total leaked bytes.
+Leak: 0x7fff3ac03270  size=16  zone: DefaultMallocZone_0x100341000  length: 10  "player.cor"
+Leak: 0x7fff3ad00000  size=16  zone: DefaultMallocZone_0x100341000  length: 7  "live %0"
+Leak: 0x7fff3ad00050  size=16  zone: DefaultMallocZone_0x100341000  length: 6  "sti r1"
+Leak: 0x7fff3ad00070  size=16  zone: DefaultMallocZone_0x100341000
+	0x0000000b 0xf0000000 0xf3ad0091 0xa00007ff 	................
+Leak: 0x7fff3ad00080  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000000 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad00090  size=16  zone: DefaultMallocZone_0x100341000  length: 5  "ld %0"
+Leak: 0x7fff3ad000b0  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000100 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad000c0  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000001 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad000d0  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000000 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad000e0  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000002 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad008d0  size=16  zone: DefaultMallocZone_0x100341000  length: 1  "h"
+Leak: 0x7fff3ad008e0  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000001 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad008f0  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000700 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad00910  size=16  zone: DefaultMallocZone_0x100341000  length: 11  "zjmp %:loop"
+Leak: 0x7fff3ad00e30  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000090 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad00e40  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000000 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad00e50  size=16  zone: DefaultMallocZone_0x100341000
+	0x00000002 0xf0000000 0x00000000 0xf0000000 	................
+Leak: 0x7fff3ad00e60  size=16  zone: DefaultMallocZone_0x100341000  length: 1  "	"
+Leak: 0x7fff3ad00e70  size=16  zone: DefaultMallocZone_0x100341000
+	0x0000edff 0xf0000000 0x00000000 0xf0000000 	................

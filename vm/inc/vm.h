@@ -24,6 +24,10 @@ typedef struct		s_bot
 	uint32_t		size;
 	uint8_t			name[128];
 	uint8_t			comment[2048];
+<<<<<<< HEAD
+=======
+	uint8_t			*code;
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 	uint8_t			*all_info;
 }					t_bot;
 
@@ -43,8 +47,15 @@ typedef struct		s_vm
 	t_bot			**bot;
 }					t_vm;
 
+<<<<<<< HEAD
 void	read_valid_av(int ac,char **av, t_vm *vm);
 void	fun_for_help(void);
 void	read_valid_bot(t_vm *vm);
+=======
+void				read_valid_av(int ac,char **av, t_vm *vm);
+void				fun_for_help(void);
+void				read_valid_bot(t_vm *vm);
+void				check_exec_code_for_valid(t_bot *bot);
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 
 #endif

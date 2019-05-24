@@ -15,11 +15,15 @@
 int		ft_allalpha(char *str)
 {
 	if (!str)
+<<<<<<< HEAD
 		return (1);
+=======
+		return (0);
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 	while ((*str >= 'a' && 'z' <= *str) || (*str >= 'A' && 'Z' <= *str))
 		str++;
 	if (*str)
-		return (0);
-	else
 		return (1);
+	else
+		return (0);
 }

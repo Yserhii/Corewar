@@ -29,7 +29,12 @@ LIB_DIR :=			./lib/
 
 # project source files
 
+<<<<<<< HEAD
 SRC =				main.c read_valid_av.c read_valid_bot.c
+=======
+SRC =				main.c read_valid_av.c read_valid_bot.c\
+					check_exec_code_for_valid.c
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 
 #SRC_V =				ft_visual.c ft_visual_main.c finish.c
 

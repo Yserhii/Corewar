@@ -16,6 +16,7 @@ void	read_bot_and_id(t_vm *vm)
 {
 	int			i;
 	int			j;
+<<<<<<< HEAD
 
 	i = -1;
 	j = -1;
@@ -26,6 +27,24 @@ void	read_bot_and_id(t_vm *vm)
 		vm->bot[i]->all_info = ft_memalloc(sizeof(unsigned char) * 5000);
 		while (++j < 4 && !vm->fd[j]);
 		if (j < 4 && read(vm->fd[j], vm->bot[i]->all_info, 5000) > 0)
+=======
+	int			ret;
+
+	i = -1;
+	j = -1;
+	if (!(vm->bot = (t_bot**)ft_memalloc(sizeof(t_bot*) * (vm->num_bot + 1))))
+		exit(ft_printf("{red}Malloc error{eoc}\n"));
+	while (++i < vm->num_bot)
+	{
+		if (!(vm->bot[i] = (t_bot*)ft_memalloc(sizeof(t_bot))))
+			exit(ft_printf("{red}Malloc error{eoc}\n"));
+		if (!(vm->bot[i]->all_info = (uint8_t*)ft_memalloc(sizeof(uint8_t) * 5000)))
+			exit(ft_printf("{red}Malloc error{eoc}\n"));
+		while (++j < 4 && !vm->fd[j])
+			;
+		ret = read(vm->fd[j], vm->bot[i]->all_info, 5000);
+		if (j < 4 && ret > 0 && ret < 5000)
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 			vm->bot[i]->id = j + 1;
 		else
 			exit(ft_printf("{red}Can't read file with bot{eoc}\n"));
@@ -37,7 +56,11 @@ void	check_magic_header(t_bot *bot)
 {
 	uint32_t	mh;
 
+<<<<<<< HEAD
 	mh = (bot->all_info[1] << 16) + (bot->all_info[2] << 8) + bot->all_info[3];
+=======
+	mh = (bot->all_info[0] << 24) + (bot->all_info[1] << 16) + (bot->all_info[2] << 8) + bot->all_info[3];
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 	if (COREWAR_EXEC_MAGIC != mh)
 		exit(ft_printf("{red}Invalid magic header, bot id = [%d]{eoc}\n", bot->id));
 }
@@ -57,9 +80,14 @@ void	check_and_record_name(t_bot *bot)
 			flag++;
 		else if (bot->all_info[i] && flag)
 			exit(ft_printf("{red}Invalid name, bot id = [%d]{eoc}\n", bot->id));
+<<<<<<< HEAD
 		bot->name[++j] = (char)bot->all_info[i];
 	}
 	ft_printf("%s\n", bot->name);//////удалить после
+=======
+		bot->name[++j] = bot->all_info[i];
+	}
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 }
 
 void	check_null_and_size(t_bot *bot)
@@ -75,7 +103,10 @@ void	check_null_and_size(t_bot *bot)
 			exit(ft_printf("{red}Not NULL after name bot, bot id = [%d]{eoc}\n", bot->id));
 	if	(!(bot->size = (str[136] << 24) + (str[137] << 16) + (str[138] << 8) + str[139]) || (bot->size > CHAMP_MAX_SIZE))
 			exit(ft_printf("{red}Exec code not valid size = [%d], bot id = [%d]{eoc}\n", bot->size, bot->id));
+<<<<<<< HEAD
 	ft_printf("%d\n", bot->size);//////удалить после
+=======
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 }
 
 void	check_and_record_comment(t_bot *bot)
@@ -94,8 +125,12 @@ void	check_and_record_comment(t_bot *bot)
 			flag1++;
 		else if (bot->all_info[i] && flag1)
 			exit(ft_printf("{red}Invalid commet, bot id = [%d]{eoc}\n", bot->id));
+<<<<<<< HEAD
 		bot->comment[++j] = (char)bot->all_info[i];
 		ft_printf("%c", bot->comment[j]);//////удалить после
+=======
+		bot->comment[++j] = bot->all_info[i];
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 	}
 }
 
@@ -106,10 +141,19 @@ void	check_and_record_exec_code(t_bot *bot)
 
 	i = 2191;
 	j = -1;
+<<<<<<< HEAD
 	while (++i < 2191 + bot->size)
 		bot->comment[++j] = (char)bot->all_info[i];
 	while(++i < 5000)
 		if ((char)bot->all_info[i])
+=======
+	if (!(bot->code = (uint8_t*)ft_memalloc(sizeof(uint8_t) * (bot->size + 1))))
+			exit(ft_printf("{red}Malloc error{eoc}\n"));
+	while (++i < 2191 + bot->size)
+		bot->code[++j] = bot->all_info[i];
+	while(++i < 5000)
+		if (bot->all_info[i])
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 			exit(ft_printf("{red}Exec code differs from his size, bot id = [%d]{eoc}\n", bot->id));
 }
 
@@ -126,6 +170,10 @@ void	read_valid_bot(t_vm *vm)
 		check_null_and_size(vm->bot[num_bot]);
 		check_and_record_comment(vm->bot[num_bot]);
 		check_and_record_exec_code(vm->bot[num_bot]);
+<<<<<<< HEAD
+=======
+		check_exec_code_for_valid(vm->bot[num_bot]);
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 		free(vm->bot[num_bot]->all_info);
 	}
 }

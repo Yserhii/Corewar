@@ -15,7 +15,11 @@
 static int		valid_dump(char **av, t_vm *vm, int i, int ac)
 {
 
+<<<<<<< HEAD
 	if (++i >= ac && ft_allnum(av[i]))
+=======
+	if (++i >= ac || !ft_allnum(av[i]))
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 		exit(ft_printf("{red}Not valid nuber cycles{eoc}\n"));
 	vm->nbr_cycles = ft_atoi(av[i]);
 	if (vm->nbr_cycles > CYCLE_TO_DIE || vm->nbr_cycles < 1)
@@ -27,7 +31,11 @@ static int		valid_n_id(int ac, char **av, t_vm *vm, int i)
 {
 	int		n;
 
+<<<<<<< HEAD
 	if (++i < ac && !ft_allnum(av[i]) && (n = ft_atoi(av[i])) && n > 0 && n < 5)
+=======
+	if (++i < ac && ft_allnum(av[i]) && (n = ft_atoi(av[i])) && n > 0 && n < 5)
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 		if (++i < ac && !ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && !vm->fd[n - 1])
 			if ((vm->fd[n - 1] = open(av[i], O_RDONLY)) < 1)
 				exit(ft_printf("{red}Not valid file with bot (*.cor){eoc}\n"));
@@ -41,7 +49,11 @@ static int		valid_n_id(int ac, char **av, t_vm *vm, int i)
 
 static int		valid_cor(char *av, int j, int *fd_tmp)
 {
+<<<<<<< HEAD
 	if (++j < 4)
+=======
+	if (j < 4)
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 		if ((fd_tmp[j] = open(av, O_RDONLY)) < 1)
 			exit(ft_printf("{red}Not valid file with bot (*.cor){eoc}\n"));
 		else
@@ -96,7 +108,11 @@ void	read_valid_av(int ac,char **av, t_vm *vm)
 			 i = valid_dump(av, vm, i, ac);
 		else if (!ft_strcmp("-n", av[i]))
 			i = valid_n_id(ac, av, vm, i);
+<<<<<<< HEAD
 		else if (!ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && ++j < 4)
+=======
+		else if (!ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && ++j <= 4)
+>>>>>>> 869a7d72d6f7436b8aa9554e90ca698d869cb127
 			 j = valid_cor(av[i], j, fd_tmp);
 		else
 			exit(ft_printf("{red}You give not valid arguments use [--help]{eoc}\n"));

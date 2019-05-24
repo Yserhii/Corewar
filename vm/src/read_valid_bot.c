@@ -131,7 +131,9 @@ void	read_valid_bot(t_vm *vm)
 		check_null_and_size(vm->bot[num_bot]);
 		check_and_record_comment(vm->bot[num_bot]);
 		check_and_record_exec_code(vm->bot[num_bot]);
-		check_exec_code_for_valid(vm->bot[num_bot]);
 		free(vm->bot[num_bot]->all_info);
 	}
 }
+
+
+

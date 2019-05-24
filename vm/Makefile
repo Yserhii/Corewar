@@ -12,7 +12,7 @@
 
 # name of the executable file
 
-NAME :=				vm
+NAME :=				corewar
 #NAME_V :=			vis
 
 # project directories
@@ -30,7 +30,7 @@ LIB_DIR :=			./lib/
 # project source files
 
 SRC =				main.c read_valid_av.c read_valid_bot.c\
-					check_exec_code_for_valid.c
+					initialization_map.c
 
 #SRC_V =				ft_visual.c ft_visual_main.c finish.c
 

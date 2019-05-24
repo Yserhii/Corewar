@@ -44,9 +44,22 @@ typedef struct		s_vm
 	t_bot			**bot;
 }					t_vm;
 
+typedef struct	s_karetka
+{
+	unsigned int		pos;
+	unsigned int		carry;
+	unsigned int		bot_id;
+	unsigned int		*reg;
+	unsigned int		exec_op;
+	unsigned int		live;
+	unsigned int		cicles_to_wait;
+
+	unsigned int		pc;
+
+}					t_karetka;
+
 void				read_valid_av(int ac,char **av, t_vm *vm);
 void				fun_for_help(void);
 void				read_valid_bot(t_vm *vm);
-void				check_exec_code_for_valid(t_bot *bot);
-
+void				initialization_map(t_vm *vm);
 #endif

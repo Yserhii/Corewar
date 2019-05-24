@@ -25,6 +25,6 @@ int		main(int ac, char **av)
 		exit(ft_printf("{red}Malloc error{eoc}\n"));
 	read_valid_av(ac, av, vm);
 	read_valid_bot(vm);
-
+	initialization_map(vm);
 	return (0);
 }

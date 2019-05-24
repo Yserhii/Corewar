@@ -1,19 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/24 12:15:25 by yhliboch          #+#    #+#             */
+/*   Updated: 2019/05/24 12:15:27 by yhliboch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "op.h"
 #include "asm.h"
-
-void	cod_operetion(char *op, t_asm *head)
-{
-	if (ft_strnequ(op, "ld", 2) || ft_strnequ(op, "st", 2) ||
-		ft_strnequ(op, "sub", 3) || ft_strnequ(op, "add", 3) ||
-		ft_strnequ(op, "and", 3) || ft_strnequ(op, "or", 2) ||
-		ft_strnequ(op, "sti", 3) || ft_strnequ(op, "xor", 3) ||
-		ft_strnequ(op, "lld", 3) || ft_strnequ(op, "ldi", 3) ||
-		ft_strnequ(op, "lldi", 4))
-			head->b_pos++;
-	else if (!ft_strnequ(op, "live", 4) && !ft_strnequ(op, "zjmp", 4) &&
-			!ft_strnequ(op, "fork", 4) && !ft_strnequ(op, "lfork", 5))
-		error("unfamiliar function\n", NULL);
-}
 
 void	position(t_asm *head, char *op)
 {
@@ -24,13 +22,15 @@ void	position(t_asm *head, char *op)
 		tmp_token = tmp_token->next;
 	if (tmp_token->type == DIR || tmp_token->type == DIR_L)
 	{
-		if (ft_strnequ(op, "zjmp", 4) || ft_strnequ (op, "ldi", 3) ||
+		if (ft_strnequ(op, "zjmp", 4) || ft_strnequ(op, "ldi", 3) ||
 			ft_strnequ(op, "fork", 4) || ft_strnequ(op, "lfork", 5) ||
 			ft_strnequ(op, "sti", 3) || ft_strnequ(op, "lldi", 4))
 			head->b_pos += 2;
 		else
 			head->b_pos += 4;
 	}
+	if (tmp_token->type == IND || tmp_token->type == IND_L)
+		head->b_pos += 2;
 }
 
 int		what_arg(char *str, t_asm *head)
@@ -53,10 +53,9 @@ int		what_arg(char *str, t_asm *head)
 		return (3);
 }
 
-void	new_token(char	*str, t_asm *head, char *op)
+void	new_token(char *str, t_asm *head, char *op)
 {
 	t_token	*tmp_token;
-
 
 	if (head->token == NULL)
 	{
@@ -83,22 +82,20 @@ void	op_token(t_asm *head, char **str)
 	if (head->token == NULL)
 	{
 		head->token = ft_memalloc(sizeof(t_token));
-		head->token->name = ft_strndup(*str, ft_strchr(*str, ' ') - *str);
+		head->token->name = name_operation(str);
 		head->token->type = OP;
 		head->token->pos = head->b_pos - 1;
-		cod_operetion(*str, head);
-		*str = ft_strdup(*str + ft_strlen(head->token->name));
+		cod_operetion(head->token->name, head);
 		return ;
 	}
 	tmp_token = head->token;
 	while (tmp_token->next)
 		tmp_token = tmp_token->next;
 	tmp_token->next = ft_memalloc(sizeof(t_token));
-	tmp_token->next->name = ft_strndup(*str, ft_strchr(*str, ' ') - *str);
+	tmp_token->next->name = name_operation(str);
 	tmp_token->next->type = OP;
 	tmp_token->next->pos = head->b_pos - 1;
-	cod_operetion(*str, head);
-	*str = ft_strdup(*str + ft_strlen(tmp_token->next->name));
+	cod_operetion(tmp_token->next->name, head);
 }
 
 void	make_tokens(t_asm *head, char *line)
@@ -123,6 +120,7 @@ void	make_tokens(t_asm *head, char *line)
 		new_token(split[i], head, op);
 		i++;
 	}
+	free(op);
 	i = -1;
 	while (split[++i])
 		free(split[i]);

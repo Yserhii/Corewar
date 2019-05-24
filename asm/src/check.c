@@ -30,7 +30,7 @@ int		empty_line(char *line)
 	if (line[i] == '\n' || line[i] == '#')
 		return (1);
 	while (line[++i])
-		if (line[i] != '\n' && line[i] != ' ')
+		if (line[i] != '\n' && line[i] != ' ' && line[i] != '	')
 			return (0);
 	return (1);
 }
@@ -71,8 +71,8 @@ int		check_dir_reg(char *str)
 	i = 1;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
-			error ("invalid register/direct ", str);
+		if (!ft_isdigit(str[i]) && str[i] != '-')
+			error("invalid register/direct ", str);
 		i++;
 	}
 	return (1);

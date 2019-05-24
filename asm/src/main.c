@@ -29,6 +29,7 @@ void	new_file(t_asm *head, char *file)
 	}
 	name = ft_strjoin(name, "cor");
 	head->fd_cor = open(name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	free(name);
 }
 
 void	error(char *str, char *line)
@@ -37,7 +38,7 @@ void	error(char *str, char *line)
 		ft_printf("%s", str);
 	else
 		ft_printf("%s [%s]\n", str, line);
-	// system("leaks asm > pip.txt");
+	// system("leaks asm");
 	exit(0);
 }
 
@@ -55,8 +56,8 @@ int		main(int argc, char **argv)
 	head.fd_s = open(argv[1], O_RDONLY);
 	new_file(&head, argv[1]);
 	parse_code(&head, read_name_comment(&head));
-	code_to_hex(&head);
 	write_file(&head);
-	// system("leaks asm > pip.txt");
+	code_to_hex(&head);
+	// system("leaks asm");
 	return (0);
 }

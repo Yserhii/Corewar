@@ -43,7 +43,7 @@ typedef struct		s_vm
 	int				num_bot;
 	t_bot			**bot;
 }					t_vm;
-
+//<<<<<<< HEAD
 typedef struct	s_karetka
 {
 	unsigned int		pos;

@@ -21,8 +21,11 @@ char	*save_name(char *line, t_asm *head, int i, int j)
 		error("Syntax error", line);
 	i += ft_strlen(NAME_CMD_STRING);
 	while (line[i] && line[i] != '"')
-		if (line[i] != ' ' && line[i++] != '\t')
+	{
+		if (line[i] != ' ' && line[i] != '\t')
 			error("Syntax error", line);
+		i++;
+	}
 	while (line[++i] != '"')
 	{
 		if (line[i] == '\0')
@@ -48,8 +51,11 @@ char	*save_comment(char *line, t_asm *head, int i, int j)
 		error("Syntax error", line);
 	i += ft_strlen(COMMENT_CMD_STRING);
 	while (line[i] && line[i] != '"')
-		if (line[i] != ' ' && line[i++] != '\t')
-			error("Syntax error", line);
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			error("Synta3x error", line);
+		i++;
+	}
 	while (line[++i] != '"')
 	{
 		if (line[i] == '\0')
@@ -61,9 +67,13 @@ char	*save_comment(char *line, t_asm *head, int i, int j)
 		}
 		head->comment[j++] = line[i];
 	}
-	while (line[++i])
+	i++;
+	while (line[i])
+	{
 		if (line[i] != ' ' && line[i] != '\t')
-			error("Syntax error", line);
+			error("Syntax 5error", line);
+		i++;
+	}
 	return (line);
 }
 
@@ -85,6 +95,6 @@ char	*read_name_comment(t_asm *head)
 	if (ft_strlen(head->name) > PROG_NAME_LENGTH)
 		error("Champion name too long (Max length 128)\n", NULL);
 	if (ft_strlen(head->comment) > COMMENT_LENGTH)
-		error("Comment too long (Max length 2048\n", NULL);
+		error("Comment too long (Max length 2048)\n", NULL);
 	return (line);
 }

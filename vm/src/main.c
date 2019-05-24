@@ -12,11 +12,18 @@
 
 #include "vm.h"
 
+void	fun_for_help()
+{
+		exit(ft_printf("{yellow}NADA NAPISAT ZDES9 USEGE!!!!!!!!!{eoc}\n"));
+}
+
 int		main(int ac, char **av)
 {
 	t_vm	*vm;
 
 	vm = ft_memalloc(sizeof(t_vm));
 	read_valid_av(ac, av, vm);
+	read_valid_bot(vm);
+
 	return (0);
 }

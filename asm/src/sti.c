@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sti.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/24 12:15:08 by yhliboch          #+#    #+#             */
+/*   Updated: 2019/05/24 12:15:10 by yhliboch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "op.h"
 #include "asm.h"
 
 int		arg_code_sti(t_token *tmp_token)
 {
-	int	code;
+	int		code;
 	t_token	*token;
 
 	code = 0;
@@ -32,7 +43,7 @@ int		arg_code_sti(t_token *tmp_token)
 
 void	sti(t_token *tmp_token, t_asm *head)
 {
-	int	n;
+	int		n;
 	t_token	*op;
 
 	op = tmp_token;
@@ -51,18 +62,10 @@ void	sti(t_token *tmp_token, t_asm *head)
 		n = label_pos(head, tmp_token->name + 1) - op->pos;
 	if (tmp_token->type == IND_L)
 		n = label_pos(head, tmp_token->name) - op->pos;
-	printf("%d\n", n);
-	if (tmp_token->type == REG)
-		hex_con(n, 1, head);
-	else
-		hex_con(n, 2, head);
-
+	tmp_token->type == REG ? hex_con(n, 1, head) : hex_con(n, 2, head);
 	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)
 		n = ft_atoi(tmp_token->next->name + 1);
 	else if (tmp_token->next->type == DIR_L)
 		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
-	if (tmp_token->next->type == REG)
-		hex_con(n, 1, head);
-	else
-		hex_con(n, 2, head);
+	tmp_token->next->type == REG ? hex_con(n, 1, head) : hex_con(n, 2, head);
 }

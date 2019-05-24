@@ -21,8 +21,11 @@ char	*save_name(char *line, t_asm *head, int i, int j)
 		error("Syntax error", line);
 	i += ft_strlen(NAME_CMD_STRING);
 	while (line[i] && line[i] != '"')
-		if (line[i] != ' ' && line[i++] != '\t')
+	{
+		if (line[i] != ' ' && line[i] != '\t')
 			error("Syntax error", line);
+		i++;
+	}
 	while (line[++i] != '"')
 	{
 		if (line[i] == '\0')
@@ -37,11 +40,6 @@ char	*save_name(char *line, t_asm *head, int i, int j)
 	while (line[++i])
 		if (line[i] != ' ' && line[i] != '\t')
 			error("Syntax error", line);
-	while (j < PROG_NAME_LENGTH)
-	{
-		head->name[j] = 0;
-		j++;
-	}
 	return (line);
 }
 
@@ -53,8 +51,11 @@ char	*save_comment(char *line, t_asm *head, int i, int j)
 		error("Syntax error", line);
 	i += ft_strlen(COMMENT_CMD_STRING);
 	while (line[i] && line[i] != '"')
-		if (line[i] != ' ' && line[i++] != '\t')
-			error("Syntax error", line);
+	{
+		if (line[i] != ' ' && line[i] != '\t')
+			error("Synta3x error", line);
+		i++;
+	}
 	while (line[++i] != '"')
 	{
 		if (line[i] == '\0')
@@ -66,9 +67,13 @@ char	*save_comment(char *line, t_asm *head, int i, int j)
 		}
 		head->comment[j++] = line[i];
 	}
-	while (line[++i])
+	i++;
+	while (line[i])
+	{
 		if (line[i] != ' ' && line[i] != '\t')
-			error("Syntax error", line);
+			error("Syntax 5error", line);
+		i++;
+	}
 	return (line);
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_code.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/24 12:14:52 by yhliboch          #+#    #+#             */
+/*   Updated: 2019/05/24 12:14:55 by yhliboch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "op.h"
 #include "asm.h"
 
@@ -19,7 +31,7 @@ int		label_pos(t_asm *head, char *label)
 void	make_lab_token(char *name, t_asm *head, char *str)
 {
 	t_token	*tmp_token;
-	int	i;
+	int		i;
 
 	i = -1;
 	if (head->token == NULL)
@@ -49,7 +61,7 @@ void	make_lab_token(char *name, t_asm *head, char *str)
 
 void	make_label(t_asm *head, char *line)
 {
-	int	i;
+	int		i;
 	t_label	*tmp_label;
 
 	i = -1;
@@ -68,7 +80,7 @@ void	make_label(t_asm *head, char *line)
 		tmp_label = tmp_label->next;
 	tmp_label->next = ft_memalloc(sizeof(t_label));
 	while (line[++i] == ' ' || line[i] == '\t')
-			;
+		;
 	tmp_label->next->name = ft_strndup(line + i, ft_strchr(line, LABEL_CHAR) - line);
 	tmp_label->next->pos = head->b_pos;
 	make_lab_token(tmp_label->next->name, head, line);
@@ -76,6 +88,7 @@ void	make_label(t_asm *head, char *line)
 
 void	parse_code(t_asm *head, char *line)
 {
+	del_comment(&line);
 	if (is_label(line))
 		make_label(head, line);
 	else if (!empty_line(line))
@@ -83,6 +96,7 @@ void	parse_code(t_asm *head, char *line)
 	free(line);
 	while (get_next_line(head->fd_s, &line))
 	{
+		del_comment(&line);
 		if (is_label(line))
 			make_label(head, line);
 		else if (!empty_line(line))

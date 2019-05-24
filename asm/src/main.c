@@ -38,7 +38,7 @@ void	error(char *str, char *line)
 		ft_printf("%s", str);
 	else
 		ft_printf("%s [%s]\n", str, line);
-	// system("leaks asm > pip.txt");
+	// system("leaks asm");
 	exit(0);
 }
 
@@ -58,6 +58,6 @@ int		main(int argc, char **argv)
 	parse_code(&head, read_name_comment(&head));
 	write_file(&head);
 	code_to_hex(&head);
-	system("leaks asm");
+	// system("leaks asm");
 	return (0);
 }

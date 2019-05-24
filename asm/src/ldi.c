@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ldi.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/24 12:13:44 by yhliboch          #+#    #+#             */
+/*   Updated: 2019/05/24 12:13:48 by yhliboch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "op.h"
 #include "asm.h"
@@ -30,7 +41,7 @@ int		arg_cod_ldi(t_token *tmp_token)
 
 void	ldi(t_token *tmp_token, t_asm *head, int nb)
 {
-	int	n;
+	int		n;
 	t_token	*op;
 
 	op = tmp_token;
@@ -44,19 +55,13 @@ void	ldi(t_token *tmp_token, t_asm *head, int nb)
 		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
 	else if (tmp_token->next->type == IND_L)
 		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
-	if (tmp_token->next->type == REG)
-		hex_con(n, 1, head);
-	else
-		hex_con(n, 2, head);
+	tmp_token->next->type == REG ? hex_con(n, 1, head) : hex_con(n, 2, head);
 	tmp_token = tmp_token->next;
 	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)
 		n = ft_atoi(tmp_token->next->name + 1);
 	else if (tmp_token->next->type == DIR_L)
 		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
-	if (tmp_token->next->type == REG)
-		hex_con(n, 1, head);
-	else
-		hex_con(n, 2, head);
+	tmp_token->next->type == REG ? hex_con(n, 1, head) : hex_con(n, 2, head);
 	n = ft_atoi(tmp_token->next->next->name + 1);
 	hex_con(n, 1, head);
 }

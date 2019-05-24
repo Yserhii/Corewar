@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_and_or.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yhliboch <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/05/24 12:12:52 by yhliboch          #+#    #+#             */
+/*   Updated: 2019/05/24 12:12:54 by yhliboch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "op.h"
 #include "asm.h"
@@ -60,7 +71,7 @@ void	what_type(t_token *tmp_token, t_asm *head, t_token *op)
 
 void	ft_and_or(t_token *tmp_token, t_asm *head, int nb)
 {
-	int	i;
+	int		i;
 	t_token *op;
 
 	i = -1;

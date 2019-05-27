@@ -26,6 +26,9 @@ void	zjmp(t_token *tmp_token, t_asm *head)
 	else if (tmp_token->next->type == DIR_L)
 		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
 	else
-		error("Bat argument for operation zjmp", tmp_token->next->name);
+		error("Bad argument for operation zjmp", tmp_token->next->name);
+	tmp_token = tmp_token->next->next;
+	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
+		error("Too many arguments for zjmp\n", NULL);
 	hex_con(n, 2, head);
 }

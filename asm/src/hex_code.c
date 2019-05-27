@@ -65,9 +65,7 @@ void	code_to_hex(t_asm *head)
 	while (tmp_token)
 	{
 		if (tmp_token->type == OP)
-		{
 			choose_operation(tmp_token, head);
-		}
 		tmp_token = tmp_token->next;
 	}
 }

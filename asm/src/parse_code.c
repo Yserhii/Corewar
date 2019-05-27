@@ -89,6 +89,7 @@ void	make_label(t_asm *head, char *line)
 void	parse_code(t_asm *head, char *line)
 {
 	del_comment(&line);
+	check_code_line(line);
 	if (is_label(line))
 		make_label(head, line);
 	else if (!empty_line(line))
@@ -97,6 +98,7 @@ void	parse_code(t_asm *head, char *line)
 	while (get_next_line(head->fd_s, &line))
 	{
 		del_comment(&line);
+		check_code_line(line);
 		if (is_label(line))
 			make_label(head, line);
 		else if (!empty_line(line))

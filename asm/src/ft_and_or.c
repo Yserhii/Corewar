@@ -13,30 +13,60 @@
 #include "op.h"
 #include "asm.h"
 
-int		arg_code_and_or(t_token *tmp_token)
+void	and_or_error(char *name, int nb, int fl)
+{
+	if (name == NULL && fl == 0)
+	{
+		if (nb == 6)
+			error("Too many arguments for and\n", NULL);
+		if (nb == 7)
+			error("Too many arguments for or\n", NULL);
+		error("Too many arguments for xor\n", NULL);
+	}
+	else if (name == NULL && fl == 1)
+	{
+		if (nb == 6)
+			error("Too few arguments for and\n", NULL);
+		if (nb == 7)
+			error("Too few arguments for or\n", NULL);
+		error("Too few arguments for xor\n", NULL);
+	}
+	else
+	{
+		if (nb == 6)
+			error("Bad argument for and", name);
+		if (nb == 7)
+			error("Bad argument for or", name);
+		error("Bad argument for xor", name);
+	}
+}
+
+int		arg_code_and_or(t_token *tmp_token, int nb)
 {
 	int	code;
 
 	code = 0;
+	if (!tmp_token || tmp_token->type == OP || tmp_token->type == LABEL)
+		and_or_error(NULL, nb, 1);
 	if (tmp_token->type == REG)
 		code += 64;
-	else if (tmp_token->type == DIR || tmp_token->type == DIR_L)
+	if (tmp_token->type == DIR || tmp_token->type == DIR_L)
 		code += 128;
-	else if (tmp_token->type == IND || tmp_token->type == IND_L)
+	if (tmp_token->type == IND || tmp_token->type == IND_L)
 		code += 128 + 64;
-	else
-		error("Bat argument for operation and", tmp_token->next->name);
 	tmp_token = tmp_token->next;
+	if (!tmp_token || tmp_token->type == OP || tmp_token->type == LABEL)
+		and_or_error(NULL, nb, 1);
 	if (tmp_token->type == REG)
 		code += 16;
 	else if (tmp_token->type == DIR || tmp_token->type == DIR_L)
 		code += 32;
 	else if (tmp_token->type == IND || tmp_token->type == IND_L)
 		code += 32 + 16;
-	else
-		error("Bat argument for operation and", tmp_token->next->name);
+	if (!tmp_token->next || tmp_token->next->type == OP || tmp_token->next->type == LABEL)
+		and_or_error(NULL, nb, 1);
 	if (tmp_token->next->type != REG)
-		error("Bat argument for operation and", tmp_token->next->name);
+		and_or_error(tmp_token->next->name, nb, 0);
 	code += 4;
 	return (code);
 }
@@ -77,12 +107,15 @@ void	ft_and_or(t_token *tmp_token, t_asm *head, int nb)
 	i = -1;
 	op = tmp_token;
 	hex_con(nb, 1, head);
-	hex_con(arg_code_and_or(tmp_token->next), 1, head);
+	hex_con(arg_code_and_or(tmp_token->next, nb), 1, head);
+	tmp_token = tmp_token->next;
 	while (++i < 2)
 	{
-		what_type(tmp_token->next, head, op);
+		what_type(tmp_token, head, op);
 		tmp_token = tmp_token->next;
 	}
-	what_type(tmp_token->next, head, op);
-	//исправить еррор под разные операции!!!!!!!
+	what_type(tmp_token, head, op);
+	tmp_token = tmp_token->next;
+	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
+		and_or_error(NULL, nb, 0);
 }

@@ -53,7 +53,7 @@ char	*save_comment(char *line, t_asm *head, int i, int j)
 	while (line[i] && line[i] != '"')
 	{
 		if (line[i] != ' ' && line[i] != '\t')
-			error("Synta3x error", line);
+			error("Syntax error", line);
 		i++;
 	}
 	while (line[++i] != '"')
@@ -71,7 +71,7 @@ char	*save_comment(char *line, t_asm *head, int i, int j)
 	while (line[i])
 	{
 		if (line[i] != ' ' && line[i] != '\t')
-			error("Syntax 5error", line);
+			error("Syntax error", line);
 		i++;
 	}
 	return (line);
@@ -91,7 +91,6 @@ char	*read_name_comment(t_asm *head)
 			line = save_comment(line, head, 0, 0);
 		free(line);
 	}
-	printf("[%s]\n[%s]\n", head->name, head->comment);
 	if (ft_strlen(head->name) > PROG_NAME_LENGTH)
 		error("Champion name too long (Max length 128)\n", NULL);
 	if (ft_strlen(head->comment) > COMMENT_LENGTH)

@@ -64,16 +64,30 @@ int		is_label(char *line)
 	return (1);
 }
 
-int		check_dir_reg(char *str)
+int		check_dir_reg(char *str, int fl)
 {
 	int	i;
 
 	i = 1;
+	if (str[i] == '-')
+		i++;
+	if (!str[i])
+		error("Syntax error", str);
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]) && str[i] != '-')
-			error("invalid register/direct ", str);
+		if (!ft_isdigit(str[i]))
+		{
+			if (fl == 1)
+				error("invalid register", str);
+			error("invalid direct", str);
+		}
 		i++;
+	}
+	if (fl == 1)
+	{
+		i = ft_atoi(str + 1);
+		if (i > 99)
+			error("Syntax error", str);
 	}
 	return (1);
 }

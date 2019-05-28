@@ -14,6 +14,7 @@
 # define ASM_H
 
 # include "libft.h"
+# define ALT_COMMENT_CHAR	';'
 
 enum				e_type
 {

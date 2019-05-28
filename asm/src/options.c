@@ -29,17 +29,48 @@ void	cod_operetion(char *op, t_asm *head)
 
 char	*name_operation(char **str)
 {
-	int		i;
 	char	*res;
 	char	*tmp;
 
-	i = 0;
+	res = NULL;
+	if (ft_strnequ(*str, "ld", 2))
+		res = ft_strdup("ld");
+	else if (ft_strnequ(*str, "st", 2))
+		res = ft_strdup("st");
+	else if (ft_strnequ(*str, "sub", 3))
+		res = ft_strdup("sub");
+	else if (ft_strnequ(*str, "sti", 3))
+		res = ft_strdup("sti");
+	else if (ft_strnequ(*str, "and", 3))
+		res = ft_strdup("and");
+	else if (ft_strnequ(*str, "aff", 3))
+		res = ft_strdup("aff");
+	else if (ft_strnequ(*str, "ldi", 3))
+		res = ft_strdup("ldi");
+	else if (ft_strnequ(*str, "xor", 3))
+		res = ft_strdup("xor");
+	else if (ft_strnequ(*str, "or", 2))
+		res = ft_strdup("or");
+	else if (ft_strnequ(*str, "fork", 4))
+		res = ft_strdup("fork");
+	else if (ft_strnequ(*str, "lldi", 4))
+		res = ft_strdup("lldi");
+	else if (ft_strnequ(*str, "lld", 3))
+		res = ft_strdup("lld");
+	else if (ft_strnequ(*str, "lfork", 5))
+		res = ft_strdup("lfork");
+	else if (ft_strnequ(*str, "live", 4))
+		res = ft_strdup("live");
+	else if (ft_strnequ(*str, "add", 3))
+		res = ft_strdup("add");
+	else if (ft_strnequ(*str, "zjmp", 4))
+		res = ft_strdup("zjmp");
+	else
+		error("Invalid instruction", *str);
 	tmp = *str;
-	while (tmp[i] && tmp[i] != ' ' && tmp[i] != '	')
-		i++;
-	if (empty_line(tmp + i))
+	if (*(tmp + ft_strlen(res)) != ' ' && *(tmp + ft_strlen(res))
+	!= DIRECT_CHAR && *(tmp + ft_strlen(res)) != '	')
 		error("Syntax error\n", NULL);
-	res = ft_strndup(*str, i);
 	*str = ft_strdup(*str + ft_strlen(res));
 	return (res);
 }
@@ -48,11 +79,20 @@ void	del_comment(char **line)
 {
 	char	*del;
 
-	if (!ft_strchr(*line, '#'))
+	if (!ft_strchr(*line, COMMENT_CHAR) && !ft_strchr(*line, ALT_COMMENT_CHAR))
 		return ;
-	del = *line;
-	*line = ft_strndup(*line, ft_strchr(*line, '#') - *line);
-	free(del);
+	if (ft_strchr(*line, COMMENT_CHAR))
+	{
+		del = *line;
+		*line = ft_strndup(*line, ft_strchr(*line, COMMENT_CHAR) - *line);
+		free(del);
+	}
+	else
+	{
+		del = *line;
+		*line = ft_strndup(*line, ft_strchr(*line, ALT_COMMENT_CHAR) - *line);
+		free(del);
+	}
 }
 
 void	check_code_line(char *line)

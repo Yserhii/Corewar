@@ -27,7 +27,7 @@ int		empty_line(char *line)
 	int	i;
 
 	i = 0;
-	if (line[i] == '\n' || line[i] == '#')
+	if (line[i] == '\n' || line[i] == COMMENT_CHAR || line[i] == ALT_COMMENT_CHAR)
 		return (1);
 	while (line[++i])
 		if (line[i] != '\n' && line[i] != ' ' && line[i] != '	')
@@ -55,6 +55,8 @@ int		is_label(char *line)
 		return (0);
 	while (line[++i] == ' ' || line[i] == '\t')
 		;
+	if (line[i] == LABEL_CHAR)
+		error("Syntax error", line);
 	while (line[i] != LABEL_CHAR)
 	{
 		if (ft_strchr(LABEL_CHARS, line[i]) == NULL)

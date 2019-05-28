@@ -26,7 +26,7 @@ char	*save_name(char *line, t_asm *head, int i, int j)
 			error("Syntax error", line);
 		i++;
 	}
-	while (line[++i] != '"')
+	while (line[++i] && line[i] != '"')
 	{
 		if (line[i] == '\0')
 		{
@@ -81,16 +81,28 @@ char	*read_name_comment(t_asm *head)
 {
 	char	*line;
 
-	head->name = ft_strnew(PROG_NAME_LENGTH);
-	head->comment = ft_strnew(COMMENT_LENGTH);
 	while (get_next_line(head->fd_s, &line) && check_line(line))
 	{
 		if (ft_strstr(line, NAME_CMD_STRING))
+		{
+			if (head->name != NULL)
+				error("More then one champion name\n", NULL);
+			head->name = ft_strnew(PROG_NAME_LENGTH);
 			line = save_name(line, head, 0, 0);
+		}
 		if (ft_strstr(line, COMMENT_CMD_STRING))
+		{
+			if (head->comment != NULL)
+				error("More then one comment\n", NULL);
+			head->comment = ft_strnew(COMMENT_LENGTH);
 			line = save_comment(line, head, 0, 0);
+		}
 		free(line);
 	}
+	if (head->name == NULL)
+		error("No champion name\n", NULL);
+	if (head->comment == NULL)
+		error("No comment\n", NULL);
 	if (ft_strlen(head->name) > PROG_NAME_LENGTH)
 		error("Champion name too long (Max length 128)\n", NULL);
 	if (ft_strlen(head->comment) > COMMENT_LENGTH)

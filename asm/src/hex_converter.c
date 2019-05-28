@@ -30,8 +30,7 @@ void	hex_con(int32_t nbr, int size, t_asm *head)
 		tmp = max + nbr + 1;
 	else
 		tmp = nbr;
-	if (!(res = (char *)malloc(sizeof(char) * size)))
-		printf("lo\n");
+	res = (char *)malloc(sizeof(char) * size);
 	i = size;
 	while (--i >= 0)
 	{

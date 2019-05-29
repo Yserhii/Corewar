@@ -50,6 +50,8 @@ typedef struct		s_asm
 	int				fd_cor;
 	char			*name;
 	char			*comment;
+	char			code[CHAMP_MAX_SIZE];
+	int				pos;
 	int				b_pos;
 }					t_asm;
 
@@ -89,5 +91,7 @@ void	aff(t_token *tmp_token, t_asm *head);
 int		label_pos(t_asm *head, char *label);
 void	check_code_line(char *line);
 int		check_ind(char *line);
+char	*what_op(char *str);
+
 
 #endif

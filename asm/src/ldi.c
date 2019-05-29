@@ -35,13 +35,8 @@ void	ldi_error(char *name, int nb, int fl)
 	}
 }
 
-int		arg_cod_ldi(t_token *tmp_token, int nb)
+int		arg_cod_ldi(t_token *tmp_token, int nb, int code)
 {
-	int	code;
-
-	code = 0;
-	if (!tmp_token || tmp_token->type == OP || tmp_token->type == LABEL)
-		ldi_error(NULL, nb, 1);
 	if (tmp_token->type == DIR || tmp_token->type == DIR_L)
 		code += 128;
 	else if (tmp_token->type == REG)
@@ -57,7 +52,8 @@ int		arg_cod_ldi(t_token *tmp_token, int nb)
 		code += 32;
 	else
 		ldi_error(tmp_token->name, nb, 0);
-	if (!tmp_token->next || tmp_token->next->type == OP || tmp_token->next->type == LABEL)
+	if (!tmp_token->next || tmp_token->next->type == OP
+	|| tmp_token->next->type == LABEL)
 		ldi_error(NULL, nb, 1);
 	if (tmp_token->next->type != REG)
 		ldi_error(tmp_token->next->name, nb, 0);
@@ -75,7 +71,7 @@ void	ldi(t_token *tmp_token, t_asm *head, int nb)
 
 	op = tmp_token;
 	hex_con(nb, 1, head);
-	hex_con(arg_cod_ldi(tmp_token->next, nb), 1, head);
+	hex_con(arg_cod_ldi(tmp_token->next, nb, 0), 1, head);
 	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)
 		n = ft_atoi(tmp_token->next->name + 1);
 	else if (tmp_token->next->type == IND)

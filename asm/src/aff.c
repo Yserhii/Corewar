@@ -27,6 +27,6 @@ void	aff(t_token *tmp_token, t_asm *head)
 	n = ft_atoi(tmp_token->name + 1);
 	hex_con(n, 1, head);
 	tmp_token = tmp_token->next;
-	if (tmp_token->type != OP && tmp_token->type != LABEL)
+	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
 		error("Too many arguments for aff\n", NULL);
 }

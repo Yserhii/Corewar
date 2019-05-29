@@ -46,7 +46,7 @@ void	st(t_token *tmp_token, t_asm *head)
 	if (!tmp_token->next->next ||
 			tmp_token->next->next->type == OP ||
 			tmp_token->next->next->type == LABEL)
-			error("Too few arguments for st\n", NULL);
+		error("Too few arguments for st\n", NULL);
 	if (tmp_token->next->next->type == REG)
 		n = 80;
 	else

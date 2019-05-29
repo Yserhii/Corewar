@@ -21,7 +21,7 @@ void	cod_operetion(char *op, t_asm *head)
 		ft_strequ(op, "sti") || ft_strequ(op, "xor") ||
 		ft_strequ(op, "lld") || ft_strequ(op, "ldi") ||
 		ft_strequ(op, "lldi") || ft_strequ(op, "aff"))
-			head->b_pos++;
+		head->b_pos++;
 	else if (!ft_strequ(op, "live") && !ft_strequ(op, "zjmp") &&
 			!ft_strequ(op, "fork") && !ft_strequ(op, "lfork"))
 		error("Invalid instruction", op);
@@ -32,45 +32,13 @@ char	*name_operation(char **str)
 	char	*res;
 	char	*tmp;
 
-	res = NULL;
-	if (ft_strnequ(*str, "ld", 2))
-		res = ft_strdup("ld");
-	else if (ft_strnequ(*str, "st", 2))
-		res = ft_strdup("st");
-	else if (ft_strnequ(*str, "sub", 3))
-		res = ft_strdup("sub");
-	else if (ft_strnequ(*str, "sti", 3))
-		res = ft_strdup("sti");
-	else if (ft_strnequ(*str, "and", 3))
-		res = ft_strdup("and");
-	else if (ft_strnequ(*str, "aff", 3))
-		res = ft_strdup("aff");
-	else if (ft_strnequ(*str, "ldi", 3))
-		res = ft_strdup("ldi");
-	else if (ft_strnequ(*str, "xor", 3))
-		res = ft_strdup("xor");
-	else if (ft_strnequ(*str, "or", 2))
-		res = ft_strdup("or");
-	else if (ft_strnequ(*str, "fork", 4))
-		res = ft_strdup("fork");
-	else if (ft_strnequ(*str, "lldi", 4))
-		res = ft_strdup("lldi");
-	else if (ft_strnequ(*str, "lld", 3))
-		res = ft_strdup("lld");
-	else if (ft_strnequ(*str, "lfork", 5))
-		res = ft_strdup("lfork");
-	else if (ft_strnequ(*str, "live", 4))
-		res = ft_strdup("live");
-	else if (ft_strnequ(*str, "add", 3))
-		res = ft_strdup("add");
-	else if (ft_strnequ(*str, "zjmp", 4))
-		res = ft_strdup("zjmp");
-	else
+	res = what_op(*str);
+	if (res == NULL)
 		error("Invalid instruction", *str);
 	tmp = *str;
 	if (*(tmp + ft_strlen(res)) != ' ' && *(tmp + ft_strlen(res))
-	!= DIRECT_CHAR && *(tmp + ft_strlen(res)) != '	')
-		error("Syntax error\n", NULL);
+	!= DIRECT_CHAR && *(tmp + ft_strlen(res)) != '\t')
+		error("11Syntax error", *str);
 	*str = ft_strdup(*str + ft_strlen(res));
 	return (res);
 }
@@ -100,15 +68,15 @@ void	check_code_line(char *line)
 	if (ft_strchr(line, SEPARATOR_CHAR))
 	{
 		if (empty_line(ft_strrchr(line, SEPARATOR_CHAR)))
-			error("Syntax error\n", NULL);
+			error("12Syntax error", line);
 	}
 }
 
 int		check_ind(char *line)
 {
 	if (!*line)
-		error("Syntax error\n", NULL);
+		error("Syntax error", line);
 	if (ft_allnum(line))
-		error("Bad argument", line);
+		error("13Bad argument", line);
 	return (1);
 }

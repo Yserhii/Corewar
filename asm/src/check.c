@@ -27,10 +27,11 @@ int		empty_line(char *line)
 	int	i;
 
 	i = 0;
-	if (line[i] == '\n' || line[i] == COMMENT_CHAR || line[i] == ALT_COMMENT_CHAR)
+	if (line[i] == '\n' || line[i] == COMMENT_CHAR ||
+	line[i] == ALT_COMMENT_CHAR)
 		return (1);
 	while (line[++i])
-		if (line[i] != '\n' && line[i] != ' ' && line[i] != '	')
+		if (line[i] != '\n' && line[i] != ' ' && line[i] != '\t')
 			return (0);
 	return (1);
 }
@@ -56,7 +57,7 @@ int		is_label(char *line)
 	while (line[++i] == ' ' || line[i] == '\t')
 		;
 	if (line[i] == LABEL_CHAR)
-		error("Syntax error", line);
+		error("1Syntax error", line);
 	while (line[i] != LABEL_CHAR)
 	{
 		if (ft_strchr(LABEL_CHARS, line[i]) == NULL)
@@ -74,7 +75,7 @@ int		check_dir_reg(char *str, int fl)
 	if (str[i] == '-')
 		i++;
 	if (!str[i])
-		error("Syntax error", str);
+		error("2Syntax error", str);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
@@ -89,7 +90,7 @@ int		check_dir_reg(char *str, int fl)
 	{
 		i = ft_atoi(str + 1);
 		if (i > 99)
-			error("Syntax error", str);
+			error("3Syntax error", str);
 	}
 	return (1);
 }

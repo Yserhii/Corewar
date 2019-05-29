@@ -46,8 +46,6 @@ int		arg_code_and_or(t_token *tmp_token, int nb)
 	int	code;
 
 	code = 0;
-	if (!tmp_token || tmp_token->type == OP || tmp_token->type == LABEL)
-		and_or_error(NULL, nb, 1);
 	if (tmp_token->type == REG)
 		code += 64;
 	if (tmp_token->type == DIR || tmp_token->type == DIR_L)
@@ -63,7 +61,8 @@ int		arg_code_and_or(t_token *tmp_token, int nb)
 		code += 32;
 	else if (tmp_token->type == IND || tmp_token->type == IND_L)
 		code += 32 + 16;
-	if (!tmp_token->next || tmp_token->next->type == OP || tmp_token->next->type == LABEL)
+	if (!tmp_token->next || tmp_token->next->type == OP
+	|| tmp_token->next->type == LABEL)
 		and_or_error(NULL, nb, 1);
 	if (tmp_token->next->type != REG)
 		and_or_error(tmp_token->next->name, nb, 0);

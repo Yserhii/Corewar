@@ -44,5 +44,8 @@ void	write_file(t_asm *head)
 	write(head->fd_cor, head->comment, COMMENT_LENGTH);
 	res = ft_memset(res, 0, 4);
 	write(head->fd_cor, res, (size_t)size);
+	// write(head->fd_cor, head->code, head->b_pos);
+		// ft_printf("------%x\n", head->code[1]);
+
 	free(res);
 }

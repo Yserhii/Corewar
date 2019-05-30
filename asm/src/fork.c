@@ -13,6 +13,24 @@
 #include "op.h"
 #include "asm.h"
 
+void	valid_fork(t_token *token, int nb)
+{
+	token = token->next;
+	if (token->type != DIR && token->type != DIR_L)
+	{
+		if (nb == 12)
+			error("Bad argument for operation fork", token->name);
+		error("Bad argument for operation lfork", token->name);
+	}
+	token = token->next;
+	if (token && token->type != OP && token->type != LABEL)
+	{
+		if (nb == 12)
+			error("Too many arguments for fork\n", NULL);
+		error("Too many arguments for lfork\n", NULL);
+	}
+}
+
 void	ft_fork(t_token *tmp_token, t_asm *head, int nb)
 {
 	int		n;
@@ -26,18 +44,5 @@ void	ft_fork(t_token *tmp_token, t_asm *head, int nb)
 		n = ft_atoi(tmp_token->name + 1);
 	else if (tmp_token->type == DIR_L)
 		n = label_pos(head, tmp_token->name + 1) - op->pos;
-	else
-	{
-		if (nb == 12)
-			error("Bad argument for operation fork", tmp_token->name);
-		error("Bad argument for operation lfork", tmp_token->name);
-	}
-	tmp_token = tmp_token->next;
-	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
-	{
-		if (nb == 12)
-			error("Too many arguments for fork\n", NULL);
-		error("Too many arguments for lfork\n", NULL);
-	}
 	hex_con(n, 2, head);
 }

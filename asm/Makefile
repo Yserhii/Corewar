@@ -20,7 +20,7 @@ INK_DIR := ./ink/
 SRC := main.c check.c ft_write.c name_comment.c parse_code.c \
 		tokens.c hex_converter.c live.c hex_code.c add.c aff.c \
 		fork.c ld.c st.c sub.c zjmp.c sti.c ldi.c ft_and_or.c options.c\
-		fnc.c ft_ujoin.c
+		fnc.c valid_code.c
 
 OBJ = $(addprefix $(OBJ_DIR), $(SRC:.c=.o))
 

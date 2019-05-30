@@ -17,7 +17,6 @@ void	hex_con(int32_t nbr, int size, t_asm *head)
 {
 	unsigned int	tmp;
 	int				i;
-	// int				j;
 	unsigned int	max;
 	char			*res;
 
@@ -32,25 +31,12 @@ void	hex_con(int32_t nbr, int size, t_asm *head)
 	else
 		tmp = nbr;
 	res = ft_memalloc(sizeof(char) * size);
-	i = size + head->pos;
-	// j = head->pos + size;
-	while (--i >= head->pos)
+	i = size;
+	while (--i >= 0)
 	{
-		head->code[i] = tmp % 256;
+		res[i] = tmp % 256;
 		tmp /= 256;
-		// j--;
-		// res[i] = tmp % 256;
-		// tmp /= 256;
 	}
-	head->pos += size;
-	// while (i < size)
-	// {
-	// 	head->code[head->pos] = res[i];
-	// 	i++;
-	// 	head->pos++;
-	// }
-	// head->code = ft_strjoin(head->code, res);
-	// exit (1);
-	write(head->fd_cor, head->code, size);
+	write(head->fd_cor, res, size);
 	free(res);
 }

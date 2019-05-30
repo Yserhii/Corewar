@@ -41,7 +41,23 @@ void	and_or_error(char *name, int nb, int fl)
 	}
 }
 
-int		arg_code_and_or(t_token *tmp_token, int nb)
+void	valid_and_or(t_token *token, int nb)
+{
+	token = token->next->next;
+	if (!token || token->type == OP || token->type == LABEL)
+		and_or_error(NULL, nb, 1);
+	token = token->next;
+	if (!token || token->type == OP
+	|| token->type == LABEL)
+		and_or_error(NULL, nb, 1);
+	if (token->type != REG)
+		and_or_error(token->next->name, nb, 0);
+	token = token->next;
+	if (token && token->type != OP && token->type != LABEL)
+		and_or_error(NULL, nb, 0);
+}
+
+int		arg_code_and_or(t_token *tmp_token)
 {
 	int	code;
 
@@ -53,19 +69,12 @@ int		arg_code_and_or(t_token *tmp_token, int nb)
 	if (tmp_token->type == IND || tmp_token->type == IND_L)
 		code += 128 + 64;
 	tmp_token = tmp_token->next;
-	if (!tmp_token || tmp_token->type == OP || tmp_token->type == LABEL)
-		and_or_error(NULL, nb, 1);
 	if (tmp_token->type == REG)
 		code += 16;
 	else if (tmp_token->type == DIR || tmp_token->type == DIR_L)
 		code += 32;
 	else if (tmp_token->type == IND || tmp_token->type == IND_L)
 		code += 32 + 16;
-	if (!tmp_token->next || tmp_token->next->type == OP
-	|| tmp_token->next->type == LABEL)
-		and_or_error(NULL, nb, 1);
-	if (tmp_token->next->type != REG)
-		and_or_error(tmp_token->next->name, nb, 0);
 	code += 4;
 	return (code);
 }
@@ -93,7 +102,7 @@ void	what_type(t_token *tmp_token, t_asm *head, t_token *op)
 		if (tmp_token->type == IND)
 			n = ft_atoi(tmp_token->name);
 		else
-			n = label_pos(head, tmp_token->name + 1) - op->pos;
+			n = label_pos(head, tmp_token->name) - op->pos;
 		hex_con(n, 2, head);
 	}
 }
@@ -106,7 +115,7 @@ void	ft_and_or(t_token *tmp_token, t_asm *head, int nb)
 	i = -1;
 	op = tmp_token;
 	hex_con(nb, 1, head);
-	hex_con(arg_code_and_or(tmp_token->next, nb), 1, head);
+	hex_con(arg_code_and_or(tmp_token->next), 1, head);
 	tmp_token = tmp_token->next;
 	while (++i < 2)
 	{
@@ -114,7 +123,4 @@ void	ft_and_or(t_token *tmp_token, t_asm *head, int nb)
 		tmp_token = tmp_token->next;
 	}
 	what_type(tmp_token, head, op);
-	tmp_token = tmp_token->next;
-	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
-		and_or_error(NULL, nb, 0);
 }

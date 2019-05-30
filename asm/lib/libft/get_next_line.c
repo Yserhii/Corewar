@@ -12,16 +12,6 @@
 
 #include "libft.h"
 
-static char		*ft_strndupp(const char *s1, size_t n)
-{
-	char *tmp;
-
-	if (!(tmp = ft_strnew(n)))
-		return (NULL);
-	ft_strncpy(tmp, s1, n);
-	return (tmp);
-}
-
 static t_list	*ft_checkfd(t_list **list, int fd)
 {
 	t_list	*tmp;
@@ -36,6 +26,16 @@ static t_list	*ft_checkfd(t_list **list, int fd)
 	tmp = ft_lstnew("\0", fd);
 	ft_lstadd(list, tmp);
 	return (tmp);
+}
+
+static void		check_new_line(t_list *list, char **buf)
+{
+	int	s;
+
+	s = ft_strlen((char *)list->content);
+	if (((char *)list->content)[s - 1] == '\n')
+		g_new_line = 1;
+	free(*buf);
 }
 
 int				get_next_line(const int fd, char **line)
@@ -53,11 +53,11 @@ int				get_next_line(const int fd, char **line)
 	list = ft_checkfd(&head, fd);
 	while (!(ft_strchr(list->content, '\n')) && (i = read(fd, buf, BUFF_SIZE)))
 		list->content = ft_strnjoin(list->content, buf, i);
-	free(buf);
+	check_new_line(list, &buf);
 	i = 0;
 	while (((char *)list->content)[i] && ((char *)list->content)[i] != '\n')
 		++i;
-	*line = ft_strndupp(list->content, i);
+	*line = ft_strndup(list->content, i);
 	if (((char *)list->content)[i] == '\n')
 		++i;
 	tmp = list->content;

@@ -35,7 +35,24 @@ void	ldi_error(char *name, int nb, int fl)
 	}
 }
 
-int		arg_cod_ldi(t_token *tmp_token, int nb, int code)
+void	valid_ldi(t_token *token, int nb)
+{
+	token = token->next->next;
+	if (!token || token->type == OP || token->type == LABEL)
+		ldi_error(NULL, nb, 1);
+	if (token->type != REG && token->type != DIR && token->type != DIR_L)
+		ldi_error(token->name, nb, 0);
+	token = token->next;
+	if (!token || token->type == OP || token->type == LABEL)
+		ldi_error(NULL, nb, 1);
+	if (token->type != REG)
+		ldi_error(token->name, nb, 0);
+	token = token->next;
+	if (token && token->type != OP && token->type != LABEL)
+		ldi_error(NULL, nb, 0);
+}
+
+int		arg_cod_ldi(t_token *tmp_token, int code)
 {
 	if (tmp_token->type == DIR || tmp_token->type == DIR_L)
 		code += 128;
@@ -44,23 +61,11 @@ int		arg_cod_ldi(t_token *tmp_token, int nb, int code)
 	else if (tmp_token->type == IND || tmp_token->type == IND_L)
 		code += 192;
 	tmp_token = tmp_token->next;
-	if (!tmp_token || tmp_token->type == OP || tmp_token->type == LABEL)
-		ldi_error(NULL, nb, 1);
 	if (tmp_token->type == REG)
 		code += 16;
 	else if (tmp_token->type == DIR || tmp_token->type == DIR_L)
 		code += 32;
-	else
-		ldi_error(tmp_token->name, nb, 0);
-	if (!tmp_token->next || tmp_token->next->type == OP
-	|| tmp_token->next->type == LABEL)
-		ldi_error(NULL, nb, 1);
-	if (tmp_token->next->type != REG)
-		ldi_error(tmp_token->next->name, nb, 0);
 	code += 4;
-	tmp_token = tmp_token->next->next;
-	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
-		ldi_error(NULL, nb, 0);
 	return (code);
 }
 
@@ -71,7 +76,7 @@ void	ldi(t_token *tmp_token, t_asm *head, int nb)
 
 	op = tmp_token;
 	hex_con(nb, 1, head);
-	hex_con(arg_cod_ldi(tmp_token->next, nb, 0), 1, head);
+	hex_con(arg_cod_ldi(tmp_token->next, 0), 1, head);
 	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)
 		n = ft_atoi(tmp_token->next->name + 1);
 	else if (tmp_token->next->type == IND)
@@ -79,7 +84,7 @@ void	ldi(t_token *tmp_token, t_asm *head, int nb)
 	else if (tmp_token->next->type == DIR_L)
 		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
 	else if (tmp_token->next->type == IND_L)
-		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+		n = label_pos(head, tmp_token->next->name) - op->pos;
 	tmp_token->next->type == REG ? hex_con(n, 1, head) : hex_con(n, 2, head);
 	tmp_token = tmp_token->next;
 	if (tmp_token->next->type == REG || tmp_token->next->type == DIR)

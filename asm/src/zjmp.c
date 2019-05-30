@@ -13,6 +13,16 @@
 #include "op.h"
 #include "asm.h"
 
+void	valid_zjmp(t_token *token)
+{
+	token = token->next;
+	if (token->type != DIR && token->type != DIR_L)
+		error("Bad argument for operation zjmp", token->name);
+	token = token->next;
+	if (token && token->type != OP && token->type != LABEL)
+		error("Too many arguments for zjmp\n", NULL);
+}
+
 void	zjmp(t_token *tmp_token, t_asm *head)
 {
 	int		n;
@@ -25,10 +35,5 @@ void	zjmp(t_token *tmp_token, t_asm *head)
 		n = ft_atoi(tmp_token->next->name + 1);
 	else if (tmp_token->next->type == DIR_L)
 		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
-	else
-		error("Bad argument for operation zjmp", tmp_token->next->name);
-	tmp_token = tmp_token->next->next;
-	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
-		error("Too many arguments for zjmp\n", NULL);
 	hex_con(n, 2, head);
 }

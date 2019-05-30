@@ -38,7 +38,7 @@ char	*name_operation(char **str)
 	tmp = *str;
 	if (*(tmp + ft_strlen(res)) != ' ' && *(tmp + ft_strlen(res))
 	!= DIRECT_CHAR && *(tmp + ft_strlen(res)) != '\t')
-		error("11Syntax error", *str);
+		error("Syntax error", *str);
 	*str = ft_strdup(*str + ft_strlen(res));
 	return (res);
 }
@@ -68,7 +68,7 @@ void	check_code_line(char *line)
 	if (ft_strchr(line, SEPARATOR_CHAR))
 	{
 		if (empty_line(ft_strrchr(line, SEPARATOR_CHAR)))
-			error("12Syntax error", line);
+			error("Syntax error", line);
 	}
 }
 
@@ -76,7 +76,15 @@ int		check_ind(char *line)
 {
 	if (!*line)
 		error("Syntax error", line);
-	if (ft_allnum(line))
-		error("13Bad argument", line);
+	if (line[0] == '-')
+	{
+		if (ft_allnum(line + 1))
+			error("Bad argument", line);
+	}
+	else
+	{
+		if (ft_allnum(line))
+			error("Bad argument", line);
+	}
 	return (1);
 }

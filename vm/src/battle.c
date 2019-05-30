@@ -29,6 +29,23 @@ int count_alive_kar(t_vm *vm)
 	return (i);
 }
 
+void	print_map(t_vm *vm)
+{
+	// /////////////////////для печати//////////////
+
+	for(int i = 0, k = -1; i < 64; i++)
+	{
+		for(int l = 0; l < 64; l++)
+			ft_printf("%02x ", vm->map[++k]);
+		ft_printf("\n");
+	}
+// 	//////////////////
+}
+
+void	show_winner(t_vm *vm)
+{
+	ft_printf("Winner is %s", vm->bot[vm->last_say_live]->name); // ? name is not a string?
+}
 
 void killing_check(t_vm *vm)
 {
@@ -72,8 +89,6 @@ void killing_check(t_vm *vm)
 
 
 
-
-
 void	battle(t_vm *vm)
 {
 	t_kar	*kar;
@@ -101,6 +116,7 @@ void	battle(t_vm *vm)
 			// 		continue ;
 			// 	}
 			// }
+
 			//ALEX
 			if (!vm->kar->cicles_to_wait)
 			{
@@ -110,7 +126,7 @@ void	battle(t_vm *vm)
 				op_recognize(vm, kar);
 			}
 
-			//if (vm->kar->cicles_to_wait > 0)
+			//if (vm->kar->cicles_to_wait > 0) // ALEX
 			else
 				vm->kar->cicles_to_wait--;
 			kar = kar->next;
@@ -127,7 +143,16 @@ void	battle(t_vm *vm)
 			check_count++;
 			killing_check(vm);
 		}
+		// DUMP finish
+		if (vm->nbr_cycles > -1 && vm->cycles_from_start >= vm->nbr_cycles)
+		{
+			print_map(vm);
+			break;
+		}
 	}
+	if (vm->nbr_cycles == -1)
+		show_winner(vm);
+
 }
 
 

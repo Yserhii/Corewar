@@ -89,6 +89,7 @@ void	read_valid_av(int ac,char **av, t_vm *vm)
 	if (ac == 2 && !ft_strcmp("--help", av[1]))
 		fun_for_help();
 	ft_bzero(fd_tmp, sizeof(fd_tmp));
+	vm->nbr_cycles = -1;
 	while (++i < ac)
 	{
 		if (!ft_strcmp("-dump", av[i]))

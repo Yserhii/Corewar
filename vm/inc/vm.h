@@ -28,6 +28,22 @@ typedef struct		s_bot
 	uint8_t			*all_info;
 }					t_bot;
 
+typedef struct		s_kar
+{
+	int				zjmp;
+
+	int				id;
+	int				carry;
+	uint32_t		pos;
+	uint32_t		op_id;
+	uint32_t		bot_id;
+	uint32_t		live;
+	uint32_t		cicles_to_wait;
+	uint32_t		reg[REG_NUMBER];
+	struct s_kar	*next;
+	struct s_kar	*back;
+}					t_kar;
+
 typedef struct		s_vm
 {
 	// flags
@@ -39,27 +55,206 @@ typedef struct		s_vm
 	//map
 	uint8_t			map[MEM_SIZE];
 
+	int				last_say_live;
+	int				cycles_from_start;
+	int				cycles_to_die;
+	int				num_of_life;
+	int				number_of_checks;
+
 	//bots
 	int				num_bot;
 	t_bot			**bot;
+	t_kar			*kar;
 }					t_vm;
-//<<<<<<< HEAD
-typedef struct	s_karetka
+
+
+// for oper
+typedef struct	s_op
 {
-	unsigned int		pos;
-	unsigned int		carry;
-	unsigned int		bot_id;
-	unsigned int		*reg;
-	unsigned int		exec_op;
-	unsigned int		live;
-	unsigned int		cicles_to_wait;
-
-	unsigned int		pc;
-
-}					t_karetka;
+	char		*name;
+	uint8_t		code;
+	uint8_t		num_arg;
+	uint8_t		is_args_types;
+	uint8_t		args_types[3];
+	uint8_t		dir_size;
+	int			wait;
+}				t_op;
 
 void				read_valid_av(int ac,char **av, t_vm *vm);
 void				fun_for_help(void);
 void				read_valid_bot(t_vm *vm);
 void				initialization_map(t_vm *vm);
+
+void				battle(t_vm *vm);
+void				killing_check(t_vm *vm);
+
+//for oper
+void				op_recognize(t_vm *vm, t_kar *kar);
+void				vm_live(t_vm *vm, t_kar *kar);
+void				vm_ld(t_vm *vm, t_kar *kar);
+void				vm_st(t_vm *vm, t_kar *kar);
+void				vm_add(t_vm *vm, t_kar *kar);
+void				vm_sub(t_vm *vm, t_kar *kar);
+void				vm_and(t_vm *vm, t_kar *kar);
+void				vm_or(t_vm *vm, t_kar *kar);
+void				vm_xor(t_vm *vm, t_kar *kar);
+void				vm_zjmp(t_vm *vm, t_kar *kar);
+void				vm_ldi(t_vm *vm, t_kar *kar);
+void				vm_sti(t_vm *vm, t_kar *kar);
+void				vm_fork(t_vm *vm, t_kar *kar);
+void				vm_lld(t_vm *vm, t_kar *kar);
+void				vm_lldi(t_vm *vm, t_kar *kar);
+void				vm_lfork(t_vm *vm, t_kar *kar);
+void				vm_aff(t_vm *vm, t_kar *kar);
+
+static void			(*g_opers[17])() = {0, &vm_live, &vm_ld, &vm_st,
+	&vm_add, &vm_sub, &vm_and, &vm_or, &vm_xor, &vm_zjmp, &vm_ldi, &vm_sti,
+	&vm_fork, &vm_lld, &vm_lldi, &vm_lfork, &vm_aff};
+
+static t_op g_op[16] = {
+	{
+		.name = "live",
+		.code = 0x01,
+		.num_arg = 1,
+		.is_args_types = 0,
+		.args_types = {T_DIR | 0 | 0},
+		.dir_size = 4,
+		.wait = 10
+	},
+	{
+		.name = "ld",
+		.code = 0x02,
+		.num_arg = 2,
+		.is_args_types = 1,
+		.args_types = {T_DIR | T_IND, T_REG, 0},
+		.dir_size = 4,
+		.wait = 5
+	},
+	{
+		.name = "st",
+		.code = 0x03,
+		.num_arg = 2,
+		.is_args_types = 1,
+		.args_types = {T_REG, T_REG | T_IND, 0},
+		.dir_size = 4,
+		.wait = 5
+	},
+	{
+		.name = "add",
+		.code = 0x04,
+		.num_arg = 3,
+		.is_args_types = 1,
+		.args_types = {T_REG, T_REG, T_REG},
+		.dir_size = 4,
+		.wait = 10
+	},
+	{
+		.name = "sub",
+		.code = 0x05,
+		.num_arg = 3,
+		.is_args_types = 1,
+		.args_types = {T_REG, T_REG, T_REG},
+		.dir_size = 4,
+		.wait = 10
+	},
+	{
+		.name = "and",
+		.code = 0x06,
+		.num_arg = 3,
+		.is_args_types = 1,
+		.args_types = {T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG},
+		.dir_size = 4,
+		.wait = 6
+	},
+	{
+		.name = "or",
+		.code = 0x07,
+		.num_arg = 3,
+		.is_args_types = 1,
+		.args_types = {T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG},
+		.dir_size = 4,
+		.wait = 6
+	},
+	{
+		.name = "xor",
+		.code = 0x08,
+		.num_arg = 3,
+		.is_args_types = 1,
+		.args_types = {T_REG | T_DIR | T_IND, T_REG | T_DIR | T_IND, T_REG},
+		.dir_size = 4,
+		.wait = 6
+	},
+	{
+		.name = "zjmp",
+		.code = 0x09,
+		.num_arg = 1,
+		.is_args_types = 0,
+		.args_types = {T_DIR, 0, 0},
+		.dir_size = 2,
+		.wait = 20
+	},
+	{
+		.name = "ldi",
+		.code = 0x0A,
+		.num_arg = 3,
+		.is_args_types = 1,
+		.args_types = {T_REG | T_DIR | T_IND, T_REG | T_DIR, T_REG},
+		.dir_size = 2,
+		.wait = 25
+	},
+	{
+		.name = "sti",
+		.code = 0x0B,
+		.num_arg = 3,
+		.is_args_types = 1,
+		.args_types = {T_REG, T_REG | T_DIR | T_IND, T_REG | T_DIR},
+		.dir_size = 2,
+		.wait = 25
+	},
+	{
+		.name = "fork",
+		.code = 0x0C,
+		.num_arg = 1,
+		.is_args_types = 0,
+		.args_types = {T_DIR, 0, 0},
+		.dir_size = 2,
+		.wait = 800
+	},
+	{
+		.name = "lld",
+		.code = 0x0D,
+		.num_arg = 2,
+		.is_args_types = 1,
+		.args_types = {T_DIR | T_IND, T_REG, 0},
+		.dir_size = 4,
+		.wait = 10
+	},
+	{
+		.name = "lldi",
+		.code = 0x0E,
+		.num_arg = 3,
+		.is_args_types = 1,
+		.args_types = {T_REG | T_DIR | T_IND, T_REG | T_DIR, T_REG},
+		.dir_size = 2,
+		.wait = 50
+	},
+	{
+		.name = "lfork",
+		.code = 0x0F,
+		.num_arg = 1,
+		.is_args_types = 0,
+		.args_types = {T_DIR, 0, 0},
+		.dir_size = 2,
+		.wait = 1000
+	},
+	{
+		.name = "aff",
+		.code = 0x10,
+		.num_arg = 1,
+		.is_args_types = 1,
+		.args_types = {T_REG, 0, 0},
+		.dir_size = 4,
+		.wait = 2
+	}
+};
 #endif

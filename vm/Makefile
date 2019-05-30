@@ -30,7 +30,13 @@ LIB_DIR :=			./lib/
 # project source files
 
 SRC =				main.c read_valid_av.c read_valid_bot.c\
-					initialization_map.c
+					initialization_map.c battle.c\
+					op/vm_add.c op/vm_aff.c op/vm_and.c\
+					op/vm_fork.c op/vm_ld.c op/vm_ldi.c\
+					op/vm_lfork.c op/vm_live.c op/vm_lld.c\
+					op/vm_lldi.c op/vm_or.c op/vm_st.c\
+					op/vm_sti.c op/vm_sub.c op/vm_xor.c\
+					op/vm_zjmp.c op/op_make_and_add_func.c\
 
 #SRC_V =				ft_visual.c ft_visual_main.c finish.c
 
@@ -79,6 +85,7 @@ $(OBJ): | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
+	mkdir ./obj/op
 
 $(OBJ_DIR)%.o: %.c
 		$(CC) -c $< -o $@ $(CC_FLAGS) $(HEADER_FLAGS)

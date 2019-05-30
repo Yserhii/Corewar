@@ -26,5 +26,6 @@ int		main(int ac, char **av)
 	read_valid_av(ac, av, vm);
 	read_valid_bot(vm);
 	initialization_map(vm);
+	battle(vm);
 	return (0);
 }

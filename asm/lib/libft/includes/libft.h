@@ -26,6 +26,8 @@
 # define BUFF_SIZE 100
 # define ABS(x) ((x) < 0 ? -(x) : (x))
 
+int							g_new_line;
+
 typedef struct				s_list
 {
 	void					*content;

@@ -13,32 +13,39 @@
 #include "op.h"
 #include "asm.h"
 
-int		arg_code_sti(t_token *token, int code)
+void	valid_sti(t_token *token)
 {
 	token = token->next;
 	if (token->type != REG)
 		error("Bad argument for sti", token->name);
-	code += 64;
 	token = token->next;
 	if (!token || token->type == OP || token->type == LABEL)
 		error("Too few argumentd for sti", NULL);
+	token = token->next;
+	if (!token || token->type == OP || token->type == LABEL)
+		error("Too few argumentd for sti", NULL);
+	if (token->type != REG && token->type != DIR && token->type != DIR_L)
+		error("Bad argument for sti", token->next->name);
+	token = token->next;
+	if (token && token->type != OP && token->type != LABEL)
+		error("Too many arguments for sti\n", NULL);
+}
+
+int		arg_code_sti(t_token *token, int code)
+{
+	code += 64;
+	token = token->next->next;
 	if (token->type == REG)
 		code += 16;
 	else if (token->type == DIR || token->type == DIR_L)
 		code += 32;
 	else if (token->type == IND || token->type == IND_L)
 		code += 48;
-	if (!token->next || token->next->type == OP || token->next->type == LABEL)
-		error("Too few argumentd for sti", NULL);
-	if (token->next->type == REG)
+	token = token->next;
+	if (token->type == REG)
 		code += 4;
-	else if (token->next->type == DIR || token->next->type == DIR_L)
+	else if (token->type == DIR || token->type == DIR_L)
 		code += 8;
-	else
-		error("Bad argument for sti", token->next->name);
-	token = token->next->next;
-	if (token && token->type != OP && token->type != LABEL)
-		error("Too many arguments for sti\n", NULL);
 	return (code);
 }
 

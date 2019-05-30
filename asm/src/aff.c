@@ -13,20 +13,22 @@
 #include "op.h"
 #include "asm.h"
 
+void	valid_aff(t_token *token)
+{
+	token = token->next;
+	if (token->type != REG)
+		error("Bad argument for operation aff", token->name);
+	token = token->next;
+	if (token && token->type != OP && token->type != LABEL)
+		error("Too many arguments for aff\n", NULL);
+}
+
 void	aff(t_token *tmp_token, t_asm *head)
 {
 	int	n;
 
 	hex_con(16, 1, head);
 	hex_con(64, 1, head);
-	tmp_token = tmp_token->next;
-	if (!tmp_token || tmp_token->type == OP || tmp_token->type == LABEL)
-		error("Too few arguments for aff\n", NULL);
-	if (tmp_token->type != REG)
-		error("Bad argument for operation aff", tmp_token->name);
-	n = ft_atoi(tmp_token->name + 1);
+	n = ft_atoi(tmp_token->next->name + 1);
 	hex_con(n, 1, head);
-	tmp_token = tmp_token->next;
-	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
-		error("Too many arguments for aff\n", NULL);
 }

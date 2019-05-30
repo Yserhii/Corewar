@@ -38,7 +38,6 @@ void	error(char *str, char *line)
 		ft_printf("%s", str);
 	else
 		ft_printf("%s [%s]\n", str, line);
-	// system("leaks asm");
 	exit(0);
 }
 
@@ -46,20 +45,21 @@ int		main(int argc, char **argv)
 {
 	t_asm	head;
 
+	g_new_line = 0;
+	head.f = NULL;
 	head.token = NULL;
 	head.b_pos = 0;
 	head.label = NULL;
-	head.pos = 0;
-	ft_bzero(head.code, CHAMP_MAX_SIZE);
-	// head.code = ft_strdup("");
 	if (argc != 2)
 		error("Usage: ./asm <sourcefile.s>\n", NULL);
 	check_file(argv[1]);
 	head.fd_s = open(argv[1], O_RDONLY);
-	new_file(&head, argv[1]);
 	parse_code(&head, read_name_comment(&head));
+	if (g_new_line == 0)
+		error("Syntax error\n", NULL);
+	valid_code(&head);
+	new_file(&head, argv[1]);
 	write_file(&head);
 	code_to_hex(&head);
-	// system("leaks asm");
 	return (0);
 }

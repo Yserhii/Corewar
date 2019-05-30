@@ -38,14 +38,10 @@ void	write_file(t_asm *head)
 	write(head->fd_cor, head->name, PROG_NAME_LENGTH);
 	res = ft_memset(res, 0, 4);
 	write(head->fd_cor, res, (size_t)size);
-	printf("%d\n", head->b_pos);
 	write_magic(res, 0, head->b_pos, 4);
 	write(head->fd_cor, res, 4);
 	write(head->fd_cor, head->comment, COMMENT_LENGTH);
 	res = ft_memset(res, 0, 4);
 	write(head->fd_cor, res, (size_t)size);
-	// write(head->fd_cor, head->code, head->b_pos);
-		// ft_printf("------%x\n", head->code[1]);
-
 	free(res);
 }

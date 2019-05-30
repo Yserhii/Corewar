@@ -1,13 +1,11 @@
-.name		"Batman"
-.comment	"This city needs me"
+.name		".comment 'privet'"
+.comment	"reufeigfuewgfu"
 
-
-
-
-
-loop:
-        sti	r1, %:live, %1
 live:
-        live %0
-        ld %0, r2
-        zjmp %:loop
+	live %1
+loop:
+	live %:live
+	sti r1, %:live, %1
+	and r6, r6, r6
+	sti r1, %:live, %200
+	fork %8

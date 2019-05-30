@@ -21,11 +21,23 @@ void	ft_fork(t_token *tmp_token, t_asm *head, int nb)
 	n = 0;
 	op = tmp_token;
 	hex_con(nb, 1, head);
-	if (tmp_token->next->type == DIR)
-		n = ft_atoi(tmp_token->next->name + 1);
-	else if (tmp_token->next->type == DIR_L)
-		n = label_pos(head, tmp_token->next->name + 1) - op->pos;
+	tmp_token = tmp_token->next;
+	if (tmp_token->type == DIR)
+		n = ft_atoi(tmp_token->name + 1);
+	else if (tmp_token->type == DIR_L)
+		n = label_pos(head, tmp_token->name + 1) - op->pos;
 	else
-		error("Bat argument for operation fork", tmp_token->next->name);
+	{
+		if (nb == 12)
+			error("Bad argument for operation fork", tmp_token->name);
+		error("Bad argument for operation lfork", tmp_token->name);
+	}
+	tmp_token = tmp_token->next;
+	if (tmp_token && tmp_token->type != OP && tmp_token->type != LABEL)
+	{
+		if (nb == 12)
+			error("Too many arguments for fork\n", NULL);
+		error("Too many arguments for lfork\n", NULL);
+	}
 	hex_con(n, 2, head);
 }

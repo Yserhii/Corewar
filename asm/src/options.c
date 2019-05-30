@@ -20,24 +20,25 @@ void	cod_operetion(char *op, t_asm *head)
 		ft_strequ(op, "and") || ft_strequ(op, "or") ||
 		ft_strequ(op, "sti") || ft_strequ(op, "xor") ||
 		ft_strequ(op, "lld") || ft_strequ(op, "ldi") ||
-		ft_strequ(op, "lldi"))
-			head->b_pos++;
+		ft_strequ(op, "lldi") || ft_strequ(op, "aff"))
+		head->b_pos++;
 	else if (!ft_strequ(op, "live") && !ft_strequ(op, "zjmp") &&
 			!ft_strequ(op, "fork") && !ft_strequ(op, "lfork"))
-		error("Unfamiliar function", op);
+		error("Invalid instruction", op);
 }
 
 char	*name_operation(char **str)
 {
-	int		i;
 	char	*res;
 	char	*tmp;
 
-	i = 0;
+	res = what_op(*str);
+	if (res == NULL)
+		error("Invalid instruction", *str);
 	tmp = *str;
-	while (tmp[i] && tmp[i] != ' ' && tmp[i] != '	')
-		i++;
-	res = ft_strndup(*str, i);
+	if (*(tmp + ft_strlen(res)) != ' ' && *(tmp + ft_strlen(res))
+	!= DIRECT_CHAR && *(tmp + ft_strlen(res)) != '\t')
+		error("11Syntax error", *str);
 	*str = ft_strdup(*str + ft_strlen(res));
 	return (res);
 }
@@ -46,9 +47,36 @@ void	del_comment(char **line)
 {
 	char	*del;
 
-	if (!ft_strchr(*line, '#'))
+	if (!ft_strchr(*line, COMMENT_CHAR) && !ft_strchr(*line, ALT_COMMENT_CHAR))
 		return ;
-	del = *line;
-	*line = ft_strndup(*line, ft_strchr(*line, '#') - *line);
-	free(del);
+	if (ft_strchr(*line, COMMENT_CHAR))
+	{
+		del = *line;
+		*line = ft_strndup(*line, ft_strchr(*line, COMMENT_CHAR) - *line);
+		free(del);
+	}
+	else
+	{
+		del = *line;
+		*line = ft_strndup(*line, ft_strchr(*line, ALT_COMMENT_CHAR) - *line);
+		free(del);
+	}
+}
+
+void	check_code_line(char *line)
+{
+	if (ft_strchr(line, SEPARATOR_CHAR))
+	{
+		if (empty_line(ft_strrchr(line, SEPARATOR_CHAR)))
+			error("12Syntax error", line);
+	}
+}
+
+int		check_ind(char *line)
+{
+	if (!*line)
+		error("Syntax error", line);
+	if (ft_allnum(line))
+		error("13Bad argument", line);
+	return (1);
 }

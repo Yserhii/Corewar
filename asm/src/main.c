@@ -49,7 +49,9 @@ int		main(int argc, char **argv)
 	head.token = NULL;
 	head.b_pos = 0;
 	head.label = NULL;
-	head.hex_code = ft_strdup("");
+	head.pos = 0;
+	ft_bzero(head.code, CHAMP_MAX_SIZE);
+	// head.code = ft_strdup("");
 	if (argc != 2)
 		error("Usage: ./asm <sourcefile.s>\n", NULL);
 	check_file(argv[1]);

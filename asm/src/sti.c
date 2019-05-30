@@ -13,31 +13,32 @@
 #include "op.h"
 #include "asm.h"
 
-int		arg_code_sti(t_token *tmp_token)
+int		arg_code_sti(t_token *token, int code)
 {
-	int		code;
-	t_token	*token;
-
-	code = 0;
-	token = tmp_token->next;
+	token = token->next;
 	if (token->type != REG)
-		error("Bat argument for operation sti", token->name);
+		error("Bad argument for sti", token->name);
 	code += 64;
 	token = token->next;
+	if (!token || token->type == OP || token->type == LABEL)
+		error("Too few argumentd for sti", NULL);
 	if (token->type == REG)
 		code += 16;
 	else if (token->type == DIR || token->type == DIR_L)
 		code += 32;
 	else if (token->type == IND || token->type == IND_L)
 		code += 48;
-	else
-		error("Bat argument for operation sti", token->name);
+	if (!token->next || token->next->type == OP || token->next->type == LABEL)
+		error("Too few argumentd for sti", NULL);
 	if (token->next->type == REG)
 		code += 4;
 	else if (token->next->type == DIR || token->next->type == DIR_L)
 		code += 8;
 	else
-		error("Bat argument for operation sti", token->next->name);
+		error("Bad argument for sti", token->next->name);
+	token = token->next->next;
+	if (token && token->type != OP && token->type != LABEL)
+		error("Too many arguments for sti\n", NULL);
 	return (code);
 }
 
@@ -48,7 +49,7 @@ void	sti(t_token *tmp_token, t_asm *head)
 
 	op = tmp_token;
 	hex_con(11, 1, head);
-	hex_con(arg_code_sti(tmp_token), 1, head);
+	hex_con(arg_code_sti(tmp_token, 0), 1, head);
 	n = ft_atoi(tmp_token->next->name + 1);
 	hex_con(n, 1, head);
 	tmp_token = tmp_token->next->next;

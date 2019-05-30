@@ -14,6 +14,7 @@
 # define ASM_H
 
 # include "libft.h"
+# define ALT_COMMENT_CHAR	';'
 
 enum				e_type
 {
@@ -49,8 +50,9 @@ typedef struct		s_asm
 	int				fd_cor;
 	char			*name;
 	char			*comment;
+	char			code[CHAMP_MAX_SIZE];
+	int				pos;
 	int				b_pos;
-	char			*hex_code;
 }					t_asm;
 
 void	check_file(char *file);
@@ -64,7 +66,7 @@ void	parse_code(t_asm *head, char *line);
 int		is_label(char *line);
 int		empty_line(char *line);
 void	make_tokens(t_asm *head, char *line);
-int		check_dir_reg(char *str);
+int		check_dir_reg(char *str, int fl);
 void	hex_con(int32_t num, int size, t_asm *head);
 void	code_to_hex(t_asm *head);
 void	cod_operetion(char *op, t_asm *head);
@@ -87,5 +89,9 @@ void	aff(t_token *tmp_token, t_asm *head);
 
 //
 int		label_pos(t_asm *head, char *label);
+void	check_code_line(char *line);
+int		check_ind(char *line);
+char	*what_op(char *str);
+
 
 #endif

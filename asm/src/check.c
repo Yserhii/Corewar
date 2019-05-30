@@ -27,10 +27,11 @@ int		empty_line(char *line)
 	int	i;
 
 	i = 0;
-	if (line[i] == '\n' || line[i] == '#')
+	if (line[i] == '\n' || line[i] == COMMENT_CHAR ||
+	line[i] == ALT_COMMENT_CHAR)
 		return (1);
 	while (line[++i])
-		if (line[i] != '\n' && line[i] != ' ' && line[i] != '	')
+		if (line[i] != '\n' && line[i] != ' ' && line[i] != '\t')
 			return (0);
 	return (1);
 }
@@ -55,6 +56,8 @@ int		is_label(char *line)
 		return (0);
 	while (line[++i] == ' ' || line[i] == '\t')
 		;
+	if (line[i] == LABEL_CHAR)
+		error("1Syntax error", line);
 	while (line[i] != LABEL_CHAR)
 	{
 		if (ft_strchr(LABEL_CHARS, line[i]) == NULL)
@@ -64,16 +67,30 @@ int		is_label(char *line)
 	return (1);
 }
 
-int		check_dir_reg(char *str)
+int		check_dir_reg(char *str, int fl)
 {
 	int	i;
 
 	i = 1;
+	if (str[i] == '-')
+		i++;
+	if (!str[i])
+		error("2Syntax error", str);
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]) && str[i] != '-')
-			error("invalid register/direct ", str);
+		if (!ft_isdigit(str[i]))
+		{
+			if (fl == 1)
+				error("invalid register", str);
+			error("invalid direct", str);
+		}
 		i++;
+	}
+	if (fl == 1)
+	{
+		i = ft_atoi(str + 1);
+		if (i > 99)
+			error("3Syntax error", str);
 	}
 	return (1);
 }

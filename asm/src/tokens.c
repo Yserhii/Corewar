@@ -35,22 +35,20 @@ void	position(t_asm *head, char *op)
 
 int		what_arg(char *str, t_asm *head)
 {
-	if (str[0] == 'r' && check_dir_reg(str))
+	if (str[0] == 'r' && check_dir_reg(str, 1))
 	{
 		head->b_pos++;
 		return (1);
 	}
 	if (str[0] == DIRECT_CHAR && ft_strchr(str, LABEL_CHAR))
 		return (5);
-	if (str[0] == DIRECT_CHAR)
-	{
-		check_dir_reg(str);
+	if (str[0] == DIRECT_CHAR && check_dir_reg(str, 0))
 		return (2);
-	}
 	if (ft_strchr(str, LABEL_CHAR))
 		return (6);
-	else
+	if (check_ind(str))
 		return (3);
+	return (0);
 }
 
 void	new_token(char *str, t_asm *head, char *op)

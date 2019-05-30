@@ -78,7 +78,7 @@ void	check_null_and_size(t_bot *bot)
 			exit(ft_printf("{red}Not NULL after name bot, bot id = [%d]{eoc}\n", bot->id));
 	if	((j = (str[2188] << 24) + (str[2189] << 16) + (str[2190] << 8) + str[2191]))
 			exit(ft_printf("{red}Not NULL after name bot, bot id = [%d]{eoc}\n", bot->id));
-	if	(!(bot->size = (str[136] << 24) + (str[137] << 16) + (str[138] << 8) + str[139]) || (bot->size > CHAMP_MAX_SIZE))
+	if	((bot->size = (str[136] << 24) + (str[137] << 16) + (str[138] << 8) + str[139]) && (bot->size > CHAMP_MAX_SIZE))
 			exit(ft_printf("{red}Exec code not valid size = [%d], bot id = [%d]{eoc}\n", bot->size, bot->id));
 }
 

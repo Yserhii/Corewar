@@ -20,16 +20,20 @@ void	valid_op_arg(t_vm *vm, t_kar *kar)
 
 void	op_recognize(t_vm *vm, t_kar *kar)
 {
+	ft_printf("op_recognize: ");
 	if (vm->map[kar->pos] >= 0x01 && vm->map[kar->pos] <= 0x10)
 	{
 		kar->op_id = vm->map[kar->pos];
 		kar->cicles_to_wait = g_op[kar->op_id - 1].wait;
+		// ft_printf("%d\n", kar->cicles_to_wait);
+		ft_printf("OK op_id: %d position: %d\n",kar->op_id, kar->pos);
 	}
 	else
 	{	// if opration code is incorrect
 		kar->op_id = vm->map[kar->pos];
 		kar->pos++; // Yes we need it
 		kar->cicles_to_wait = 0;
+		ft_printf("incorrect op_id: %d position: %d\n",kar->op_id, kar->pos);
 	}
 }
 

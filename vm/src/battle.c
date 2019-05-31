@@ -44,7 +44,7 @@ void	print_map(t_vm *vm)
 
 void	show_winner(t_vm *vm)
 {
-	ft_printf("Winner is %s", vm->bot[vm->last_say_live]->name); // ? name is not a string?
+	ft_printf("Winner is %s\n", vm->bot[vm->last_say_live]->name); // ? name is not a string?
 }
 
 void killing_check(t_vm *vm)
@@ -72,7 +72,10 @@ void killing_check(t_vm *vm)
 			free(kar);
 		}
 		else
-			vm->last_say_live = kar->bot_id;
+		{
+			//vm->last_say_live = kar->bot_id; // ? это должно быть в операции live (скорее всего)
+			kar->live = 0;
+		}
 		kar = tmp;
 	}
 }
@@ -96,49 +99,43 @@ void	battle(t_vm *vm)
 
 	// if (!check_battle_constants())
 	// 	exit(ft_printf("Battle constants ERROR\n"));
-
+	print_map(vm);
 	check_count = 0;
 	while (vm->cycles_to_die > 0 && count_alive_kar(vm) > 0)
 	{
 		vm->cycles_from_start++;
+		ft_printf("\t CYCLE: %d\n", vm->cycles_from_start);
 		kar = vm->kar;
 		while (kar)
 		{
 			// SERG
-			// if (!vm->kar->cicles_to_wait)
-			// 	op_recognize(vm, kar); // insert if op_live -> vm->num_of_life++
-			// else
-			// {
-			// 	vm->kar->cicles_to_wait--;
-			// 	if (!vm->kar->cicles_to_wait)
-			// 	{
-			// 		(*g_opers[kar->op_id])(vm, kar);
-			// 		continue ;
-			// 	}
-			// }
+			if (!kar->cicles_to_wait)
+				op_recognize(vm, kar); // insert if op_live -> vm->num_of_life++
+			kar->cicles_to_wait--;
+			if (!kar->cicles_to_wait)
+				(*g_opers[kar->op_id])(vm, kar);
+
 
 			//ALEX
-			if (!vm->kar->cicles_to_wait)
-			{
-				if (kar->op_id >= 0x01 && kar->op_id <= 0x10)
-					if (valid_op_arg(vm, kar))
-						(*g_opers[kar->op_id])(vm, kar);
-				op_recognize(vm, kar);
-			}
-
-			//if (vm->kar->cicles_to_wait > 0) // ALEX
-			else
-				vm->kar->cicles_to_wait--;
+			// if (!kar->cicles_to_wait)
+			// {
+			// 	if (kar->op_id >= 0x01 && kar->op_id <= 0x10)
+			// 		(*g_opers[kar->op_id])(vm, kar);
+			// 	op_recognize(vm, kar);
+			// }
+			// if (kar->cicles_to_wait > 0) // ALEX
+			// 	kar->cicles_to_wait--;
 			kar = kar->next;
 		}
-		// CYCLES_TO_DIE modify
-		if (vm->num_of_life >= NBR_LIVE && !(vm->num_of_life = 0))
-			vm->cycles_to_die -= CYCLE_DELTA;
-		if (check_count > MAX_CHECKS && !(check_count = 0))
-			vm->cycles_to_die -= CYCLE_DELTA;
 		// PROVERKA
-		if (vm->cycles_to_die <= 0 || !(vm->cycles_from_start % vm->cycles_to_die))
+		if (!(vm->cycles_from_start % vm->cycles_to_die))
 		{
+			// CYCLES_TO_DIE modify
+			if (vm->num_of_life >= NBR_LIVE && !(vm->num_of_life = 0))
+				vm->cycles_to_die -= CYCLE_DELTA;
+			if (check_count > MAX_CHECKS && !(check_count = 0))
+				vm->cycles_to_die -= CYCLE_DELTA;
+			//////////////////////
 			vm->num_of_life = 0;
 			check_count++;
 			killing_check(vm);
@@ -151,7 +148,10 @@ void	battle(t_vm *vm)
 		}
 	}
 	if (vm->nbr_cycles == -1)
+	{
+		print_map(vm);
 		show_winner(vm);
+	}
 
 }
 

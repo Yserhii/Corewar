@@ -15,10 +15,10 @@
 static int		valid_dump(char **av, t_vm *vm, int i, int ac)
 {
 	if (++i >= ac || !ft_allnum(av[i]))
-		exit(ft_printf("{red}Not valid nuber cycles{eoc}\n"));
+		exit(ft_printf("{red}Not valid number cycles, number must be >= 0{eoc}\n"));
 	vm->nbr_cycles = ft_atoi(av[i]);
-	if (vm->nbr_cycles > CYCLE_TO_DIE || vm->nbr_cycles < 1)
-		exit(ft_printf("{red}Number cycles more than cycle to die or < 1{eoc}\n"));
+	// if (vm->nbr_cycles > CYCLE_TO_DIE || vm->nbr_cycles < 0)
+	// 	exit(ft_printf("{red}Number cycles more than cycle to die or < 1{eoc}\n"));
 	return (i);
 }
 

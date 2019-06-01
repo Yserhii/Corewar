@@ -44,7 +44,13 @@ void	print_map(t_vm *vm)
 
 void	show_winner(t_vm *vm)
 {
-	ft_printf("Winner is %s\n", vm->bot[vm->last_say_live]->name); // ? name is not a string?
+	if (vm->last_say_live)
+		ft_printf("Winner is %s\n", vm->bot[vm->last_say_live - 1]->name); // ? name is not a string?
+	else
+	{
+		ft_printf("ALL GAME OVER!!!\n"); // ? name is not a string?
+	}
+
 }
 
 void killing_check(t_vm *vm)
@@ -152,7 +158,6 @@ void	battle(t_vm *vm)
 		// print_map(vm);
 		show_winner(vm);
 	}
-
 }
 
 

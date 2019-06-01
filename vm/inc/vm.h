@@ -92,7 +92,8 @@ void				killing_check(t_vm *vm);
 
 //for oper
 void				op_recognize(t_vm *vm, t_kar *kar);
-uint32_t			check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
+void				check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
+int					take_arg(t_vm *vm, int pos, int size_arg);
 void				vm_live(t_vm *vm, t_kar *kar);
 void				vm_ld(t_vm *vm, t_kar *kar);
 void				vm_st(t_vm *vm, t_kar *kar);

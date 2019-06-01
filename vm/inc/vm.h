@@ -17,13 +17,15 @@
 # include <op.h>
 
 # define XXX ft_printf("================\n");
+# define IND				2
+# define REG				1
 
 typedef struct		s_bot
 {
 	int				id;
 	uint32_t		size;
-	uint8_t			name[128];
-	uint8_t			comment[2048];
+	uint8_t			name[PROG_NAME_LENGTH];
+	uint8_t			comment[COMMENT_LENGTH];
 	uint8_t			*code;
 	uint8_t			*all_info;
 }					t_bot;
@@ -90,6 +92,7 @@ void				killing_check(t_vm *vm);
 
 //for oper
 void				op_recognize(t_vm *vm, t_kar *kar);
+uint32_t			check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
 void				vm_live(t_vm *vm, t_kar *kar);
 void				vm_ld(t_vm *vm, t_kar *kar);
 void				vm_st(t_vm *vm, t_kar *kar);

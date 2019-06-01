@@ -72,14 +72,6 @@ void	initialization_map(t_vm *vm)
 	karetka_init(vm);
 	map_init(vm);
 	represen_players(vm);
-
-		for(int i = 0, k = -1; i < 64; i++)
-	{
-		for(int l = 0; l < 64; l++)
-			ft_printf("%02x ", vm->map[++k]);
-		ft_printf("\n");
-	}
-
 }
 
 

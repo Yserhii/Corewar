@@ -2,6 +2,6 @@
 .comment		"komment"		#comment
 								#comment
 load:							#comment
-	ld %0, r2					#comment
+	ld 5, r2					#comment
 load:
-	ld %0, r3					#comment
+	ld %99, r3					#comment

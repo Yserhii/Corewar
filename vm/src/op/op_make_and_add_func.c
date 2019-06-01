@@ -18,57 +18,31 @@ void	valid_op_arg(t_vm *vm, t_kar *kar)
 	(void)kar;
 }
 
+uint32_t	check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar)
+{
+	kar->pos += g_op[kar->op_id].is_args_types;
+	arg[0] = (vm->map[kar->pos] >> 6 & 0x3);
+	arg[1] = (vm->map[kar->pos] >> 4 & 0x3);
+	arg[2] = (vm->map[kar->pos] >> 2 & 0x3);
+	arg[3] = (vm->map[kar->pos] & 0x3);
+	return (kar->pos);
+}
+
 void	op_recognize(t_vm *vm, t_kar *kar)
 {
-	ft_printf("op_recognize: ");
+	// ft_printf("op_recognize: ");
 	if (vm->map[kar->pos] >= 0x01 && vm->map[kar->pos] <= 0x10)
 	{
 		kar->op_id = vm->map[kar->pos];
 		kar->cicles_to_wait = g_op[kar->op_id - 1].wait;
 		// ft_printf("%d\n", kar->cicles_to_wait);
-		ft_printf("OK op_id: %d position: %d\n",kar->op_id, kar->pos);
+		// ft_printf("OK op_id: %d position: %d\n",kar->op_id, kar->pos);
 	}
 	else
 	{	// if opration code is incorrect
 		kar->op_id = vm->map[kar->pos];
 		kar->pos++; // Yes we need it
 		kar->cicles_to_wait = 0;
-		ft_printf("incorrect op_id: %d position: %d\n",kar->op_id, kar->pos);
+		// ft_printf("incorrect op_id: %d position: %d\n",kar->op_id, kar->pos);
 	}
 }
-
-
-
-
-	// if (vm->map[kar->op_id] == 0x01)
-	// 	vm_live(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x02)
-	// 	vm_ld(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x03)
-	// 	vm_st(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x04)
-	// 	vm_add(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x05)
-	// 	vm_sub(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x06)
-	// 	vm_and(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x07)
-	// 	vm_or(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x08)
-	// 	vm_xor(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x09)
-	// 	vm_zjmp(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x0a)
-	// 	vm_ldi(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x0b)
-	// 	vm_sti(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x0c)
-	// 	vm_fork(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x0d)
-	// 	vm_lld(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x0e)
-	// 	vm_lldi(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x0f)
-	// 	vm_lfork(vm, kar);
-	// else if (vm->map[kar->op_id] == 0x10)
-	// 	vm_aff(vm, kar);

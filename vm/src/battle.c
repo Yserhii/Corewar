@@ -143,13 +143,13 @@ void	battle(t_vm *vm)
 		// DUMP finish
 		if (vm->nbr_cycles > -1 && vm->cycles_from_start >= vm->nbr_cycles)
 		{
-			print_map(vm);
+			// print_map(vm);
 			break;
 		}
 	}
 	if (vm->nbr_cycles == -1)
 	{
-		print_map(vm);
+		// print_map(vm);
 		show_winner(vm);
 	}
 

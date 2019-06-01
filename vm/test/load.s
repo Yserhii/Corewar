@@ -3,5 +3,4 @@
 								#comment
 load:							#comment
 	ld 5, r2					#comment
-load:
-	ld %99, r3					#comment
+	ld 5, r3					#comment

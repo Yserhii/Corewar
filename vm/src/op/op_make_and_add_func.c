@@ -20,7 +20,7 @@ void	valid_op_arg(t_vm *vm, t_kar *kar)
 
 uint32_t	check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar)
 {
-	kar->pos += g_op[kar->op_id].is_args_types;
+	kar->pos = (kar->pos + g_op[kar->op_id].is_args_types) % MEM_SIZE;
 	arg[0] = (vm->map[kar->pos] >> 6 & 0x3);
 	arg[1] = (vm->map[kar->pos] >> 4 & 0x3);
 	arg[2] = (vm->map[kar->pos] >> 2 & 0x3);

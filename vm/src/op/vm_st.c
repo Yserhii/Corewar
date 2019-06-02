@@ -12,21 +12,6 @@
 
 #include "vm.h"
 
-static inline int		step_for_not_valid(uint8_t *arg, t_kar *kar)
-{
-	int		i;
-
-	i = 0;
-	if (arg[0] == REG_CODE || arg[1] == REG_CODE)
-		i += REG;
-	if (arg[0] == DIR_CODE || arg[1] == DIR_CODE)
-		i += g_op[kar->op_id].dir_size;
-	if (arg[0] == IND_CODE || arg[1] == IND_CODE)
-		i += IND;
-	i += 1 + g_op[kar->op_id].is_args_types;
-	return (i);
-}
-
 void	vm_st(t_vm *vm, t_kar *kar)
 {
 	uint8_t		arg[4];
@@ -34,7 +19,7 @@ void	vm_st(t_vm *vm, t_kar *kar)
 	uint8_t		reg1;
 	uint8_t		reg2;
 
-	ft_bzero(arg, 4);
+	ft_bzero(arg, 4 * sizeof(uint8_t));
 	check_argv_for_op(arg, vm, kar);
 	if (arg[0] == REG_CODE && (arg[1] == REG_CODE || arg[1] == IND_CODE))// && !arg[2] && !arg[3])
 	{
@@ -46,13 +31,16 @@ void	vm_st(t_vm *vm, t_kar *kar)
 		{
 			// ind = (vm->map[(kar->pos + 3) % MEM_SIZE] << 8) + vm->map[(kar->pos + 4) % MEM_SIZE];
 			// ind = (kar->pos + ind % IDX_MOD) % MEM_SIZE;
+			///////Здесь я заменил строчку ниже на новую адоптивную функции почитай над ней комент поймешь как работает!!!!!!!!!!
 			ind = kar->pos + ((take_arg(vm, (kar->pos + 3), 2)) % IDX_MOD);
-			vm->map[(ind) % MEM_SIZE] = kar->reg[reg1] >> 24;
-			vm->map[(ind + 1) % MEM_SIZE] = kar->reg[reg1] >> 16;
-			vm->map[(ind + 2) % MEM_SIZE] = kar->reg[reg1] >> 8;
-			vm->map[(ind + 3) % MEM_SIZE] = kar->reg[reg1];
+			///////Здесь я заменил строчку ниже на новую адоптивную функции почитай над ней комент поймешь как работает!!!!!!!!!!
+			give_reg_to_map(vm, ind % MEM_SIZE, 4, kar->reg[reg1]);
+			// vm->map[ind % MEM_SIZE] = kar->reg[reg1] >> 24 & 0xff;
+			// vm->map[(ind + 1) % MEM_SIZE] = kar->reg[reg1] >> 16 & 0xff;
+			// vm->map[(ind + 2) % MEM_SIZE] = kar->reg[reg1] >> 8 & 0xff;
+			// vm->map[(ind + 3) % MEM_SIZE] = kar->reg[reg1] & 0xff;
 		}
 	}
-	kar->pos = (kar->pos + step_for_not_valid(arg, kar)) % MEM_SIZE;
+	kar->pos = (kar->pos + step_for_not_valid(arg, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE;
 	return ;
 }

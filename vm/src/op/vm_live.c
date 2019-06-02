@@ -16,6 +16,7 @@ void	vm_live(t_vm *vm, t_kar *kar)
 {
 	int		arg;
 
+	///////Здесь я заменил строчку ниже на новую адоптивную функции почитай над ней комент поймешь как работает!!!!!!!!!!
 	arg = take_arg(vm, (kar->pos + 1), 4);
 	// arg = (vm->map[(kar->pos + 1) % MEM_SIZE] << 24) + (vm->map[(kar->pos + 2)
 	// 	% MEM_SIZE] << 16) + (vm->map[(kar->pos + 3) % MEM_SIZE] << 8) +

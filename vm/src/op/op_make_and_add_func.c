@@ -12,13 +12,6 @@
 
 #include "vm.h"
 
-void	valid_op_arg(t_vm *vm, t_kar *kar)
-{
-	(void)vm;
-	(void)kar;
-}
-
-
 //// эта функцыя в зависимости от размера аргумента считывает по нужному
 //// указателю карту и запысывает это в инт например для
 //// Дир size_arg = 4 , а для Инт size_arg = 2
@@ -31,6 +24,34 @@ int		take_arg(t_vm *vm, int pos, int size_arg)
 	while (size_arg)
 		arg += (vm->map[pos++ % MEM_SIZE] << (8 * --size_arg));
 	return (arg);
+}
+
+
+//////////аналогичная функцыя к верхней ттолько из регистра в карту записываем
+void	give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src)
+{
+	while (size_arg)
+		vm->map[pos++ % MEM_SIZE] = src >> (8 * --size_arg) & 0xff;
+}
+
+
+// Функция которая отвечает за перемещение картеки
+int step_for_not_valid(uint8_t *arg, t_kar *kar, int num_arg)
+{
+	int i;
+
+	i = 0;
+	while (--num_arg != -1)
+	{
+		if (arg[num_arg] == REG_CODE)
+			i += REG;
+		else if (arg[num_arg] == DIR_CODE)
+			i += g_op[kar->op_id].dir_size;
+		else if (arg[num_arg] == IND_CODE)
+			i += IND;
+	}
+	i += (g_op[kar->op_id].is_args_types + 1);
+	return (i);
 }
 
 void	check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar)

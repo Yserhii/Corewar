@@ -67,6 +67,8 @@ typedef struct		s_vm
 	int				num_bot;
 	t_bot			**bot;
 	t_kar			*kar;
+
+	//output
 }					t_vm;
 
 
@@ -91,9 +93,13 @@ void				battle(t_vm *vm);
 void				killing_check(t_vm *vm);
 
 //for oper
-void				op_recognize(t_vm *vm, t_kar *kar);
-void				check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
 int					take_arg(t_vm *vm, int pos, int size_arg);
+int					step_for_not_valid(uint8_t *arg, t_kar *kar, int num_arg);
+void				give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src);
+void				check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
+void				op_recognize(t_vm *vm, t_kar *kar);
+
+
 void				vm_live(t_vm *vm, t_kar *kar);
 void				vm_ld(t_vm *vm, t_kar *kar);
 void				vm_st(t_vm *vm, t_kar *kar);

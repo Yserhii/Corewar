@@ -45,10 +45,10 @@ void	print_map(t_vm *vm)
 void	show_winner(t_vm *vm)
 {
 	if (vm->last_say_live)
-		ft_printf("Winner is %s\n", vm->bot[vm->last_say_live - 1]->name); // ? name is not a string?
+		ft_printf("Winner is %d %s\n", vm->last_say_live, vm->bot[vm->last_say_live - 1]->name);
 	else
 	{
-		ft_printf("ALL GAME OVER!!!\n"); // ? name is not a string?
+		ft_printf("ALL GAME OVER!!!\n");
 	}
 
 }
@@ -110,7 +110,7 @@ void	battle(t_vm *vm)
 	while (vm->cycles_to_die > 0 && count_alive_kar(vm) > 0)
 	{
 		vm->cycles_from_start++;
-		ft_printf("\t CYCLE: %d\n", vm->cycles_from_start);
+		ft_printf("It is now cycle %d\n", vm->cycles_from_start);
 		kar = vm->kar;
 		while (kar)
 		{
@@ -155,7 +155,7 @@ void	battle(t_vm *vm)
 	}
 	if (vm->nbr_cycles == -1)
 	{
-		// print_map(vm);
+		print_map(vm);
 		show_winner(vm);
 	}
 }

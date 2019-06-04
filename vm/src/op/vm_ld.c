@@ -46,5 +46,8 @@ void	vm_ld(t_vm *vm, t_kar *kar)
 	}
 	///////Здесь я заменил строчку ниже на новую адоптивную функции почитай над ней комент поймешь как работает!!!!!!!!!!
 	kar->pos = (kar->pos + step_for_not_valid(arg, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE;
+	// OUTPUT V_FLAG = 4
+	if (vm->v_fl == 4 || vm->v_fl == 30)
+		ft_printf("P% 5d | ld %d r%d\n", kar->id, arg, reg);
 	return ;
 }

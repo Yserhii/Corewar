@@ -46,10 +46,14 @@ typedef struct		s_kar
 	struct s_kar	*back;
 }					t_kar;
 
+
+
 typedef struct		s_vm
 {
 	// flags
 	int				nbr_cycles;
+	int				v_fl;
+	int				ncurs;
 
 	//fd
 	int				fd[5];

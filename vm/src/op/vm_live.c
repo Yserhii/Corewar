@@ -28,5 +28,8 @@ void	vm_live(t_vm *vm, t_kar *kar)
 	}
 	vm->num_of_life++; //вне цыкла;
 	kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE;
+	// OUTPUT V_FLAG = 4
+	if (vm->v_fl == 4 || vm->v_fl == 30)
+		ft_printf("P% 5d | live %d\n", kar->id, ABS(arg));
 	return ;
 }

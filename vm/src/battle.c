@@ -105,12 +105,20 @@ void	battle(t_vm *vm)
 
 	// if (!check_battle_constants())
 	// 	exit(ft_printf("Battle constants ERROR\n"));
-	print_map(vm);
+	//print_map(vm);
 	check_count = 0;
 	while (vm->cycles_to_die > 0 && count_alive_kar(vm) > 0)
 	{
+		// DUMP check
+		if (vm->nbr_cycles > -1 && vm->cycles_from_start >= vm->nbr_cycles)
+		{
+			print_map(vm);
+			break;
+		}
 		vm->cycles_from_start++;
-		ft_printf("It is now cycle %d\n", vm->cycles_from_start);
+		// OUTPUT V_FLAG = 2
+		if (vm->v_fl == 2 || vm->v_fl == 30)
+			ft_printf("It is now cycle %d\n", vm->cycles_from_start);
 		kar = vm->kar;
 		while (kar)
 		{
@@ -146,12 +154,7 @@ void	battle(t_vm *vm)
 			check_count++;
 			killing_check(vm);
 		}
-		// DUMP finish
-		if (vm->nbr_cycles > -1 && vm->cycles_from_start >= vm->nbr_cycles)
-		{
-			// print_map(vm);
-			break;
-		}
+
 	}
 	if (vm->nbr_cycles == -1)
 	{

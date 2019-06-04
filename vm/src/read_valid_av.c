@@ -38,6 +38,20 @@ static int		valid_n_id(int ac, char **av, t_vm *vm, int i)
 		exit(ft_printf("{red}Id players must be int from 1 to 4{eoc}\n"));
 }
 
+static int		valid_v_fl(int ac, char **av, t_vm *vm, int i)
+{
+	int		n;
+
+	if (++i < ac && ft_allnum(av[i]) && (n = ft_atoi(av[i])) && (n == 2
+		|| n == 4 || n == 8 || n == 16 || n == 30))
+	{
+		vm->v_fl = n;
+		return(i);
+	}
+	else
+		exit(ft_printf("{red}Verbosity levels are only 2, 4, 8, 16 or 30{eoc}\n"));
+}
+
 static int		valid_cor(char *av, int j, int *fd_tmp)
 {
 	if (j < 4)
@@ -93,13 +107,22 @@ void	read_valid_av(int ac,char **av, t_vm *vm)
 	while (++i < ac)
 	{
 		if (!ft_strcmp("-dump", av[i]))
-			 i = valid_dump(av, vm, i, ac);
+			i = valid_dump(av, vm, i, ac);
 		else if (!ft_strcmp("-n", av[i]))
 			i = valid_n_id(ac, av, vm, i);
+		else if (!ft_strcmp("-v", av[i]))
+			i = valid_v_fl(ac, av, vm, i);
+		else if (!ft_strcmp("-ncurs", av[i]))
+			vm->ncurs = 1;
 		else if (!ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && ++j <= 4)
-			 j = valid_cor(av[i], j, fd_tmp);
+			j = valid_cor(av[i], j, fd_tmp);
 		else
 			exit(ft_printf("{red}You give not valid arguments use [--help]{eoc}\n"));
+	}
+	if (vm->ncurs) // если задана визуализация, то выключаем ДАМП и вывод V
+	{
+		vm->nbr_cycles = -1;
+		vm->v_fl = 0;
 	}
 	sort_fd_by_id(vm, fd_tmp);
 }

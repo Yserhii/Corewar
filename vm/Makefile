@@ -37,6 +37,7 @@ SRC =				main.c read_valid_av.c read_valid_bot.c\
 					op/vm_lldi.c op/vm_or.c op/vm_st.c\
 					op/vm_sti.c op/vm_sub.c op/vm_xor.c\
 					op/vm_zjmp.c op/op_make_and_add_func.c\
+					visual/visual.c
 
 #SRC_V =				ft_visual.c ft_visual_main.c finish.c
 
@@ -52,7 +53,7 @@ LIBFT =				$(LIBFT_DIR)libft.a
 LIBFT_DIR :=		$(LIB_DIR)libft/
 LIBFT_INC :=		$(LIBFT_DIR)includes/
 
-LIBRARIES =  -lft -L$(LIBFT_DIR)
+LIBRARIES = -lncurses -lft -L$(LIBFT_DIR)
 #LIBRARIES_V = -lmlx -lft -L$(LIBFT_DIR) -framework OpenGL -framework AppKit
 
 # compilation flags
@@ -86,6 +87,7 @@ $(OBJ): | $(OBJ_DIR)
 $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 	mkdir ./obj/op
+	mkdir ./obj/visual
 
 $(OBJ_DIR)%.o: %.c
 		$(CC) -c $< -o $@ $(CC_FLAGS) $(HEADER_FLAGS)

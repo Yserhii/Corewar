@@ -28,7 +28,8 @@ char	*rem_name(char *line, int *i, t_asm *head)
 			r = get_next_line(head->fd_s, &line);
 			head->name[j++] = '\n';
 			*i = 0;
-		}
+		}if (j > PROG_NAME_LENGTH)
+            error("The name is too long\n", NULL);
 		head->name[j++] = line[*i];
 	}
 	if (r <= 0)
@@ -78,10 +79,10 @@ char	*rem_comment(char *line, int *i, t_asm *head)
 			free(line);
 			r = get_next_line(head->fd_s, &line);
 			head->comment[j++] = '\n';
-			if (j >= COMMENT_LENGTH)
-				error("The comment is too long\n", NULL);
 			(*i) = 0;
 		}
+        if (j > COMMENT_LENGTH)
+            error("The comment is too long\n", NULL);
 		head->comment[j++] = line[*i];
 	}
 	if (r <= 0)

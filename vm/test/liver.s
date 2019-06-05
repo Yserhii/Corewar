@@ -5,7 +5,4 @@ live:					#comment
 	live %1				#comment
 	live %1				#comment
 	live %1				#comment
-	live %1				#comment
-	live %1				#comment
-	live %1				#comment
 	

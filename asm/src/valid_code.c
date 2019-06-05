@@ -61,6 +61,8 @@ void	valid_code(t_asm *head)
 {
 	t_token	*token;
 
+	if (head->token == NULL)
+		error("No code\n", NULL);
 	token = head->token;
 	while (token)
 	{

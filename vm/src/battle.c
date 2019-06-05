@@ -100,26 +100,31 @@ void	battle(t_vm *vm)
 		// OUTPUT V_FLAG = 2
 		if (vm->v_fl == 2 || vm->v_fl == 30)
 			ft_printf("It is now cycle %d\n", vm->cycles_from_start);
+		// ft_printf("%d", vm->map[kar->pos]);
 		kar = vm->kar;
 		while (kar)
 		{
+			// 	ft_printf("\t****pos[%d] = %02d", kar->pos, vm->map[kar->pos]);
+
 			// SERG
-			if (!kar->cicles_to_wait)
-				op_recognize(vm, kar); // insert if op_live -> vm->num_of_life++
-			kar->cicles_to_wait--;
-			if (!kar->cicles_to_wait)
-				(*g_opers[kar->op_id])(vm, kar);
+			// if (kar->cicles_to_wait <= 0)
+			// 	op_recognize(vm, kar); // insert if op_live -> vm->num_of_life++
+			// kar->cicles_to_wait--;
+			// if (!kar->cicles_to_wait)
+			// 	(*g_opers[kar->op_id])(vm, kar);
 
 
 			//ALEX
-			// if (!kar->cicles_to_wait)
-			// {
-			// 	if (kar->op_id >= 0x01 && kar->op_id <= 0x10)
-			// 		(*g_opers[kar->op_id])(vm, kar);
-			// 	op_recognize(vm, kar);
-			// }
-			// if (kar->cicles_to_wait > 0) // ALEX
-			// 	kar->cicles_to_wait--;
+			if (!kar->cicles_to_wait)
+			{
+				if (kar->op_id >= 0x01 && kar->op_id <= 0x10)
+					(*g_opers[kar->op_id])(vm, kar);
+				op_recognize(vm, kar);
+			}
+			if (kar->cicles_to_wait > 0) // ALEX
+				kar->cicles_to_wait--;
+			if (vm->ncurs)
+				visualisation(vm);
 			kar = kar->next;
 		}
 		// PROVERKA

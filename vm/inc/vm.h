@@ -15,6 +15,7 @@
 
 # include <libft.h>
 # include <op.h>
+# include <visual.h>
 
 # define XXX ft_printf("================\n");
 # define IND				2
@@ -102,8 +103,7 @@ int					step_for_not_valid(uint8_t *arg, t_kar *kar, int num_arg);
 void				give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src);
 void				check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
 void				op_recognize(t_vm *vm, t_kar *kar);
-
-
+void				read_args(t_vm *vm, t_kar *kar, uint32_t *args, uint8_t *arg);
 
 void				vm_live(t_vm *vm, t_kar *kar);
 void				vm_ld(t_vm *vm, t_kar *kar);
@@ -127,6 +127,10 @@ void				vm_aff(t_vm *vm, t_kar *kar);
 void				show_winner(t_vm *vm);
 void				print_map(t_vm *vm);
 void				print_adv(t_vm *vm, int start, int end);
+
+// VISUALIZATION
+
+void				visualisation(t_vm *vm);
 
 static void			(*g_opers[17])() = {0, &vm_live, &vm_ld, &vm_st,
 	&vm_add, &vm_sub, &vm_and, &vm_or, &vm_xor, &vm_zjmp, &vm_ldi, &vm_sti,

@@ -11,6 +11,46 @@
 /* ************************************************************************** */
 
 #include "vm.h"
+//// эта функцыя считывает аргументы определяет их тип
+//// и делает нужные с ними операции после чего записывает
+//// значения в фуфер. В случае если занчение регистра больше 16
+//// или меньше 16 записывает -1.
+
+void	read_args(t_vm *vm, t_kar *kar, uint32_t *args, uint8_t *cod_arg)
+{
+	int			i;
+	int			j;
+	int			n;
+	uint16_t	ind;
+
+	i = 0;
+	j = 0;
+	n = -1;
+	while (++n < 3)
+	{
+		if (cod_arg[n] == REG_CODE)
+		{
+			if ((int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] >= 0x0 && (int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] <= 0x16)
+			{
+				args[n] = vm->map[(kar->pos + 2 + i) % MEM_SIZE];
+				i += REG;
+			}
+			else
+				args[n] = -1;
+		}
+		else if (cod_arg[n] == DIR_CODE)
+		{
+			args[n] = take_arg(vm, (kar->pos + 2 + i), 4);
+			i += g_op[kar->op_id].dir_size;
+		}
+		else if (cod_arg[n] == IND_CODE)
+		{
+			ind = kar->pos + ((take_arg(vm, (kar->pos + 2 + i), 2)) % IDX_MOD);
+			args[n] = take_arg(vm, (ind % MEM_SIZE), 4);
+			i += IND;
+		}
+	}
+}
 
 //// эта функцыя в зависимости от размера аргумента считывает по нужному
 //// указателю карту и запысывает это в инт например для

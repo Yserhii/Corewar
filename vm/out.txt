@@ -1,6 +1,1 @@
-Introducing contestants...
-* Player 1, weighing 30 bytes, "Liver" ("liver_comment") !
-* Player 2, weighing 19 bytes, "bot_load" ("komment") !
-Process 2 hasn't lived for 1536 cycles (CTD 1536)
-Process 1 hasn't lived for 3072 cycles (CTD 1536)
-Contestant 1, "Liver", has won !
+[31mYou give not valid arguments use [--help][0m

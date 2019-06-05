@@ -49,6 +49,8 @@ void	del_comment(char **line)
 
 	if (!ft_strchr(*line, COMMENT_CHAR) && !ft_strchr(*line, ALT_COMMENT_CHAR))
 		return ;
+	if ((*line)[0] == COMMENT_CHAR || (*line)[0] == ALT_COMMENT_CHAR)
+		g_new_line = 1;
 	if (ft_strchr(*line, COMMENT_CHAR))
 	{
 		del = *line;

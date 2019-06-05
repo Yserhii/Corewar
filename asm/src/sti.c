@@ -20,10 +20,10 @@ void	valid_sti(t_token *token)
 		error("Bad argument for sti", token->name);
 	token = token->next;
 	if (!token || token->type == OP || token->type == LABEL)
-		error("Too few argumentd for sti", NULL);
+		error("Too few argumentd for sti\n", NULL);
 	token = token->next;
 	if (!token || token->type == OP || token->type == LABEL)
-		error("Too few argumentd for sti", NULL);
+		error("Too few argumentd for sti\n", NULL);
 	if (token->type != REG && token->type != DIR && token->type != DIR_L)
 		error("Bad argument for sti", token->next->name);
 	token = token->next;

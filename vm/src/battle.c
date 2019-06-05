@@ -29,35 +29,12 @@ int count_alive_kar(t_vm *vm)
 	return (i);
 }
 
-void	print_map(t_vm *vm)
-{
-	// /////////////////////для печати//////////////
-
-	for(int i = 0, k = -1; i < 64; i++)
-	{
-		for(int l = 0; l < 64; l++)
-			ft_printf("%02x ", vm->map[++k]);
-		ft_printf("\n");
-	}
-// 	//////////////////
-}
-
-void	show_winner(t_vm *vm)
-{
-	if (vm->last_say_live)
-		ft_printf("Winner is %d %s\n", vm->last_say_live, vm->bot[vm->last_say_live - 1]->name);
-	else
-	{
-		ft_printf("ALL GAME OVER!!!\n");
-	}
-
-}
-
 void killing_check(t_vm *vm)
 {
 	t_kar	*kar;
 	t_kar	*tmp;
 
+	// ft_printf("\t\t\tKILLING check\n");
 	kar = vm->kar;
 	while(kar)
 	{
@@ -75,6 +52,10 @@ void killing_check(t_vm *vm)
 				kar->back->next = kar->next;
 				kar->next->back = kar->back;
 			}
+			// OUTPUT V_FLAG = 8
+			if (vm->v_fl == 8 || vm->v_fl == 30)
+				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
+					kar->id, vm->cycles_from_start, vm->cycles_to_die);
 			free(kar);
 		}
 		else
@@ -157,10 +138,8 @@ void	battle(t_vm *vm)
 
 	}
 	if (vm->nbr_cycles == -1)
-	{
-		print_map(vm);
 		show_winner(vm);
-	}
+	else
+		print_map(vm);
+
 }
-
-

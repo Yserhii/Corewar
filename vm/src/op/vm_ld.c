@@ -18,6 +18,7 @@ void	vm_ld(t_vm *vm, t_kar *kar)
 	uint8_t		reg;
 	uint16_t	ind;
 	uint32_t	dir;
+	int			start;
 
 	ft_bzero(arg, 4 * sizeof(uint8_t));
 	check_argv_for_op(arg, vm, kar); // karetka na kode argumentov
@@ -44,10 +45,14 @@ void	vm_ld(t_vm *vm, t_kar *kar)
 			kar->carry = (!kar->reg[vm->map[kar->pos]] ? 1 : 0);
 		}
 	}
+	start = kar->pos;
 	///////Здесь я заменил строчку ниже на новую адоптивную функции почитай над ней комент поймешь как работает!!!!!!!!!!
 	kar->pos = (kar->pos + step_for_not_valid(arg, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE;
+
 	// OUTPUT V_FLAG = 4
 	if (vm->v_fl == 4 || vm->v_fl == 30)
-		ft_printf("P% 5d | ld %d r%d\n", kar->id, arg, reg);
+		ft_printf("P% 5d | ld %d r%d\n", kar->id, dir, vm->map[(kar->pos + reg) % MEM_SIZE]);
+	// OUTPUT V_FLAG = 16
+	print_adv(vm, start, kar->pos);
 	return ;
 }

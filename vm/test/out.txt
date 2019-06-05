@@ -1,7 +1,6 @@
 Introducing contestants...
-* Player 1, weighing 24 bytes, "bot_load" ("komment") !
-P    1 | ld 20 r1
-P    1 | ld 131586 r2
-P    1 | ld 4 r3
-P    1 | ld 0 r4
-Contestant 1, "bot_load", has won !
+* Player 1, weighing 30 bytes, "Liver" ("liver_comment") !
+* Player 2, weighing 19 bytes, "bot_load" ("komment") !
+Process 2 hasn't lived for 1536 cycles (CTD 1536)
+Process 1 hasn't lived for 3012 cycles (CTD 1536)
+Contestant 2, "bot_load", has won !

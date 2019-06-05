@@ -96,12 +96,13 @@ void				initialization_map(t_vm *vm);
 void				battle(t_vm *vm);
 void				killing_check(t_vm *vm);
 
-//for oper
+//for operations
 int					take_arg(t_vm *vm, int pos, int size_arg);
 int					step_for_not_valid(uint8_t *arg, t_kar *kar, int num_arg);
 void				give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src);
 void				check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
 void				op_recognize(t_vm *vm, t_kar *kar);
+
 
 
 void				vm_live(t_vm *vm, t_kar *kar);
@@ -120,6 +121,12 @@ void				vm_lld(t_vm *vm, t_kar *kar);
 void				vm_lldi(t_vm *vm, t_kar *kar);
 void				vm_lfork(t_vm *vm, t_kar *kar);
 void				vm_aff(t_vm *vm, t_kar *kar);
+
+// OUTPUT
+
+void				show_winner(t_vm *vm);
+void				print_map(t_vm *vm);
+void				print_adv(t_vm *vm, int start, int end);
 
 static void			(*g_opers[17])() = {0, &vm_live, &vm_ld, &vm_st,
 	&vm_add, &vm_sub, &vm_and, &vm_or, &vm_xor, &vm_zjmp, &vm_ldi, &vm_sti,

@@ -78,7 +78,9 @@ char	*rem_comment(char *line, int *i, t_asm *head)
 			free(line);
 			r = get_next_line(head->fd_s, &line);
 			head->comment[j++] = '\n';
-			*i = 0;
+			if (j >= COMMENT_LENGTH)
+				error("The comment is too long\n", NULL);
+			(*i) = 0;
 		}
 		head->comment[j++] = line[*i];
 	}

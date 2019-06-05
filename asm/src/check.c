@@ -89,8 +89,8 @@ int		check_dir_reg(char *str, int fl)
 	if (fl == 1)
 	{
 		i = ft_atoi(str + 1);
-		if (i > 99)
-			error("Syntax error", str);
+		if (i > 99 || i < 0)
+			error("invalid register", str);
 	}
 	return (1);
 }

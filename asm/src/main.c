@@ -13,6 +13,8 @@
 #include "op.h"
 #include "asm.h"
 
+// ./corewar ../../../projects_hub/corewar_my/vm_champs/load.cor
+
 void	new_file(t_asm *head, char *file)
 {
 	char	*name;

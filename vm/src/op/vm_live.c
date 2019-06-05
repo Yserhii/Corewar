@@ -12,53 +12,24 @@
 
 #include "vm.h"
 
-void	ft_memrev(void *s, size_t len)
-{
-	size_t	i;
-	char	*tmpmem;
-	char	tmp;
-
-	i = 0;
-	tmpmem = (char *)s;
-	while (i < len / 2)
-	{
-		tmp = tmpmem[i];
-		tmpmem[i] = tmpmem[len - i - 1];
-		tmpmem[len - i - 1] = tmp;
-		i++;
-	}
-}
-
-int		get_value(uint8_t *map, int start, int size)
-{
-	uint8_t	n[4];
-	int		res;
-	int		i;
-
-	i = -1;
-	ft_bzero(n, 4);
-	while (++i < size)
-		n[i + size % 4] = map[(start + i) % MEM_SIZE];
-	if (n[2] >> 7 && size == 2)
-	{
-		n[0] = -1;
-		n[1] = -1;
-	}
-	ft_memcpy(&res, n, 4);
-	ft_memrev(&res, 4);
-	return (res);
-}
-
 void	vm_live(t_vm *vm, t_kar *kar)
 {
-	int arg;
+	int		arg;
 
-	arg = get_value(vm->map, (kar->pos + 1) % MEM_SIZE, g_op[kar->op_id - 1].dir_size);
-	if (arg < 0)
-		vm->last_say_live = abs(arg);
-	vm->num_of_life++;
-	kar->live = vm->cycles_from_start;
-	(void)kar;
-	(void)vm;
+	///////Здесь я заменил строчку ниже на новую адоптивную функции почитай над ней комент поймешь как работает!!!!!!!!!!
+	arg = take_arg(vm, (kar->pos + 1), 4);
+	// arg = (vm->map[(kar->pos + 1) % MEM_SIZE] << 24) + (vm->map[(kar->pos + 2)
+	// 	% MEM_SIZE] << 16) + (vm->map[(kar->pos + 3) % MEM_SIZE] << 8) +
+	// 		vm->map[(kar->pos + 4) % MEM_SIZE];
+	if ((int)kar->bot_id == ABS(arg))
+	{
+		vm->last_say_live = kar->bot_id;
+		kar->live = vm->cycles_from_start;
+	}
+	vm->num_of_life++; //вне цыкла;
+	kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE;
+	// OUTPUT V_FLAG = 4
+	if (vm->v_fl == 4 || vm->v_fl == 30)
+		ft_printf("P% 5d | live %d\n", kar->id, ABS(arg));
 	return ;
 }

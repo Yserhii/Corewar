@@ -111,7 +111,7 @@ void	check_and_record_exec_code(t_bot *bot)
 	j = -1;
 	if (!(bot->code = (uint8_t*)ft_memalloc(sizeof(uint8_t) * (bot->size + 1))))
 			exit(ft_printf("{red}Malloc error{eoc}\n"));
-	while (++i < 2191 + bot->size)
+	while (++i < 2192 + bot->size)
 		bot->code[++j] = bot->all_info[i];
 	while(++i < 5000)
 		if (bot->all_info[i])

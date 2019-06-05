@@ -17,13 +17,15 @@
 # include <op.h>
 
 # define XXX ft_printf("================\n");
+# define IND				2
+# define REG				1
 
 typedef struct		s_bot
 {
 	int				id;
 	uint32_t		size;
-	uint8_t			name[128];
-	uint8_t			comment[2048];
+	uint8_t			name[PROG_NAME_LENGTH];
+	uint8_t			comment[COMMENT_LENGTH];
 	uint8_t			*code;
 	uint8_t			*all_info;
 }					t_bot;
@@ -44,10 +46,14 @@ typedef struct		s_kar
 	struct s_kar	*back;
 }					t_kar;
 
+
+
 typedef struct		s_vm
 {
 	// flags
 	int				nbr_cycles;
+	int				v_fl;
+	int				ncurs;
 
 	//fd
 	int				fd[5];
@@ -65,6 +71,8 @@ typedef struct		s_vm
 	int				num_bot;
 	t_bot			**bot;
 	t_kar			*kar;
+
+	//output
 }					t_vm;
 
 
@@ -89,7 +97,13 @@ void				battle(t_vm *vm);
 void				killing_check(t_vm *vm);
 
 //for oper
+int					take_arg(t_vm *vm, int pos, int size_arg);
+int					step_for_not_valid(uint8_t *arg, t_kar *kar, int num_arg);
+void				give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src);
+void				check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
 void				op_recognize(t_vm *vm, t_kar *kar);
+
+
 void				vm_live(t_vm *vm, t_kar *kar);
 void				vm_ld(t_vm *vm, t_kar *kar);
 void				vm_st(t_vm *vm, t_kar *kar);

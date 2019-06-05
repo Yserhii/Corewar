@@ -1,0 +1,7 @@
+Introducing contestants...
+* Player 1, weighing 24 bytes, "bot_load" ("komment") !
+P    1 | ld 20 r1
+P    1 | ld 131586 r2
+P    1 | ld 4 r3
+P    1 | ld 0 r4
+Contestant 1, "bot_load", has won !

@@ -72,7 +72,6 @@ void	initialization_map(t_vm *vm)
 	karetka_init(vm);
 	map_init(vm);
 	represen_players(vm);
-
 }
 
 

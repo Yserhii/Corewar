@@ -16,8 +16,10 @@ void	vm_lfork(t_vm *vm, t_kar *kar)
 {
 	t_kar	*new;
 	int		i;
+	int		start;
 
 	i = -1;
+	start = kar->pos;
 	if (!(new = (t_kar *)ft_memalloc(sizeof(t_kar))))
 		exit(ft_printf("{red}Malloc error{eoc}\n"));
 	vm->num_kar++;
@@ -31,5 +33,8 @@ void	vm_lfork(t_vm *vm, t_kar *kar)
 	new->next = vm->kar;
 	new->next->back = new;
 	vm->kar = new;
+		if (vm->v_fl == 4 || vm->v_fl == 30)
+		ft_printf("P% 5d | lfork %d (%d)\n", kar->id, vm->map[(start + 2) % MEM_SIZE], vm->map[(start + 2) % MEM_SIZE]);
+	print_adv(vm, start, kar->pos);
 }
 

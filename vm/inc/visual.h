@@ -16,6 +16,4 @@
 # include <ncurses.h>
 # include <vm.h>
 
-
-
 #endif

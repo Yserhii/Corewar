@@ -37,21 +37,13 @@ void	vm_ld(t_vm *vm, t_kar *kar)
 		{
 			kar->reg[vm->map[kar->pos]] = dir;
 			kar->carry = (!kar->reg[vm->map[kar->pos]] ? 1 : 0);
+			// OUTPUT V_FLAG = 4
+			if (vm->v_fl == 4 || vm->v_fl == 30)
+				ft_printf("P% 5d | ld %d r%d\n", kar->id, dir, vm->map[(kar->pos + reg_size) % MEM_SIZE]);
 		}
-		// OUTPUT V_FLAG = 4
-		if (vm->v_fl == 4 || vm->v_fl == 30)
-			ft_printf("P% 5d | ld %d r%d\n", kar->id, dir, vm->map[(kar->pos + reg_size) % MEM_SIZE]);
 	}
-
 	kar->pos = (kar->pos + step_for_not_valid(arg, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE;
-
 	// OUTPUT V_FLAG = 16
 	print_adv(vm, start, kar->pos);
 
-
-
-	// ft_printf("+++++++++++++%d\n", kar->pos);
-	// ft_printf("+++++++++++++%x\n", vm->map[kar->pos]);
-	// ft_printf("+++++++++STEP%d\n", step_for_not_valid(arg, kar, g_op[kar->op_id].num_arg));
-	return ;
 }

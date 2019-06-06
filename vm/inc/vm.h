@@ -69,6 +69,7 @@ typedef struct		s_vm
 	int				number_of_checks;
 
 	//bots
+	int				num_kar;
 	int				num_bot;
 	t_bot			**bot;
 	t_kar			*kar;

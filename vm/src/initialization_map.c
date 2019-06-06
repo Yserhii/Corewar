@@ -33,6 +33,7 @@ void	karetka_init(t_vm *vm)
 		else
 			vm->kar = new;
 	}
+	vm->num_kar = vm->num_bot;
 }
 
 void	map_init(t_vm *vm)

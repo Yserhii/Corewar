@@ -25,13 +25,14 @@ void	vm_add(t_vm *vm, t_kar *kar)
 	check_argv_for_op(kod, vm, kar);
 	if (kod[0] == REG_CODE && kod[1] == REG_CODE && kod[2] == REG_CODE) // && !arg[3])
 	{
-		reg1 = kar->reg[vm->map[(kar->pos + 2) % MEM_SIZE]];
-		reg2 = kar->reg[vm->map[(kar->pos + 3) % MEM_SIZE]];
-		reg3 = kar->reg[vm->map[(kar->pos + 4) % MEM_SIZE]];
-		if (reg1 >= 0x0 && reg1 <= 0x16 && reg2 >= 0x0 && reg2 <= 0x16 && reg3 >= 0x0 && reg3 <= 0x16)
+		reg1 = vm->map[(kar->pos + 2) % MEM_SIZE];
+		reg2 = vm->map[(kar->pos + 3) % MEM_SIZE];
+		reg3 = vm->map[(kar->pos + 4) % MEM_SIZE];
+		if (reg1 > 0 && reg1 < 17 && reg2 > 0 && reg2 < 17 && reg3 > 0 && reg3 < 17)
 		{
 			kar->reg[reg3] = kar->reg[reg1] + kar->reg[reg2];
 			kar->carry = (!kar->reg[reg3] ? 1 : 0);
+			// ft_printf("carry %d\n", kar->carry);
 			// OUTPUT V_FLAG = 4
 			if (vm->v_fl == 4 || vm->v_fl == 30)
 				ft_printf("P% 5d | add r%d r%d r%d\n", kar->id,

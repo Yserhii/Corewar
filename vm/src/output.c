@@ -13,15 +13,17 @@ void	show_winner(t_vm *vm)
 
 void	print_map(t_vm *vm)
 {
-	// /////////////////////для печати//////////////
+	int	i;
 
-	for(int i = 0, k = -1; i < 64; i++)
+	i = -1;
+	while (++i < MEM_SIZE)
 	{
-		for(int l = 0; l < 64; l++)
-			ft_printf("%02x ", vm->map[++k]);
-		ft_printf("\n");
+		if (!(i % 64))
+			ft_printf("0x%04x : ", i);
+		ft_printf("%02x ", vm->map[i]);
+		if (!((i + 1) % 64) && i != 0)
+			ft_printf("\n");
 	}
-// 	//////////////////
 }
 
 void	print_adv(t_vm *vm, int start, int end)

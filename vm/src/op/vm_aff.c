@@ -32,10 +32,10 @@ void	vm_aff(t_vm *vm, t_kar *kar)
 		reg = kar->reg[vm->map[(kar->pos + 2) % MEM_SIZE]];
 		c = kar->reg[reg] % 256;
 		ft_printf("%c\n", c);
+		if (vm->v_fl == 4 || vm->v_fl == 30)
+			ft_printf("P% 5d | aff %d\n", kar->id, vm->map[(kar->pos + 2) % MEM_SIZE]);
 	}
 	// OUTPUT V_FLAG = 4
-	if (vm->v_fl == 4 || vm->v_fl == 30)
-		ft_printf("P% 5d | aff %d\n", kar->id, vm->map[(kar->pos + 2) % MEM_SIZE]);
 	kar->pos = (kar->pos + step_for_not_valid(kod, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE;
 	print_adv(vm, start, kar->pos);
 }

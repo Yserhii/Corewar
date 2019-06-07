@@ -26,7 +26,7 @@ void	karetka_init(t_vm *vm)
 			exit(ft_printf("{red}Malloc error{eoc}\n"));
 		new->bot_id = i;
 		new->id = i;
-		new->reg[0] = -i;
+		new->reg[1] = -i;
 		new->pos = dis_bet_bot * (i - 1);
 		if (i > 1 && (vm->kar->back = new) && (new->next = vm->kar))
 			vm->kar = new;

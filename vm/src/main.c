@@ -14,7 +14,7 @@
 
 void	fun_for_help(void)
 {
-	ft_printf("Usage: ./corewar [-dump N -v N | -ncurs] ");
+	ft_printf("{cyan}Usage: ./corewar [-dump N -v N | -ncurs] ");
 	ft_printf("[[-n N] champion1.cor] ...\n");
 	ft_printf("-dump N   : Dumps memory after N cycles then exits\n");
 	ft_printf("-n    N   : sets the number N of the next player\n");
@@ -24,7 +24,7 @@ void	fun_for_help(void)
 	ft_printf("            - 8 : Show deaths\n");
 	ft_printf("            - 16 : Show PC movements (Except for jumps)\n");
 	ft_printf("            - 30 : Show all levels at once\n");
-	ft_printf("-ncurs    : Ncurses output mode\n");
+	ft_printf("-ncurs    : Ncurses output mode{eoc}\n");
 	exit(1);
 }
 

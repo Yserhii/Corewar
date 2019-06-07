@@ -142,9 +142,9 @@ void	battle(t_vm *vm)
 		}
 
 	}
-	if (vm->nbr_cycles == -1)
-		show_winner(vm);
-	else
-		print_map(vm);
+	// if (vm->nbr_cycles == -1)
+	// 	show_winner(vm);
+	// else
+	// 	print_map(vm);
 
 }

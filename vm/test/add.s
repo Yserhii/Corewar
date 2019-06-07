@@ -1,7 +1,11 @@
 .name		"add_operation"
 .comment	"comment"
 
-
-add r0, r0, r3
-add r1, r2, r16
+ld	%-100, r1
+ld	%-2000, r2
+add r1, r2, r3
+ld	%-100, r4
+ld	%100, r5
 add r4, r5, r6
+st	r3, 100
+st	r6, 200

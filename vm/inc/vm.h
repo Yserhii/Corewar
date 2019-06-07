@@ -42,7 +42,7 @@ typedef struct		s_kar
 	uint32_t		bot_id;
 	uint32_t		live;
 	uint32_t		cicles_to_wait;
-	uint32_t		reg[REG_NUMBER];
+	uint32_t		reg[REG_NUMBER + 1];
 	struct s_kar	*next;
 	struct s_kar	*back;
 }					t_kar;
@@ -137,7 +137,9 @@ static void			(*g_opers[17])() = {0, &vm_live, &vm_ld, &vm_st,
 	&vm_add, &vm_sub, &vm_and, &vm_or, &vm_xor, &vm_zjmp, &vm_ldi, &vm_sti,
 	&vm_fork, &vm_lld, &vm_lldi, &vm_lfork, &vm_aff};
 
-static t_op g_op[16] = {
+static t_op g_op[17] = {
+	{
+	},
 	{
 		.name = "live",
 		.code = 0x01,

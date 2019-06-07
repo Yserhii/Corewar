@@ -29,14 +29,14 @@ void	vm_lld(t_vm *vm, t_kar *kar)
 			dir = take_arg(vm, (kar->pos + 2), 4);
 		else
 		{
-			ind = kar->pos + take_arg(vm, (kar->pos + 2), 2);
+			ind = kar->pos + (short)take_arg(vm, (kar->pos + 2), 2);
 			dir = take_arg(vm, (ind % MEM_SIZE), 4);
 		}
 		reg_size = (kod[0] == DIR_CODE ? 6 : 4);
-		if (vm->map[(kar->pos + reg_size) % MEM_SIZE] >= 0x0 && vm->map[(kar->pos + reg_size) % MEM_SIZE] <= 0x16)
+		if ((int)vm->map[(kar->pos + reg_size) % MEM_SIZE] >= 0x0 && (int)vm->map[(kar->pos + reg_size) % MEM_SIZE] <= 0x16)
 		{
-			kar->reg[vm->map[kar->pos]] = dir;
-			kar->carry = (!kar->reg[vm->map[kar->pos]] ? 1 : 0);
+			kar->reg[(int)vm->map[kar->pos]] = dir;
+			kar->carry = (!kar->reg[(int)vm->map[kar->pos]] ? 1 : 0);
 			// OUTPUT V_FLAG = 4
 			if (vm->v_fl == 4 || vm->v_fl == 30)
 				ft_printf("P% 5d | ld %d r%d\n", kar->id, dir, vm->map[(kar->pos + reg_size) % MEM_SIZE]);

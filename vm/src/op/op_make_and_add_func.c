@@ -31,13 +31,11 @@ void	read_args(t_vm *vm, t_kar *kar, uint32_t *args, uint8_t *cod_arg)
 	{
 		if (cod_arg[n] == REG_CODE)
 		{
-			if ((int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] >= 0x0 && (int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] <= 0x16)
-			{
+			if ((int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] > 0 && (int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] < 17)
 				args[n] = vm->map[(kar->pos + 2 + i) % MEM_SIZE];
-				i += REG;
-			}
 			else
 				args[n] = -1;
+			i += REG;
 		}
 		else if (cod_arg[n] == DIR_CODE)
 		{
@@ -46,7 +44,7 @@ void	read_args(t_vm *vm, t_kar *kar, uint32_t *args, uint8_t *cod_arg)
 		}
 		else if (cod_arg[n] == IND_CODE)
 		{
-			ind = kar->pos + ((take_arg(vm, (kar->pos + 2 + i), 2)) % IDX_MOD);
+			ind = kar->pos + (short)take_arg(vm, (kar->pos + 2 + i), 2) % IDX_MOD;
 			args[n] = take_arg(vm, (ind % MEM_SIZE), 4);
 			i += IND;
 		}
@@ -66,7 +64,6 @@ int		take_arg(t_vm *vm, int pos, int size_arg)
 		arg += (vm->map[pos++ % MEM_SIZE] << (8 * --size_arg));
 	return (arg);
 }
-
 
 //////////аналогичная функцыя к верхней ттолько из регистра в карту записываем
 void	give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src)
@@ -109,7 +106,7 @@ void	op_recognize(t_vm *vm, t_kar *kar)
 	if (vm->map[kar->pos] >= 0x01 && vm->map[kar->pos] <= 0x10)
 	{
 		kar->op_id = vm->map[kar->pos];
-		kar->cicles_to_wait = g_op[kar->op_id - 1].wait;
+		kar->cicles_to_wait = g_op[kar->op_id].wait;
 		// ft_printf("%d\n", kar->cicles_to_wait);
 		// ft_printf("OK op_id: %d position: %d\n",kar->op_id, kar->pos);
 	}

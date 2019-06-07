@@ -29,19 +29,22 @@ void	vm_ld(t_vm *vm, t_kar *kar)
 			dir = take_arg(vm, (kar->pos + 2), 4);
 		else
 		{
-			ind = kar->pos + ((take_arg(vm, (kar->pos + 2), 2)) % IDX_MOD);
+			ind = kar->pos + (short)take_arg(vm, kar->pos + 2, 2) % IDX_MOD;
 			dir = take_arg(vm, (ind % MEM_SIZE), 4);
 		}
 		reg_size = (arg[0] == DIR_CODE ? 6 : 4);
-		if (vm->map[(kar->pos + reg_size) % MEM_SIZE] >= 0x0 && vm->map[(kar->pos + reg_size) % MEM_SIZE] <= 0x16)
+		if ((int)vm->map[(kar->pos + reg_size) % MEM_SIZE] > 0 && (int)vm->map[(kar->pos + reg_size) % MEM_SIZE] < 17)
 		{
-			kar->reg[vm->map[kar->pos]] = dir;
-			kar->carry = (!kar->reg[vm->map[kar->pos]] ? 1 : 0);
+			kar->reg[(int)vm->map[kar->pos + reg_size]] = dir;//// тут была проблема) оно не туда записывало
+			kar->carry = (!kar->reg[(int)vm->map[kar->pos + reg_size]] ? 1 : 0);
 			// OUTPUT V_FLAG = 4
 			if (vm->v_fl == 4 || vm->v_fl == 30)
 				ft_printf("P% 5d | ld %d r%d\n", kar->id, dir, vm->map[(kar->pos + reg_size) % MEM_SIZE]);
 		}
 	}
+			// ft_printf(">>>>reg1>>> %hd\n", kar->reg[0]);
+			// ft_printf(">>>>reg2>>> %hd\n", kar->reg[1]);
+			// ft_printf(">>>>reg3>>> %hd\n", kar->reg[2]);
 	kar->pos = (kar->pos + step_for_not_valid(arg, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE;
 	// OUTPUT V_FLAG = 16
 	print_adv(vm, start, kar->pos);

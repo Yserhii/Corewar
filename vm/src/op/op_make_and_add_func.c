@@ -113,7 +113,7 @@ void	op_recognize(t_vm *vm, t_kar *kar)
 	else
 	{	// if opration code is incorrect
 		kar->op_id = vm->map[kar->pos];
-		kar->pos++; // Yes we need it
+		kar->pos = (kar->pos + 1) % MEM_SIZE; // Yes we need it
 		kar->cicles_to_wait = 0;
 		// ft_printf("incorrect op_id: %d position: %d\n",kar->op_id, kar->pos);
 	}

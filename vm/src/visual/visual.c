@@ -102,6 +102,6 @@ void	visualisation(t_vm *vm)
 	refresh();
 	wrefresh(map);
 	wrefresh(menu);
-	halfdelay(10);
+	halfdelay(1);
 	getch();
 }

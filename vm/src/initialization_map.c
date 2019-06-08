@@ -53,6 +53,9 @@ void	map_init(t_vm *vm)
 		while ((dis_bet_bot * num_bot + (int)vm->bot[num_bot]->size) > ++i)
 			vm->map[i] = vm->bot[num_bot]->code[++j];
 	}
+	// TEST POSTION OP - DELETE
+	// while ( ++i < MEM_SIZE)
+	// 	vm->map[i] = 0x01;
 }
 
 void	represen_players(t_vm *vm)

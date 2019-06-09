@@ -16,25 +16,26 @@ void	vm_lfork(t_vm *vm, t_kar *kar)
 {
 	t_kar	*new;
 	int		i;
-	int		start;
+	// int		start;
 
 	i = -1;
-	start = kar->pos;
+	// start = kar->pos;
 	if (!(new = (t_kar *)ft_memalloc(sizeof(t_kar))))
-		exit(ft_printf("{red}Malloc error{eoc}\n"));
-	vm->num_kar++;
+		vm_exit(9);
 	while (++i < REG_NUMBER)
 		new->reg[i] = kar->reg[i];
 	new->carry = kar->carry;
-	new->id = vm->num_kar;
+	new->id = ++vm->num_kar;
 	new->bot_id = kar->bot_id;
 	new->live = kar->live;
-	new->pos = (kar->pos + take_arg(vm, (kar->pos + 1), 2)) % MEM_SIZE;
+	new->pos = (kar->pos + take_arg(vm, (kar->pos + 1), 2));
 	new->next = vm->kar;
 	new->next->back = new;
 	vm->kar = new;
-		if (vm->v_fl == 4 || vm->v_fl == 30)
-		ft_printf("P% 5d | lfork %d (%d)\n", kar->id, vm->map[(start + 2) % MEM_SIZE], vm->map[(start + 2) % MEM_SIZE]);
-	print_adv(vm, start, kar->pos);
+	if (vm->v_fl == 4 || vm->v_fl == 30)
+		ft_printf("P% 5d | lfork %d (%d)\n", kar->id, vm->map[(kar->pos+ 2) % MEM_SIZE], vm->map[(kar->pos + 2) % MEM_SIZE]);
+	// print_adv(vm, start, kar->pos);
+	print_adv(vm, kar->pos, kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE);
+
 }
 

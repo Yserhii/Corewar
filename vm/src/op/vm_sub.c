@@ -18,9 +18,9 @@ void	vm_sub(t_vm *vm, t_kar *kar)
 	int			reg2;
 	int			reg3;
 	uint8_t		kod[4];
-	int			start;
+	// int			start;
 
-	start = kar->pos;
+	// start = kar->pos;
 	ft_bzero(kod, 4 * sizeof(uint8_t));
 	check_argv_for_op(kod, vm, kar);
 	if (kod[0] == REG_CODE && kod[1] == REG_CODE && kod[2] == REG_CODE) // && !arg[3])
@@ -41,7 +41,8 @@ void	vm_sub(t_vm *vm, t_kar *kar)
 		}
 	}
 	// OUTPUT V_FLAG = 16
-	print_adv(vm, start, kar->pos);
-	kar->pos = (kar->pos + step_for_not_valid(kod, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE;
+	// print_adv(vm, start, kar->pos);
+	// kar->pos = (kar->pos + step_for_not_valid(kod, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE;
+	print_adv(vm, kar->pos, kar->pos = (kar->pos + step_for_not_valid(kod, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE);
 	return ;
 }

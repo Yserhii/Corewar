@@ -47,38 +47,31 @@ typedef struct		s_kar
 	struct s_kar	*back;
 }					t_kar;
 
-
-
 typedef struct		s_vm
 {
-	// flags
+	/*flags*/
 	int				nbr_cycles;
 	int				v_fl;
 	int				ncurs;
-
 	//fd
 	int				fd[5];
-
-	//map
+	/*map*/
 	uint8_t			map[MEM_SIZE];
-
 	int				last_say_live;
 	int				cycles_from_start;
 	int				cycles_to_die;
 	int				num_of_life;
 	int				number_of_checks;
-
-	//bots
+	/*bots*/
 	int				num_kar;
 	int				num_bot;
 	t_bot			**bot;
 	t_kar			*kar;
-
-	//output
+	/*output*/
 }					t_vm;
 
 
-// for oper
+/* for oper*/
 typedef struct	s_op
 {
 	char		*name;
@@ -90,6 +83,9 @@ typedef struct	s_op
 	int			wait;
 }				t_op;
 
+void				vm_exit(int n);
+void				vm_exit_bot(int n, t_bot *bot);
+
 void				read_valid_av(int ac,char **av, t_vm *vm);
 void				fun_for_help(void);
 void				read_valid_bot(t_vm *vm);
@@ -98,7 +94,7 @@ void				initialization_map(t_vm *vm);
 void				battle(t_vm *vm);
 void				killing_check(t_vm *vm);
 
-//for operations
+/*for operations*/
 int					take_arg(t_vm *vm, int pos, int size_arg);
 int					step_for_not_valid(uint8_t *arg, t_kar *kar, int num_arg);
 void				give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src);
@@ -123,13 +119,13 @@ void				vm_lldi(t_vm *vm, t_kar *kar);
 void				vm_lfork(t_vm *vm, t_kar *kar);
 void				vm_aff(t_vm *vm, t_kar *kar);
 
-// OUTPUT
+/*OUTPUT*/
 
 void				show_winner(t_vm *vm);
 void				print_map(t_vm *vm);
 void				print_adv(t_vm *vm, int start, int end);
 
-// VISUALIZATION
+/*VISUALIZATION*/
 
 void				visualisation(t_vm *vm);
 

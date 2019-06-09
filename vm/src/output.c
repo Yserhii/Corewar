@@ -1,14 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   output.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yserhii <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/09 13:06:23 by yserhii           #+#    #+#             */
+/*   Updated: 2019/06/09 13:06:29 by yserhii          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 
 void	show_winner(t_vm *vm)
 {
 	if (vm->last_say_live)
-		ft_printf("Contestant %d, \"%s\", has won !\n", vm->last_say_live, vm->bot[vm->last_say_live - 1]->name);
+		ft_printf("Contestant %d, \"%s\", has won !\n",
+					vm->last_say_live, vm->bot[vm->last_say_live - 1]->name);
 	else
-	{
 		ft_printf("ALL GAME OVER!!!\n");
-	}
-
 }
 
 void	print_map(t_vm *vm)

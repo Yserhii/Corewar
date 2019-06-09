@@ -17,7 +17,7 @@ void	vm_live(t_vm *vm, t_kar *kar)
 	int		arg;
 
 	// OUTPUT
-	int	start;
+	// int	start;
 
 	///////Здесь я заменил строчку ниже на новую адоптивную функции почитай над ней комент поймешь как работает!!!!!!!!!!
 	arg = take_arg(vm, (kar->pos + 1), 4);
@@ -30,12 +30,12 @@ void	vm_live(t_vm *vm, t_kar *kar)
 		kar->live = vm->cycles_from_start;
 	}
 	vm->num_of_life++; //вне цыкла;
-	start = kar->pos;
+	// start = kar->pos;
 	kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE;
 	// OUTPUT V_FLAG = 4
 	if (vm->v_fl == 4 || vm->v_fl == 30)
 		ft_printf("P% 5d | live %d\n", kar->id, ABS(arg));
 	// OUTPUT V_FLAG = 16
-	print_adv(vm, start, kar->pos);
+	print_adv(vm, kar->pos, kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE);
 	return ;
 }

@@ -31,6 +31,7 @@ LIB_DIR :=			./lib/
 
 SRC =				main.c read_valid_av.c read_valid_bot.c\
 					initialization_map.c battle.c output.c\
+					vm_exit.c\
 					op/vm_add.c op/vm_aff.c op/vm_and.c\
 					op/vm_fork.c op/vm_ld.c op/vm_ldi.c\
 					op/vm_lfork.c op/vm_live.c op/vm_lld.c\

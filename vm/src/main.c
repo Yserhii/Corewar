@@ -33,7 +33,7 @@ int		main(int ac, char **av)
 	t_vm	*vm;
 
 	if (!(vm = (t_vm*)ft_memalloc(sizeof(t_vm))))
-		exit(ft_printf("{red}Malloc error{eoc}\n"));
+		vm_exit(9);
 	read_valid_av(ac, av, vm);
 	read_valid_bot(vm);
 	initialization_map(vm);

@@ -12,7 +12,7 @@
 
 #include "vm.h"
 
-void	karetka_init(t_vm *vm)
+static void	karetka_init(t_vm *vm)
 {
 	int			i;
 	int			dis_bet_bot;
@@ -23,20 +23,24 @@ void	karetka_init(t_vm *vm)
 	while (++i <= vm->num_bot)
 	{
 		if (!(new = (t_kar*)ft_memalloc(sizeof(t_kar))))
-			exit(ft_printf("{red}Malloc error{eoc}\n"));
+			vm_exit(9);
 		new->bot_id = i;
 		new->id = i;
 		new->reg[1] = -i;
 		new->pos = dis_bet_bot * (i - 1);
-		if (i > 1 && (vm->kar->back = new) && (new->next = vm->kar))
+		if (i > 1)
+		{
+			vm->kar->back = new;
+			new->next = vm->kar;
 			vm->kar = new;
+		}
 		else
 			vm->kar = new;
 	}
 	vm->num_kar = vm->num_bot;
 }
 
-void	map_init(t_vm *vm)
+static void	map_init(t_vm *vm)
 {
 	int		i;
 	int		j;
@@ -53,12 +57,12 @@ void	map_init(t_vm *vm)
 		while ((dis_bet_bot * num_bot + (int)vm->bot[num_bot]->size) > ++i)
 			vm->map[i] = vm->bot[num_bot]->code[++j];
 	}
-	// TEST POSTION OP - DELETE
-	// while ( ++i < MEM_SIZE)
-	// 	vm->map[i] = 0x01;
+	/* TEST POSTION OP - DELETE
+	while ( ++i < MEM_SIZE)
+		vm->map[i] = 0x01;*/
 }
 
-void	represen_players(t_vm *vm)
+static void	represen_players(t_vm *vm)
 {
 	int		n;
 	t_bot	**bot;
@@ -71,11 +75,9 @@ void	represen_players(t_vm *vm)
 					bot[n]->id, bot[n]->size, bot[n]->name, bot[n]->comment);
 }
 
-void	initialization_map(t_vm *vm)
+void		initialization_map(t_vm *vm)
 {
 	karetka_init(vm);
 	map_init(vm);
 	represen_players(vm);
 }
-
-

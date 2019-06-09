@@ -22,10 +22,7 @@ void	vm_zjmp(t_vm *vm, t_kar *kar)
 	start = kar->pos;
 	dir = (short)take_arg(vm, (kar->pos + 1), 2);
 	if (kar->carry && (flag = 1))
-	{
-		ft_printf("%hd\n", dir % IDX_MOD);
 		kar->pos = (kar->pos + (dir % IDX_MOD)) % MEM_SIZE;
-	}
 	else
 		kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE;
 	if (vm->v_fl == 4 || vm->v_fl == 30)

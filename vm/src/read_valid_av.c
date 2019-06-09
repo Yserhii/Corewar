@@ -12,33 +12,35 @@
 
 #include "vm.h"
 
-static int		valid_dump(char **av, t_vm *vm, int i, int ac)
+static int	valid_dump(char **av, t_vm *vm, int i, int ac)
 {
 	if (++i >= ac || !ft_allnum(av[i]))
-		exit(ft_printf("{red}Not valid number cycles, number must be >= 0{eoc}\n"));
+		vm_exit(1);
 	vm->nbr_cycles = ft_atoi(av[i]);
-	// if (vm->nbr_cycles > CYCLE_TO_DIE || vm->nbr_cycles < 0)
-	// 	exit(ft_printf("{red}Number cycles more than cycle to die or < 1{eoc}\n"));
+	/* if (vm->nbr_cycles > CYCLE_TO_DIE || vm->nbr_cycles < 0)
+		exit(ft_printf("{red}Number cycles more than cycle to die or < 1{eoc}\n"));*/
 	return (i);
 }
 
-static int		valid_n_id(int ac, char **av, t_vm *vm, int i)
+static int	valid_n_id(int ac, char **av, t_vm *vm, int i)
 {
 	int		n;
 
 	if (++i < ac && ft_allnum(av[i]) && (n = ft_atoi(av[i])) && n > 0 && n < 5)
-		if (++i < ac && !ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && !vm->fd[n - 1])
+		if (++i < ac && !ft_strcmp(ft_strrchr(av[i], '.'), ".cor")
+															&& !vm->fd[n - 1])
 			if ((vm->fd[n - 1] = open(av[i], O_RDONLY)) < 1)
-				exit(ft_printf("{red}Not valid file with bot (*.cor){eoc}\n"));
+				vm_exit(2);
 			else
 				return (i);
 		else
-			exit(ft_printf("{red}Not valid file with bot (*.cor) or you use two identical id players{eoc}\n"));
+			vm_exit(3);
 	else
-		exit(ft_printf("{red}Id players must be int from 1 to 4{eoc}\n"));
+		vm_exit(4);
+	return (i);
 }
 
-static int		valid_v_fl(int ac, char **av, t_vm *vm, int i)
+static int	valid_v_fl(int ac, char **av, t_vm *vm, int i)
 {
 	int		n;
 
@@ -46,24 +48,26 @@ static int		valid_v_fl(int ac, char **av, t_vm *vm, int i)
 		|| n == 4 || n == 8 || n == 16 || n == 30))
 	{
 		vm->v_fl = n;
-		return(i);
+		return (i);
 	}
 	else
-		exit(ft_printf("{red}Verbosity levels are only 2, 4, 8, 16 or 30{eoc}\n"));
+		vm_exit(5);
+	return (i);
 }
 
 static int		valid_cor(char *av, int j, int *fd_tmp)
 {
 	if (j < 4)
 		if ((fd_tmp[j] = open(av, O_RDONLY)) < 1)
-			exit(ft_printf("{red}Not valid file with bot (*.cor){eoc}\n"));
+			vm_exit(6);
 		else
 			return (j);
 	else
-		exit(ft_printf("{red}You give so many players{eoc}\n"));
+		vm_exit(7);
+	return (j);
 }
 
-static void		sort_fd_by_id(t_vm *vm, int *fd_tmp)
+static void	sort_fd_by_id(t_vm *vm, int *fd_tmp)
 {
 	int		i;
 	int		j;
@@ -86,24 +90,17 @@ static void		sort_fd_by_id(t_vm *vm, int *fd_tmp)
 		else
 			count++;
 	if (count < 1 || count > 4)
-		exit(ft_printf("{red}You give so many players{eoc}\n"));
+		vm_exit(7);
 	vm->num_bot = count;
 }
 
-void	read_valid_av(int ac,char **av, t_vm *vm)
+static void	while_for_read_valid_av(int ac, char **av, t_vm *vm, int *fd_tmp)
 {
 	int		i;
 	int		j;
-	int		fd_tmp[5];
 
 	i = 0;
 	j = -1;
-	if (ac == 1 || ac > 15)
-		exit(ft_printf("{red}You give not valid arguments use [--help]{eoc}\n"));
-	if (ac == 2 && !ft_strcmp("--help", av[1]))
-		fun_for_help();
-	ft_bzero(fd_tmp, sizeof(fd_tmp));
-	vm->nbr_cycles = -1;
 	while (++i < ac)
 	{
 		if (!ft_strcmp("-dump", av[i]))
@@ -117,9 +114,22 @@ void	read_valid_av(int ac,char **av, t_vm *vm)
 		else if (!ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && ++j <= 4)
 			j = valid_cor(av[i], j, fd_tmp);
 		else
-			exit(ft_printf("{red}You give not valid arguments use [--help]{eoc}\n"));
+			vm_exit(8);
 	}
-	if (vm->ncurs) // если задана визуализация, то выключаем ДАМП и вывод V
+}
+
+void	read_valid_av(int ac, char **av, t_vm *vm)
+{
+	int		fd_tmp[5];
+
+	if (ac == 1 || ac > 15)
+		vm_exit(8);
+	if (ac == 2 && !ft_strcmp("--help", av[1]))
+		fun_for_help();
+	ft_bzero(fd_tmp, sizeof(fd_tmp));
+	vm->nbr_cycles = -1;
+	while_for_read_valid_av(ac, av, vm, fd_tmp);
+	if (vm->ncurs)/* если задана визуализация, то выключаем ДАМП и вывод V*/
 	{
 		vm->nbr_cycles = -1;
 		vm->v_fl = 0;

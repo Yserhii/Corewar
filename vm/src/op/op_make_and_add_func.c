@@ -42,18 +42,21 @@ void		read_args(t_vm *vm, t_kar *kar, uint32_t *args, uint8_t *cod_arg)
 	while (++n < 3)
 	{
 		if (cod_arg[n] == REG_CODE)
-		/*{*/
+		// {
 			i = reg_add(vm->map[(kar->pos + 2 + i) % MEM_SIZE], args, i, n);
-			/* if ((int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] > 0 &&
-			// 		(int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] < 17)
-			// 	args[n] = vm->map[(kar->pos + 2 + i) % MEM_SIZE];
-			// else
-			// 	args[n] = -1;
-			// i += REG;
-		}*/
+		// 	if ((int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] > 0 &&
+		// 			(int)vm->map[(kar->pos + 2 + i) % MEM_SIZE] < 17)
+		// 		args[n] = vm->map[(kar->pos + 2 + i) % MEM_SIZE];
+		// 	else
+		// 		args[n] = -1;
+		// 	i += REG;
+		// }
 		else if (cod_arg[n] == DIR_CODE)
 		{
-			args[n] = take_arg(vm, (kar->pos + 2 + i), 4);
+			if (g_op[kar->op_id].dir_size == 4)
+				args[n] = take_arg(vm, (kar->pos + 2 + i), 4);
+			else if (g_op[kar->op_id].dir_size == 2)
+				args[n] = (short)take_arg(vm, (kar->pos + 2 + i), 2);
 			i += g_op[kar->op_id].dir_size;
 		}
 		else if (cod_arg[n] == IND_CODE)

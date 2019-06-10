@@ -3,6 +3,12 @@
 
 
 
-lldi r1, %67, r9
-lldi r3, r4, r5
-lldi %9, %67, r7
+ld	%-1, r1
+ldi r1, %4, r7
+st r7, 120
+ldi %-1000, %-2, r6
+st r6, 120
+ld	%-1000, r2
+ldi -10, r2, r8
+st r8, 120
+zjmp %100

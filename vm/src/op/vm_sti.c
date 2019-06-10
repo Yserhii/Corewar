@@ -25,7 +25,7 @@ void	vm_sti(t_vm *vm, t_kar *kar)
 	ft_bzero(kod, 4 * sizeof(uint8_t));
 	ft_bzero(args, 3 * sizeof(uint8_t));
 	check_argv_for_op(kod, vm, kar);
-	while (kod[0] == REG_CODE && kod[1] && (kod[2] == REG_CODE || kod[2] == DIR_CODE) && i--) // && !kod[3]
+	if (kod[0] == REG_CODE && kod[1] && (kod[2] == REG_CODE || kod[2] == DIR_CODE)) // && !kod[3]
 	{
 		read_args(vm, kar, args, kod);
 		if (!((kod[0] == REG_CODE && (int)args[0] == -1) ||
@@ -39,8 +39,8 @@ void	vm_sti(t_vm *vm, t_kar *kar)
 			give_reg_to_map(vm, ind % MEM_SIZE, 4, kar->reg[(int)args[0]]);
 			if (vm->v_fl == 4 || vm->v_fl == 30)
 			{
-				ft_printf("P% 5d | sti r%d %d %d\n", kar->id, args[0], args[1], (int)args[2]);
-				ft_printf("       | -> store to %d + %d = %d (with pc and mod \?\?\?)\n", args[1], args[2], args[1] + args[2]);
+				ft_printf("P% 5d | sti r%d %d %d\n", kar->id, (int)args[0], (int)args[1], (int)args[2]);
+				ft_printf("       | load from %d + %d = %d (with pc and mod %d)\n", (int)args[1], (int)args[2], (int)((int)args[1] + (int)args[2]), ind);
 			}
 		}
 	}

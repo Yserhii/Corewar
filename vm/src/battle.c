@@ -83,37 +83,35 @@ void	battle(t_vm *vm)
 {
 	t_kar	*kar;
 	int		check_count;
-
 	// if (!check_battle_constants())
 	// 	exit(ft_printf("Battle constants ERROR\n"));
 	//print_map(vm);
 	check_count = 0;
 	while (vm->cycles_to_die > 0 && count_alive_kar(vm) > 0)
 	{
+		// OUTPUT V_FLAG = 2
+
 		// DUMP check
-		if (vm->nbr_cycles > -1 && vm->cycles_from_start >= vm->nbr_cycles)
+		if ((vm->nbr_cycles > -1 && vm->cycles_from_start >= vm->nbr_cycles))
 		{
 			print_map(vm);
 			break;
 		}
-		vm->cycles_from_start++;
-		// OUTPUT V_FLAG = 2
 		if (vm->v_fl == 2 || vm->v_fl == 30)
 			ft_printf("It is now cycle %d\n", vm->cycles_from_start);
 		// ft_printf("%d", vm->map[kar->pos]);
+		vm->cycles_from_start++;
 		kar = vm->kar;
+
 		while (kar)
 		{
-			// 	ft_printf("\t****pos[%d] = %02d", kar->pos, vm->map[kar->pos]);
-
+		 	// ft_printf("\t****pos[%d] = %02d", kar->pos, vm->map[kar->pos]);
 			// SERG
 			// if (kar->cicles_to_wait <= 0)
 			// 	op_recognize(vm, kar); // insert if op_live -> vm->num_of_life++
 			// kar->cicles_to_wait--;
 			// if (!kar->cicles_to_wait)
 			// 	(*g_opers[kar->op_id])(vm, kar);
-
-
 			//ALEX
 			if (!kar->cicles_to_wait)
 			{

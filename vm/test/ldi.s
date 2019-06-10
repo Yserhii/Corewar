@@ -1,7 +1,11 @@
 .name		"ldi"
 .comment	"aasdasd"
 
-
-ldi r9, %897, r7
-ldi 67, r7, r9
-ldi r5, %67, r56
+ld	%1, r1
+ldi r1, %4, r7
+st r7, 120
+ldi %-1000, %-2, r6
+st r6, 120
+ld	%-1000, r2
+ldi -10, r2, r8
+st r8, 120

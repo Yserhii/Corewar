@@ -1,4 +1,7 @@
 .name		"lfork"
 .comment	"reufeigfuewgfu"
 
-lfork %567
+live %1
+lfork %-5
+live %1
+lfork %100

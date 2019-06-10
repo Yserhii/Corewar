@@ -57,6 +57,7 @@ typedef struct		s_vm
 	int				fd[5];
 	/*map*/
 	uint8_t			map[MEM_SIZE];
+	uint8_t			info[MEM_SIZE];
 	int				last_say_live;
 	int				cycles_from_start;
 	int				cycles_to_die;

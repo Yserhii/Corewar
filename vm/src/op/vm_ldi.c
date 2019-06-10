@@ -40,8 +40,8 @@ void	vm_ldi(t_vm *vm, t_kar *kar)
 			// OUTPUT V_FLAG = 4
 			if (vm->v_fl == 4 || vm->v_fl == 30)
 			{
-				ft_printf("P% 5d | ldi %d %d r%d\n", kar->id, args[0], args[1], (int)args[2]);
-				ft_printf("       | load from %d + %d = %d (with pc and mod \?\?\?)\n", args[0], args[1], args[0] + args[1]);
+				ft_printf("P% 5d | ldi %d %d r%d\n", kar->id, (int)args[0], (int)args[1], (int)args[2]);
+				ft_printf("       | load from %d + %d = %d (with pc and mod %d)\n", (int)args[0], (int)args[1], (int)((int)args[0] + (int)args[1]), ind);
 			}
 		}
 	}

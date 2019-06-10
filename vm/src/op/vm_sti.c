@@ -40,7 +40,7 @@ void	vm_sti(t_vm *vm, t_kar *kar)
 			if (vm->v_fl == 4 || vm->v_fl == 30)
 			{
 				ft_printf("P% 5d | sti r%d %d %d\n", kar->id, (int)args[0], (int)args[1], (int)args[2]);
-				ft_printf("       | load from %d + %d = %d (with pc and mod %d)\n", (int)args[1], (int)args[2], (int)((int)args[1] + (int)args[2]), ind);
+				ft_printf("       | -> store to %d + %d = %d (with pc and mod %d)\n", (int)args[1], (int)args[2], (int)((int)args[1] + (int)args[2]), ind);
 			}
 		}
 	}

@@ -41,6 +41,7 @@ typedef struct		s_kar
 	uint32_t		op_id;
 	uint32_t		bot_id;
 	uint32_t		live;
+	uint32_t		last_time_said_live;
 	uint32_t		cicles_to_wait;
 	uint32_t		reg[REG_NUMBER + 1];
 	struct s_kar	*next;
@@ -52,6 +53,7 @@ typedef struct		s_vm
 	/*flags*/
 	int				nbr_cycles;
 	int				v_fl;
+	int				a_fl;
 	int				ncurs;
 	//fd
 	int				fd[5];

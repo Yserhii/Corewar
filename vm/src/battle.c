@@ -55,7 +55,7 @@ void killing_check(t_vm *vm)
 			// OUTPUT V_FLAG = 8
 			if (vm->v_fl == 8 || vm->v_fl == 30)
 				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-					kar->id, vm->cycles_from_start, vm->cycles_to_die);
+					kar->id, vm->last_say_live, vm->cycles_to_die);
 			free(kar);
 		}
 		else
@@ -87,6 +87,18 @@ void	battle(t_vm *vm)
 	// 	exit(ft_printf("Battle constants ERROR\n"));
 	//print_map(vm);
 	check_count = 0;
+
+	// init OPERATIONS kars
+	kar = vm->kar;
+	while (kar)
+	{
+		op_recognize(vm, kar);
+		if (kar->cicles_to_wait > 0) // ALEX
+		kar->cicles_to_wait--;
+		kar = kar->next;
+	}
+
+	// vm->cycles_from_start = 1;
 	while (vm->cycles_to_die > 0 && count_alive_kar(vm) > 0)
 	{
 		// OUTPUT V_FLAG = 2
@@ -97,10 +109,13 @@ void	battle(t_vm *vm)
 			print_map(vm);
 			break;
 		}
+
+		vm->cycles_from_start++;
+
 		if (vm->v_fl == 2 || vm->v_fl == 30)
 			ft_printf("It is now cycle %d\n", vm->cycles_from_start);
 		// ft_printf("%d", vm->map[kar->pos]);
-		vm->cycles_from_start++;
+
 		kar = vm->kar;
 
 		while (kar)
@@ -138,11 +153,8 @@ void	battle(t_vm *vm)
 			check_count++;
 			killing_check(vm);
 		}
-
 	}
-	// if (vm->nbr_cycles == -1)
-	// 	show_winner(vm);
-	// else
-	// 	print_map(vm);
+	if (vm->cycles_from_start < vm->nbr_cycles)
+		show_winner(vm);
 
 }

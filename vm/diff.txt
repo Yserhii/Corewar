@@ -1,0 +1,23 @@
+28d27
+< ================
+871d869
+< ================
+1714d1711
+< ================
+2557d2553
+< ================
+3106,3107c3102,3103
+< Process 3 hasn't lived for 1 cycles (CTD 1536)
+< Process 2 hasn't lived for 1 cycles (CTD 1536)
+---
+> Process 3 hasn't lived for 2216 cycles (CTD 1536)
+> Process 2 hasn't lived for 3051 cycles (CTD 1536)
+3402d3397
+< ================
+4245d4239
+< ================
+4660c4654,4655
+< Process 5 hasn't lived for 1 cycles (CTD 1536)
+---
+> Process 5 hasn't lived for 2082 cycles (CTD 1536)
+> Process 4 hasn't lived for 2917 cycles (CTD 1536)

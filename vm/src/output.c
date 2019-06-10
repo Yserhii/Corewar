@@ -44,10 +44,10 @@ void	print_adv(t_vm *vm, int start, int end)
 	if (vm->v_fl == 16 || vm->v_fl == 30)
 	{
 		delta = (end - start < 0) ? MEM_SIZE - start + end : end - start;
-		ft_printf("ADV %d (0x%04x -> 0x%04x)", delta, start, end);
+		ft_printf("ADV %d (0x%04x -> 0x%04x) ", delta, start, end);
 		i = -1;
 		while (++i < delta)
-			ft_printf(" %02x", vm->map[(start + i) % MEM_SIZE]);
+			ft_printf("%02x ", vm->map[(start + i) % MEM_SIZE]);
 		ft_printf("\n");
 	}
 }

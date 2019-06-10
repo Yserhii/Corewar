@@ -1,64 +1,10 @@
 Introducing contestants...
-* Player 1, weighing 24 bytes, "bot_load" ("komment") !
-It is now cycle 1
-It is now cycle 2
-It is now cycle 3
-It is now cycle 4
-It is now cycle 5
-P    1 | ld 10 r1
-ADV 7 (0x0000 -> 0x0007) 02 90 00 00 00 0a 01 
-It is now cycle 6
-It is now cycle 7
-It is now cycle 8
-It is now cycle 9
-It is now cycle 10
-P    1 | ld 0 r2
-ADV 5 (0x0007 -> 0x000c) 02 d0 00 14 02 
-It is now cycle 11
-It is now cycle 12
-It is now cycle 13
-It is now cycle 14
-It is now cycle 15
-P    1 | ld 335676112 r3
-ADV 5 (0x000c -> 0x0011) 02 d0 ff fe 03 
-It is now cycle 16
-It is now cycle 17
-It is now cycle 18
-It is now cycle 19
-It is now cycle 20
-P    1 | ld -3 r4
-ADV 7 (0x0011 -> 0x0018) 02 90 ff ff ff fd 04 
-It is now cycle 21
-It is now cycle 22
-It is now cycle 23
-It is now cycle 24
-It is now cycle 25
-It is now cycle 26
-It is now cycle 27
-It is now cycle 28
-It is now cycle 29
-It is now cycle 30
-It is now cycle 31
-It is now cycle 32
-It is now cycle 33
-It is now cycle 34
-It is now cycle 35
-It is now cycle 36
-It is now cycle 37
-It is now cycle 38
-It is now cycle 39
-It is now cycle 40
-It is now cycle 41
-It is now cycle 42
-It is now cycle 43
-It is now cycle 44
-It is now cycle 45
-It is now cycle 46
-It is now cycle 47
-It is now cycle 48
-It is now cycle 49
-It is now cycle 50
-0x0000 : 02 90 00 00 00 0a 01 02 d0 00 14 02 02 d0 ff fe 03 02 90 ff ff ff fd 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+* Player 1, weighing 28 bytes, "ANTON MOROZIUK" ("The strongest champion created by pzakala, okryzhan, amoroziu and vlytvyne!") !
+Process 3 hasn't lived for 2216 cycles (CTD 1536)
+Process 2 hasn't lived for 3051 cycles (CTD 1536)
+Process 5 hasn't lived for 2082 cycles (CTD 1536)
+Process 4 hasn't lived for 2917 cycles (CTD 1536)
+0x0000 : 08 54 02 01 01 03 70 01 00 06 01 ff ff ff ff 0c 00 64 02 90 00 00 00 00 0a 09 ff f1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0x0040 : 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0x0080 : 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
 0x00c0 : 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 

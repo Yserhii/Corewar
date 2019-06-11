@@ -30,7 +30,7 @@ void	vm_st(t_vm *vm, t_kar *kar)
 		if (arg[1] == REG_CODE && reg1 > 0 && reg1 < 17 && reg2 > 0 && reg2 < 17)
 				kar->reg[reg2] = kar->reg[reg1];
 		else if (arg[1] == IND_CODE && reg1 > 0 && reg1 < 17)
-				give_reg_to_map(vm, (kar->pos + reg2) % MEM_SIZE, 4, kar->reg[reg1]);
+				give_reg_to_map(vm, (kar->pos + reg2) % MEM_SIZE, kar, kar->reg[reg1]);
 		// OUTPUT V_FLAG = 4
 		if ((arg[1] == REG_CODE && reg1 > 0 && reg1 < 17 && reg2 > 0 &&
 				reg2 < 17) || (arg[1] == IND_CODE && reg1 > 0 && reg1 < 17))

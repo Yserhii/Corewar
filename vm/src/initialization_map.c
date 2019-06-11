@@ -56,7 +56,10 @@ static void	map_init(t_vm *vm)
 		j = -1;
 		i = (dis_bet_bot * num_bot - 1);
 		while ((dis_bet_bot * num_bot + (int)vm->bot[num_bot]->size) > ++i)
+		{
 			vm->map[i] = vm->bot[num_bot]->code[++j];
+			vm->inf_vis[i] = num_bot + 1;
+		}
 	}
 	/* TEST POSTION OP - DELETE
 	while ( ++i < MEM_SIZE)

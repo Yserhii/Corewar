@@ -13,47 +13,38 @@
 #include "vm.h"
 #include "visual.h"
 
-// void	check_kar(WINDOW *win, t_vm *vm, int i)
-// {
-// 	t_kar	*kar;
-// 	t_kar	*start;
-
-// 	start = NULL;
-// 	while
-// }
+// void	check_kar()
 
 void	print_map_vis(t_vm *vm, WINDOW *win)
 {
-	int		i;
+	uint32_t	i;
+	t_kar		*kar;
 
 	i = 0;
 	while (i < MEM_SIZE)
 	{
-		if (vm->map[i] != 0x0)
-			wattron(win, COLOR_PAIR(1));
-		// check_kar(win, vm, i);
+		// if (vm->inf_vis[i] > 0)
+			// wattron(win, COLOR_PAIR(vm->inf_vis[i]));
+		kar = vm->kar;
+		while (kar)
+			if (kar->pos == i)
+				break ;
+			else
+				kar = kar->next;
+		if (kar && kar->pos == i)
+			wattron(win, COLOR_PAIR(kar->bot_id + 4));
+		else if (vm->inf_vis[i] > 0)
+			wattron(win, COLOR_PAIR(vm->inf_vis[i]));
 		wprintw(win, "%02x", vm->map[i]);
+		if (kar && kar->pos == i)
+			wattroff(win, COLOR_PAIR(kar->bot_id + 4));
+		if (vm->inf_vis[i] > 0)
+			wattroff(win, COLOR_PAIR(vm->inf_vis[i]));
 		if ((i + 1) % 64 != 0)
 			wprintw(win, " ");
-		wattroff(win, COLOR_PAIR(1));
 		i++;
 	}
 }
-
-// void	print_kar(t_vm *vm, WINDOW *win)
-// {
-// 	t_kar		*start;
-// 	t_kar		*kar;
-
-// 	start = NULL;
-// 	kar = vm->kar;
-// 	wattron(win, COLOR_PAIR(2));
-// 	while (kar != start)
-// 	{
-
-// 	}
-// 	wattroff(win, COLOR_PAIR(2));
-// }
 
 void	print_menu(t_vm *vm, WINDOW *win)
 {
@@ -66,24 +57,30 @@ void	print_menu(t_vm *vm, WINDOW *win)
 	mvwprintw(win, 7, 5, "Cycles to die: %d", vm->cycles_to_die);
 	mvwprintw(win, 9, 5, "Lives: %d", vm->num_of_life);
 	mvwprintw(win, 11, 5, "Checks: %d", vm->number_of_checks);
-	wattron(win, COLOR_PAIR(1));
 	while (vm->bot[i] && i < 4)
 	{
+		wattron(win, COLOR_PAIR(i + 1));
 		if (vm->bot[i])
 		{
 			mvwprintw(win, 14 + row, 5, "Player - %d : %s", row + 1, vm->bot[i]->name);
 			row++;
 		}
+		wattroff(win, COLOR_PAIR(i + 1));
 		i++;
 	}
-	wattroff(win, COLOR_PAIR(1));
 }
 
 void		set_colors()
 {
 	start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);
-	init_pair(2, COLOR_BLUE, COLOR_WHITE);
+	init_pair(2, COLOR_BLUE, COLOR_BLACK);
+	init_pair(3, COLOR_GREEN, COLOR_BLACK);
+	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(5, COLOR_WHITE, COLOR_RED);
+	init_pair(6, COLOR_WHITE, COLOR_BLUE);
+	init_pair(7, COLOR_WHITE, COLOR_GREEN);
+	init_pair(8, COLOR_WHITE, COLOR_YELLOW);
 }
 
 void	visualisation(t_vm *vm)
@@ -99,6 +96,7 @@ void	visualisation(t_vm *vm)
 	box(menu, 0, 0);
 	print_map_vis(vm, map);
 	print_menu(vm, menu);
+	noecho();
 	refresh();
 	wrefresh(map);
 	wrefresh(menu);

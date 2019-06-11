@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 
 #include "vm.h"
+// make && ./corewar -v 30  ../../42-corewar/tests/vm/error/zork_lt_size.s.cor  > out.txt && ./test/corewar_orig -v 30 ../../42-corewar/tests/vm/error/zork_lt_size.s.cor > out_orig.txt && diff out.txt out_orig.txt > diff.txt
+
+
+//  make && ./test/asm_orig test/bot_test.s && ./corewar -v 30 -dump 30000 test/bot_test.cor test/bot_test.cor> out.txt && ./test/corewar_orig -v 30 -d 30000 test/bot_test.cor test/bot_test.cor> out_orig.txt && diff out.txt out_orig.txt > diff.txt
 
 int check_battle_constants(void)
 {
@@ -38,7 +42,8 @@ void	ft_show_alive_kars_tmp(t_vm *vm)
 	ft_printf("ALIVE KARS: ");
 	while (kar)
 	{
-		ft_printf("[%d] ", kar->id);
+		if (kar->live)
+			ft_printf("[%d] ", kar->id);
 		kar = kar->next;
 	}
 
@@ -95,7 +100,7 @@ void killing_check(t_vm *vm)
 			if (vm->v_fl == 8 || vm->v_fl == 30)
 				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
 					kar->id, vm->cycles_from_start - kar->last_time_said_live, vm->cycles_to_die);
-			ft_show_alive_kars_tmp(vm);
+			// ft_show_alive_kars_tmp(vm);
 			free(kar);
 		}
 		else
@@ -103,18 +108,6 @@ void killing_check(t_vm *vm)
 		kar = tmp;
 	}
 }
-
-			// if (kar->back)
-			// 	kar->back->next = kar->next;
-			// else
-			// 	vm->kar = kar->next;
-			// if (kar->next)
-			// 	kar->next->back = kar->back;
-			// else
-			// 	kar->back->next = NULL;
-			// free(kar);
-
-
 
 void	battle(t_vm *vm)
 {
@@ -131,7 +124,7 @@ void	battle(t_vm *vm)
 	{
 		op_recognize(vm, kar);
 		if (kar->cicles_to_wait > 0) // ALEX
-		kar->cicles_to_wait--;
+			kar->cicles_to_wait--;
 		kar = kar->next;
 	}
 
@@ -191,8 +184,11 @@ void	battle(t_vm *vm)
 			killing_check(vm);
 		}
 	}
-	if (vm->cycles_from_start < vm->nbr_cycles)
+	if (vm->nbr_cycles == -1 || vm->cycles_from_start < vm->nbr_cycles)
 		show_winner(vm);
-	getch();
-	endwin();
+	if (vm->ncurs)
+	{
+		getch();
+		endwin();
+	}
 }

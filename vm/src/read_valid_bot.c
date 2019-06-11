@@ -83,6 +83,8 @@ static void	check_null_and_size(t_bot *bot)
 	if ((bot->size = (str[136] << 24) + (str[137] << 16) +
 					(str[138] << 8) + str[139]) && (bot->size > CHAMP_MAX_SIZE))
 		vm_exit_bot(4, bot);
+	if (bot->size < 1)
+		vm_exit_bot(4, bot);
 }
 
 static void	check_and_record_comment(t_bot *bot)

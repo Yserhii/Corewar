@@ -28,6 +28,7 @@ static void	karetka_init(t_vm *vm)
 		new->id = i;
 		new->reg[1] = -i;
 		new->pos = dis_bet_bot * (i - 1);
+		vm->last_say_live = new->bot_id;
 		if (i > 1)
 		{
 			vm->kar->back = new;

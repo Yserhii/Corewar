@@ -156,5 +156,6 @@ void	battle(t_vm *vm)
 	}
 	if (vm->cycles_from_start < vm->nbr_cycles)
 		show_winner(vm);
-
+	getch();
+	endwin();
 }

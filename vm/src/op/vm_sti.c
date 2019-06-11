@@ -36,7 +36,7 @@ void	vm_sti(t_vm *vm, t_kar *kar)
 				if (kod[i] == REG_CODE)
 					args[i] = kar->reg[(int)args[i]];
 			ind = kar->pos + (int)((int)args[1] + (int)args[2]) % IDX_MOD;
-			give_reg_to_map(vm, ind % MEM_SIZE, 4, kar->reg[(int)args[0]]);
+			give_reg_to_map(vm, ind % MEM_SIZE, kar, kar->reg[(int)args[0]]);
 			if (vm->v_fl == 4 || vm->v_fl == 30)
 			{
 				ft_printf("P% 5d | sti r%d %d %d\n", kar->id, (int)args[0], (int)args[1], (int)args[2]);

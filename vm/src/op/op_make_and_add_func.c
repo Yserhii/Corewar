@@ -90,10 +90,16 @@ int		take_arg(t_vm *vm, int pos, int size_arg)
 аналогичная функцыя к верхней ттолько из регистра в карту записываем
 */
 
-void	give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src)
+void	give_reg_to_map(t_vm *vm, int pos, t_kar *kar, uint32_t src)
 {
+	int	size_arg;
+
+	size_arg = 4;
 	while (size_arg)
+	{
 		vm->map[pos++ % MEM_SIZE] = src >> (8 * --size_arg) & 0xff;
+		vm->inf_vis[pos++ % MEM_SIZE] = kar->bot_id;
+	}
 }
 
 /*Функция которая отвечает за перемещение картеки*/

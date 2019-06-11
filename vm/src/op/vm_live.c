@@ -26,7 +26,6 @@ void	vm_live(t_vm *vm, t_kar *kar)
 	// 		vm->map[(kar->pos + 4) % MEM_SIZE];
 	if ((int)kar->bot_id == ABS(arg))
 	{
-		XXX
 		vm->last_say_live = kar->bot_id;
 		kar->live = vm->cycles_from_start;
 		kar->last_time_said_live = vm->cycles_from_start;

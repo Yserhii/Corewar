@@ -59,7 +59,7 @@ typedef struct		s_vm
 	int				fd[5];
 	/*map*/
 	uint8_t			map[MEM_SIZE];
-	uint8_t			info[MEM_SIZE];
+	uint8_t			inf_vis[MEM_SIZE];
 	int				last_say_live;
 	int				cycles_from_start;
 	int				cycles_to_die;
@@ -100,7 +100,7 @@ void				killing_check(t_vm *vm);
 /*for operations*/
 int					take_arg(t_vm *vm, int pos, int size_arg);
 int					step_for_not_valid(uint8_t *arg, t_kar *kar, int num_arg);
-void				give_reg_to_map(t_vm *vm, int pos, int size_arg, uint32_t src);
+void				give_reg_to_map(t_vm *vm, int pos, t_kar *kar, uint32_t src);
 void				check_argv_for_op(uint8_t *arg, t_vm *vm, t_kar *kar);
 void				op_recognize(t_vm *vm, t_kar *kar);
 void				read_args(t_vm *vm, t_kar *kar, uint32_t *args, uint8_t *arg);

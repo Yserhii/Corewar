@@ -37,8 +37,8 @@ int		main(int ac, char **av)
 
 	if (!(vm = (t_vm*)ft_memalloc(sizeof(t_vm))))
 		vm_exit(9);
-	if (start_menu())
-		exit(0);
+	// if (start_menu())
+	// 	exit(0);
 	read_valid_av(ac, av, vm);
 	read_valid_bot(vm);
 	initialization_map(vm);

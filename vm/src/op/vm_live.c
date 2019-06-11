@@ -26,11 +26,12 @@ void	vm_live(t_vm *vm, t_kar *kar)
 	// 		vm->map[(kar->pos + 4) % MEM_SIZE];
 	if ((int)kar->bot_id == ABS(arg))
 	{
-		XXX
+		// ft_printf("%d\n", vm->cycles_from_start);
 		vm->last_say_live = kar->bot_id;
-		kar->live = vm->cycles_from_start;
-		kar->last_time_said_live = vm->cycles_from_start;
+		// kar->live = vm->cycles_from_start;
+		kar->live = 1;
 	}
+	kar->last_time_said_live = vm->cycles_from_start;
 	vm->num_of_life++; //вне цыкла;
 	// start = kar->pos;
 	// kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE;

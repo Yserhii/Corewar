@@ -42,7 +42,7 @@ void	vm_lldi(t_vm *vm, t_kar *kar)
 			if (vm->v_fl == 4 || vm->v_fl == 30)
 			{
 				ft_printf("P% 5d | lldi %d %d r%d\n", kar->id, (int)args[0], (int)args[1], (int)args[2]);
-				ft_printf("       | load from %d + %d = %d (with pc and mod %d)\n", (int)args[0], (int)args[1], (int)((int)args[0] + (int)args[1]), ind);
+				ft_printf("       | -> load from %d + %d = %d (with pc %d)\n", (int)args[0], (int)args[1], (int)((int)args[0] + (int)args[1]), ind);
 			}
 		}
 	}

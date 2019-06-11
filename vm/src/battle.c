@@ -29,6 +29,55 @@ int count_alive_kar(t_vm *vm)
 	return (i);
 }
 
+void	ft_show_alive_kars_tmp(t_vm *vm)
+{
+	t_kar	*kar;
+
+	kar = vm->kar;
+
+	ft_printf("ALIVE KARS: ");
+	while (kar)
+	{
+		ft_printf("[%d] ", kar->id);
+		kar = kar->next;
+	}
+
+	// go to end
+	kar = vm->kar;
+	while (kar && kar->next)
+		kar = kar->next;
+	ft_printf("ALIVE KARS backwards: ");
+	while (kar)
+	{
+		ft_printf("[%d] ", kar->id);
+		kar = kar->back;
+	}
+	ft_printf("\n");
+}
+
+void	ft_kar_del(t_vm *vm, t_kar *kar)
+{
+	t_kar	*tmp;
+
+	if (!kar->back && !kar->next)
+		vm->kar = NULL;
+	else if (!kar->back)
+	{
+		vm->kar = kar->next;
+		vm->kar->back = NULL;
+	}
+	else if (!kar->next)
+	{
+		kar->back->next = NULL;
+	}
+	else
+	{
+		tmp = kar->next;
+		kar->back->next = kar->next;
+		tmp->back = kar->back;
+	}
+}
+
 void killing_check(t_vm *vm)
 {
 	t_kar	*kar;
@@ -41,28 +90,16 @@ void killing_check(t_vm *vm)
 		tmp = kar->next;
 		if (!kar->live)
 		{
-			if (!kar->back && !kar->next)
-				vm->kar = NULL;
-			else if (!kar->back && (vm->kar = kar->next))
-				vm->kar->back = NULL;
-			else if (!kar->next && kar->back)
-				kar->back->next = NULL;
-			else
-			{
-				kar->back->next = kar->next;
-				kar->next->back = kar->back;
-			}
+			ft_kar_del(vm, kar);
 			// OUTPUT V_FLAG = 8
 			if (vm->v_fl == 8 || vm->v_fl == 30)
 				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n",
-					kar->id, vm->last_say_live, vm->cycles_to_die);
+					kar->id, vm->cycles_from_start - kar->last_time_said_live, vm->cycles_to_die);
+			ft_show_alive_kars_tmp(vm);
 			free(kar);
 		}
 		else
-		{
-			//vm->last_say_live = kar->bot_id; // ? это должно быть в операции live (скорее всего)
 			kar->live = 0;
-		}
 		kar = tmp;
 	}
 }

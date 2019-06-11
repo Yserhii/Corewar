@@ -32,6 +32,7 @@ void	vm_fork(t_vm *vm, t_kar *kar)
 	dir = (int16_t)take_arg(vm, (kar->pos + 1), 2) % IDX_MOD;
 	new->pos = (kar->pos + dir) % MEM_SIZE;
 	new->next = vm->kar;
+	vm->kar->back = new;
 	vm->kar = new;
 	op_recognize(vm, new);
 	if (new->cicles_to_wait > 0)

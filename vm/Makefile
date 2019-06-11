@@ -38,7 +38,7 @@ SRC =				main.c read_valid_av.c read_valid_bot.c\
 					op/vm_lldi.c op/vm_or.c op/vm_st.c\
 					op/vm_sti.c op/vm_sub.c op/vm_xor.c\
 					op/vm_zjmp.c op/op_make_and_add_func.c\
-					visual/visual.c
+					visual/visual.c visual/start_menu.c
 
 #SRC_V =				ft_visual.c ft_visual_main.c finish.c
 

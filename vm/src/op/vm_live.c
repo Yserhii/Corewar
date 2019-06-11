@@ -26,15 +26,17 @@ void	vm_live(t_vm *vm, t_kar *kar)
 	// 		vm->map[(kar->pos + 4) % MEM_SIZE];
 	if ((int)kar->bot_id == ABS(arg))
 	{
+		XXX
 		vm->last_say_live = kar->bot_id;
 		kar->live = vm->cycles_from_start;
+		kar->last_time_said_live = vm->cycles_from_start;
 	}
 	vm->num_of_life++; //вне цыкла;
 	// start = kar->pos;
 	// kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE;
 	// OUTPUT V_FLAG = 4
 	if (vm->v_fl == 4 || vm->v_fl == 30)
-		ft_printf("P% 5d | live %d\n", kar->id, ABS(arg));
+		ft_printf("P% 5d | live %d\n", kar->id, arg);
 	// OUTPUT V_FLAG = 16
 	print_adv(vm, kar->pos, kar->pos = (kar->pos + g_op[kar->op_id].dir_size + 1) % MEM_SIZE);
 	return ;

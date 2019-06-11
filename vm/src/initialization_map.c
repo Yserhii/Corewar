@@ -49,7 +49,7 @@ static void	map_init(t_vm *vm)
 
 	num_bot = -1;
 	vm->cycles_to_die = CYCLE_TO_DIE;
-	vm->cycles_from_start = 1;
+	vm->cycles_from_start = 0;
 	dis_bet_bot = MEM_SIZE / vm->num_bot;
 	while (++num_bot < vm->num_bot)
 	{

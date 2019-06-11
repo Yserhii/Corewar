@@ -17,8 +17,8 @@ static int	valid_dump(char **av, t_vm *vm, int i, int ac)
 	if (++i >= ac || !ft_allnum(av[i]))
 		vm_exit(1);
 	vm->nbr_cycles = ft_atoi(av[i]);
-	if (vm->nbr_cycles == 0)
-		vm->nbr_cycles = -1;
+	// if (vm->nbr_cycles == 0)
+	// 	vm->nbr_cycles = -1;
 	/* if (vm->nbr_cycles > CYCLE_TO_DIE || vm->nbr_cycles < 0)
 		exit(ft_printf("{red}Number cycles more than cycle to die or < 1{eoc}\n"));*/
 	return (i);
@@ -113,6 +113,8 @@ static void	while_for_read_valid_av(int ac, char **av, t_vm *vm, int *fd_tmp)
 			i = valid_v_fl(ac, av, vm, i);
 		else if (!ft_strcmp("-ncurs", av[i]))
 			vm->ncurs = 1;
+		else if (!ft_strcmp("-a", av[i]))
+			vm->a_fl = 1;
 		else if (!ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && ++j <= 4)
 			j = valid_cor(av[i], j, fd_tmp);
 		else

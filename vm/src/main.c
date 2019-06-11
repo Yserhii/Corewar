@@ -12,6 +12,9 @@
 
 #include "vm.h"
 
+// make && ./corewar -v 30 -dump 100 helltrain.cor > out.txt && ./test/corewar_orig -v 30 -d 100 helltrain.cor > out_orig.txt
+// /test/corewar_orig -v 8 helltrain.cor -d 200
+// make && ./corewar -v 30 -dump 10000 helltrain.cor > out.txt && ./test/corewar_orig -v 30 -d 10000 helltrain.cor > out_orig.txt && diff out.txt out_orig.txt > diff.txt
 void	fun_for_help(void)
 {
 	ft_printf("{cyan}Usage: ./corewar [-dump N -v N | -ncurs] ");

@@ -38,19 +38,19 @@ void	ft_show_alive_kars_tmp(t_vm *vm)
 	t_kar	*kar;
 
 	kar = vm->kar;
-
 	ft_printf("ALIVE KARS: ");
 	while (kar)
 	{
 		if (kar->live)
 			ft_printf("[%d] ", kar->id);
+		if (!kar->next)//////////////////////////////////////////////
+			break ;//////////////////////////////////////////////////
 		kar = kar->next;
 	}
-
 	// go to end
-	kar = vm->kar;
-	while (kar && kar->next)
-		kar = kar->next;
+	// kar = vm->kar;//////////////////////////////////////////////////////////
+	// while (kar && kar->next)///////////////////////////////////////////
+		// kar = kar->next;///////////////////////////////////////////////////
 	ft_printf("ALIVE KARS backwards: ");
 	while (kar)
 	{
@@ -62,7 +62,7 @@ void	ft_show_alive_kars_tmp(t_vm *vm)
 
 void	ft_kar_del(t_vm *vm, t_kar *kar)
 {
-	t_kar	*tmp;
+	// t_kar	*tmp;
 
 	if (!kar->back && !kar->next)
 		vm->kar = NULL;
@@ -72,14 +72,14 @@ void	ft_kar_del(t_vm *vm, t_kar *kar)
 		vm->kar->back = NULL;
 	}
 	else if (!kar->next)
-	{
 		kar->back->next = NULL;
-	}
 	else
 	{
-		tmp = kar->next;
-		kar->back->next = kar->next;
-		tmp->back = kar->back;
+		// tmp = kar->next;///////////////////////////////////////////
+		// kar->back->next = kar->next;//////////////////////////////
+		// tmp->back = kar->back;///////////////////////////////////
+		kar->next->back = kar->back;/////////////////////////////////
+		kar->back->next = kar->next;////////////////////////////////
 	}
 }
 

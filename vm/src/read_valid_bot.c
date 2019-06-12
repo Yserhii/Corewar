@@ -16,7 +16,6 @@ static void	read_bot_and_id(t_vm *vm)
 {
 	int			i;
 	int			j;
-	int			ret;
 
 	i = -1;
 	j = -1;
@@ -31,8 +30,8 @@ static void	read_bot_and_id(t_vm *vm)
 			vm_exit(9);
 		while (++j < 4 && !vm->fd[j])
 			;
-		ret = read(vm->fd[j], vm->bot[i]->all_info, 5000);
-		if (j < 4 && ret > 0 && ret < 5000)
+		vm->bot[i]->size_read = read(vm->fd[j], vm->bot[i]->all_info, 5000);
+		if (j < 4 && vm->bot[i]->size_read > 0 && vm->bot[i]->size_read < 5000)
 			vm->bot[i]->id = j + 1;
 		else
 			vm_exit(10);
@@ -118,7 +117,7 @@ static void	check_and_record_exec_code(t_bot *bot)
 	while (++i < 2192 + bot->size)
 		bot->code[++j] = bot->all_info[i];
 	while (++i < 5000)
-		if (bot->all_info[i])
+		if (bot->all_info[i] || 2192 + bot->size != bot->size_read)
 			vm_exit_bot(1, bot);
 }
 

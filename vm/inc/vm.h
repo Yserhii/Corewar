@@ -24,6 +24,7 @@
 typedef struct		s_bot
 {
 	int				id;
+	uint32_t			size_read;
 	uint32_t		size;
 	uint8_t			name[PROG_NAME_LENGTH];
 	uint8_t			comment[COMMENT_LENGTH];

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_menu.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: omaltsev <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/12 13:15:12 by omaltsev          #+#    #+#             */
+/*   Updated: 2019/06/12 13:15:15 by omaltsev         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vm.h"
 #include "visual.h"
 
@@ -34,7 +46,6 @@ int			menu(WINDOW *win, int x, int y)
 	{
 		show_menu(win, position, x, y);
 		key = getch();
-		// printf("%d", key);
 		if (key == 65 || key == 66)
 			position = (key == 65 ? 0 : 1);
 		else if (key == 10 && position == 1)
@@ -45,7 +56,7 @@ int			menu(WINDOW *win, int x, int y)
 	return (1);
 }
 
-int			start_menu()
+int			start_menu(void)
 {
 	int		x;
 	int		y;
@@ -59,7 +70,6 @@ int			start_menu()
 	start_color();
 	init_pair(1, COLOR_BLACK, COLOR_WHITE);
 	win = newwin(y, x, 0, 0);
-	// box(win, 0, 0);
 	res = menu(win, x, y);
 	endwin();
 	return (res);

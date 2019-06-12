@@ -13,8 +13,6 @@
 #include "vm.h"
 #include "visual.h"
 
-// void	check_kar()
-
 void	print_map_vis(t_vm *vm, WINDOW *win)
 {
 	uint32_t	i;
@@ -23,8 +21,6 @@ void	print_map_vis(t_vm *vm, WINDOW *win)
 	i = 0;
 	while (i < MEM_SIZE)
 	{
-		// if (vm->inf_vis[i] > 0)
-			// wattron(win, COLOR_PAIR(vm->inf_vis[i]));
 		kar = vm->kar;
 		while (kar)
 			if (kar->pos == i)
@@ -62,7 +58,8 @@ void	print_menu(t_vm *vm, WINDOW *win)
 		wattron(win, COLOR_PAIR(i + 1));
 		if (vm->bot[i])
 		{
-			mvwprintw(win, 14 + row, 5, "Player - %d : %s", row + 1, vm->bot[i]->name);
+			mvwprintw(win, 14 + row, 5, "Player %d : %s", row + 1,
+				vm->bot[i]->name);
 			row++;
 		}
 		wattroff(win, COLOR_PAIR(i + 1));
@@ -70,7 +67,7 @@ void	print_menu(t_vm *vm, WINDOW *win)
 	}
 }
 
-void		set_colors()
+void	set_colors(void)
 {
 	start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);
@@ -100,6 +97,10 @@ void	visualisation(t_vm *vm)
 	refresh();
 	wrefresh(map);
 	wrefresh(menu);
-	// halfdelay(1);
-	// getch();
+	nodelay(stdscr, TRUE);
+	if (getch() == 10)
+	{
+		while (getch() != 10)
+			;
+	}
 }

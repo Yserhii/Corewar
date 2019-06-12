@@ -132,7 +132,7 @@ void				print_adv(t_vm *vm, int start, int end);
 /*VISUALIZATION*/
 
 void				visualisation(t_vm *vm);
-int					start_menu();
+int					start_menu(void);
 
 static void			(*g_opers[17])() = {0, &vm_live, &vm_ld, &vm_st,
 	&vm_add, &vm_sub, &vm_and, &vm_or, &vm_xor, &vm_zjmp, &vm_ldi, &vm_sti,

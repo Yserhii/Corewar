@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "vm.h"
+#include "visual.h"
 
 // make && ./corewar -v 30 -dump 100 helltrain.cor > out.txt && ./test/corewar_orig -v 30 -d 100 helltrain.cor > out_orig.txt
 // /test/corewar_orig -v 8 helltrain.cor -d 200
@@ -42,6 +43,8 @@ int		main(int ac, char **av)
 	read_valid_av(ac, av, vm);
 	read_valid_bot(vm);
 	initialization_map(vm);
+	if (vm->ncurs)
+		init_visual(vm);
 	battle(vm);
 	return (0);
 }

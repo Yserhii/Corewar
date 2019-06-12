@@ -163,10 +163,11 @@ void	battle(t_vm *vm)
 		// 		ft_printf("Cycle to die is now %d\n", vm->cycles_to_die);
 		// }
 	}
-	if (vm->nbr_cycles == -1 || vm->cycles_from_start < vm->nbr_cycles)
+	if ((vm->nbr_cycles == -1 || vm->cycles_from_start < vm->nbr_cycles) && !vm->ncurs)
 		show_winner(vm);
 	if (vm->ncurs)
 	{
+		show_winner_vis(vm);
 		getch();
 		endwin();
 	}

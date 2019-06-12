@@ -18,6 +18,7 @@ void	show_winner_vis(t_vm *vm)
 	int		winner;
 
 	winner = vm->last_say_live - 1;
+	nodelay(stdscr, FALSE);
 	wattron(vm->vis->menu, A_BOLD);
 	wattron(vm->vis->menu, COLOR_PAIR(winner + 4));
 	mvwprintw(vm->vis->menu, 25, 5, "Winner: %s", vm->bot[winner]->name);
@@ -29,20 +30,28 @@ void	show_winner_vis(t_vm *vm)
 
 void	print_map_vis(t_vm *vm, WINDOW *win)
 {
-	uint32_t			i;
+	int		bot;
+	int		i;
 
-	i = 0;
-	while (i < MEM_SIZE)
+	bot = -1;
+	while (++bot < vm->num_bot)
 	{
-		if (vm->inf_vis[i] > 0)
+		i = -1;
+		wattron(win, COLOR_PAIR(bot + 1));
+		while (++i < MEM_SIZE)
 		{
-			wattron(win, COLOR_PAIR(vm->inf_vis[i]));
-			mvwprintw(win, i / 64, (i % 64) * 3, "%02x", vm->map[i]);
-			wattroff(win, COLOR_PAIR(vm->inf_vis[i]));
+			if (vm->inf_vis[i] == bot + 1)
+			{
+				mvwprintw(win, i / 64, (i % 64) * 3, "%02x", vm->map[i]);
+			}
 		}
-		else
+		wattroff(win, COLOR_PAIR(bot + 1));
+	}
+	i = -1;
+	while (++i < MEM_SIZE)
+	{
+		if (vm->inf_vis[i] == 0)
 			mvwprintw(win, i / 64, (i % 64) * 3, "%02x", vm->map[i]);
-		i++;
 	}
 }
 
@@ -104,10 +113,10 @@ void	visualisation(t_vm *vm)
 	refresh();
 	wrefresh(vm->vis->map);
 	wrefresh(vm->vis->menu);
-	// nodelay(stdscr, TRUE);
-	// if (getch() == 10)
-	// {
-	// 	while (getch() != 10)
-	// 		;
-	// }
+	nodelay(stdscr, TRUE);
+	if (getch() == 10)
+	{
+		while (getch() != 10)
+			;
+	}
 }

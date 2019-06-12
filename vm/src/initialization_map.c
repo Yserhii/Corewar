@@ -52,6 +52,7 @@ static void	map_init(t_vm *vm)
 	vm->cycles_to_die = CYCLE_TO_DIE;
 	vm->cycles_from_start = 0;
 	dis_bet_bot = MEM_SIZE / vm->num_bot;
+	vm->a_fl = 1; // to delete
 	while (++num_bot < vm->num_bot)
 	{
 		j = -1;

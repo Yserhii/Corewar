@@ -41,8 +41,8 @@ typedef struct		s_kar
 	uint32_t		pos;
 	uint32_t		op_id;
 	uint32_t		bot_id;
-	uint32_t		live;
-	uint32_t		last_time_said_live;
+	int				live;
+	// uint32_t		last_time_said_live;
 	uint32_t		cicles_to_wait;
 	uint32_t		reg[REG_NUMBER + 1];
 	struct s_kar	*next;
@@ -63,9 +63,10 @@ typedef struct		s_vm
 	uint8_t			inf_vis[MEM_SIZE];
 	int				last_say_live;
 	int				cycles_from_start;
+	int				cycles_after_check;
 	int				cycles_to_die;
 	int				num_of_life;
-	int				number_of_checks;
+	int				check_count;
 	/*bots*/
 	int				num_kar;
 	int				num_bot;

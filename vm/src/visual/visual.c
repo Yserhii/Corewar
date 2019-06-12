@@ -56,7 +56,7 @@ void	print_menu(t_vm *vm, WINDOW *win)
 	mvwprintw(win, 5, 5, "Cycles: %d", vm->cycles_from_start);
 	mvwprintw(win, 7, 5, "Cycles to die: %d", vm->cycles_to_die);
 	mvwprintw(win, 9, 5, "Lives: %d", vm->num_of_life);
-	mvwprintw(win, 11, 5, "Checks: %d", vm->number_of_checks);
+	mvwprintw(win, 11, 5, "Checks: %d", vm->check_count);
 	while (vm->bot[i] && i < 4)
 	{
 		wattron(win, COLOR_PAIR(i + 1));

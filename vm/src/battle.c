@@ -166,7 +166,7 @@ void	battle(t_vm *vm)
 			}
 			if (kar->cicles_to_wait > 0) // ALEX
 				kar->cicles_to_wait--;
-			if (vm->ncurs)
+			if (vm->ncurs && !(vm->cycles_from_start % 3))
 				visualisation(vm);
 			kar = kar->next;
 		}
@@ -184,10 +184,11 @@ void	battle(t_vm *vm)
 			killing_check(vm);
 		}
 	}
-	if (vm->nbr_cycles == -1 || vm->cycles_from_start < vm->nbr_cycles)
+	if ((vm->nbr_cycles == -1 || vm->cycles_from_start < vm->nbr_cycles) && !vm->ncurs)
 		show_winner(vm);
 	if (vm->ncurs)
 	{
+		show_winner_vis(vm);
 		getch();
 		endwin();
 	}

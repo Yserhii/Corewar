@@ -13,32 +13,51 @@
 #include "vm.h"
 #include "visual.h"
 
+void	show_winner_vis(t_vm *vm)
+{
+	int		winner;
+
+	winner = vm->last_say_live - 1;
+	wattron(vm->vis->menu, A_BOLD);
+	wattron(vm->vis->menu, COLOR_PAIR(winner + 4));
+	mvwprintw(vm->vis->menu, 25, 5, "Winner: %s", vm->bot[winner]->name);
+	wattroff(vm->vis->menu, COLOR_PAIR(winner + 4));
+	wattroff(vm->vis->menu, A_BOLD);
+	refresh();
+	wrefresh(vm->vis->menu);
+}
+
 void	print_map_vis(t_vm *vm, WINDOW *win)
 {
-	uint32_t	i;
-	t_kar		*kar;
+	uint32_t			i;
 
 	i = 0;
 	while (i < MEM_SIZE)
 	{
-		kar = vm->kar;
-		while (kar)
-			if (kar->pos == i)
-				break ;
-			else
-				kar = kar->next;
-		if (kar && kar->pos == i)
-			wattron(win, COLOR_PAIR(kar->bot_id + 4));
-		else if (vm->inf_vis[i] > 0)
-			wattron(win, COLOR_PAIR(vm->inf_vis[i]));
-		wprintw(win, "%02x", vm->map[i]);
-		if (kar && kar->pos == i)
-			wattroff(win, COLOR_PAIR(kar->bot_id + 4));
 		if (vm->inf_vis[i] > 0)
+		{
+			wattron(win, COLOR_PAIR(vm->inf_vis[i]));
+			mvwprintw(win, i / 64, (i % 64) * 3, "%02x", vm->map[i]);
 			wattroff(win, COLOR_PAIR(vm->inf_vis[i]));
-		if ((i + 1) % 64 != 0)
-			wprintw(win, " ");
+		}
+		else
+			mvwprintw(win, i / 64, (i % 64) * 3, "%02x", vm->map[i]);
 		i++;
+	}
+}
+
+void	print_kar(t_vm *vm, WINDOW *win)
+{
+	t_kar		*kar;
+
+	kar = vm->kar;
+	while (kar)
+	{
+		wattron(win, COLOR_PAIR(kar->bot_id + 4));
+		mvwprintw(win, kar->pos / 64, (kar->pos % 64) * 3,
+				"%02x", vm->map[kar->pos]);
+		wattroff(win, COLOR_PAIR(kar->bot_id + 4));
+		kar = kar->next;
 	}
 }
 
@@ -67,40 +86,28 @@ void	print_menu(t_vm *vm, WINDOW *win)
 	}
 }
 
-void	set_colors(void)
-{
-	start_color();
-	init_pair(1, COLOR_RED, COLOR_BLACK);
-	init_pair(2, COLOR_BLUE, COLOR_BLACK);
-	init_pair(3, COLOR_GREEN, COLOR_BLACK);
-	init_pair(4, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(5, COLOR_WHITE, COLOR_RED);
-	init_pair(6, COLOR_WHITE, COLOR_BLUE);
-	init_pair(7, COLOR_WHITE, COLOR_GREEN);
-	init_pair(8, COLOR_WHITE, COLOR_YELLOW);
-}
-
 void	visualisation(t_vm *vm)
 {
-	WINDOW		*map;
-	WINDOW		*menu;
+	// WINDOW		*map;
+	// WINDOW		*menu;
 
-	initscr();
-	curs_set(0);
-	map = newwin(64, 191, 5, 1);
-	menu = newwin(64, 50, 5, 193);
-	set_colors();
-	box(menu, 0, 0);
-	print_map_vis(vm, map);
-	print_menu(vm, menu);
+	// initscr();
+	// curs_set(0);
+	// map = newwin(64, 191, 5, 1);
+	// menu = newwin(64, 50, 5, 193);
+	// set_colors();
+	box(vm->vis->menu, 0, 0);
+	print_map_vis(vm, vm->vis->map);
+	print_kar(vm, vm->vis->map);
+	print_menu(vm, vm->vis->menu);
 	noecho();
 	refresh();
-	wrefresh(map);
-	wrefresh(menu);
-	nodelay(stdscr, TRUE);
-	if (getch() == 10)
-	{
-		while (getch() != 10)
-			;
-	}
+	wrefresh(vm->vis->map);
+	wrefresh(vm->vis->menu);
+	// nodelay(stdscr, TRUE);
+	// if (getch() == 10)
+	// {
+	// 	while (getch() != 10)
+	// 		;
+	// }
 }

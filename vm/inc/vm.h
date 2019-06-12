@@ -72,6 +72,7 @@ typedef struct		s_vm
 	t_bot			**bot;
 	t_kar			*kar;
 	/*output*/
+	t_vis			*vis;
 }					t_vm;
 
 
@@ -133,6 +134,8 @@ void				print_adv(t_vm *vm, int start, int end);
 
 void				visualisation(t_vm *vm);
 int					start_menu(void);
+void				init_visual(t_vm *vm);
+void				show_winner_vis(t_vm *vm);
 
 static void			(*g_opers[17])() = {0, &vm_live, &vm_ld, &vm_st,
 	&vm_add, &vm_sub, &vm_and, &vm_or, &vm_xor, &vm_zjmp, &vm_ldi, &vm_sti,

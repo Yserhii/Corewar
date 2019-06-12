@@ -16,4 +16,10 @@
 # include <ncurses.h>
 # include <vm.h>
 
+typedef struct		s_vis
+{
+	WINDOW		*map;
+	WINDOW		*menu;
+}					t_vis;
+
 #endif

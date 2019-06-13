@@ -39,5 +39,4 @@ void	vm_fork(t_vm *vm, t_kar *kar)
 		ft_printf("P% 5d | fork %d (%d)\n",
 							kar->id, dir, kar->pos + dir % IDX_MOD);
 	print_adv(vm, kar->pos, kar->pos += (g_op[kar->op_id].dir_size + 1));
-	kar->pos = kar->pos % MEM_SIZE;
 }

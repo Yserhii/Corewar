@@ -13,9 +13,6 @@
 #include "vm.h"
 #include "visual.h"
 
-// make && ./corewar -v 30 -dump 100 helltrain.cor > out.txt && ./test/corewar_orig -v 30 -d 100 helltrain.cor > out_orig.txt
-// /test/corewar_orig -v 8 helltrain.cor -d 200
-// make && ./corewar -v 30 -dump 10000 helltrain.cor > out.txt && ./test/corewar_orig -v 30 -d 10000 helltrain.cor > out_orig.txt && diff out.txt out_orig.txt > diff.txt
 void	fun_for_help(void)
 {
 	ft_printf("{cyan}Usage: ./corewar [-dump N -v N | -ncurs] ");
@@ -28,7 +25,9 @@ void	fun_for_help(void)
 	ft_printf("            - 8 : Show deaths\n");
 	ft_printf("            - 16 : Show PC movements (Except for jumps)\n");
 	ft_printf("            - 30 : Show all levels at once\n");
+	ft_printf("-a        : print output in aff operation\n");
 	ft_printf("-ncurs    : Ncurses output mode{eoc}\n");
+	system("leaks -q corewar > leaks.txt");
 	exit(1);
 }
 
@@ -38,13 +37,14 @@ int		main(int ac, char **av)
 
 	if (!(vm = (t_vm*)ft_memalloc(sizeof(t_vm))))
 		vm_exit(9);
-	// if (start_menu())
-	// 	exit(0);
 	read_valid_av(ac, av, vm);
+	if (vm->ncurs && start_menu())
+		exit(0);
 	read_valid_bot(vm);
 	initialization_map(vm);
 	if (vm->ncurs)
 		init_visual(vm);
 	battle(vm);
+	system("leaks -q corewar > leaks.txt");
 	return (0);
 }

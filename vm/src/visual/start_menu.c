@@ -13,7 +13,7 @@
 #include "vm.h"
 #include "visual.h"
 
-void	set_colors(void)
+void		set_colors(void)
 {
 	start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);

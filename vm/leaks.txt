@@ -1,0 +1,2 @@
+Process 57596: 162 nodes malloced for 135 KB
+Process 57596: 0 leaks for 0 total leaked bytes.

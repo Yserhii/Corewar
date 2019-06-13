@@ -97,14 +97,6 @@ void	print_menu(t_vm *vm, WINDOW *win)
 
 void	visualisation(t_vm *vm)
 {
-	// WINDOW		*map;
-	// WINDOW		*menu;
-
-	// initscr();
-	// curs_set(0);
-	// map = newwin(64, 191, 5, 1);
-	// menu = newwin(64, 50, 5, 193);
-	// set_colors();
 	box(vm->vis->menu, 0, 0);
 	print_map_vis(vm, vm->vis->map);
 	print_kar(vm, vm->vis->map);
@@ -114,9 +106,13 @@ void	visualisation(t_vm *vm)
 	wrefresh(vm->vis->map);
 	wrefresh(vm->vis->menu);
 	nodelay(stdscr, TRUE);
-	if (getch() == 10)
+	if (getch() == 32)
 	{
-		while (getch() != 10)
+		mvwprintw(vm->vis->menu, 3, 5, "* PAUSED *");
+		refresh();
+		wrefresh(vm->vis->menu);
+		while (getch() != 32)
 			;
+		mvwprintw(vm->vis->menu, 3, 5, "          ");
 	}
 }

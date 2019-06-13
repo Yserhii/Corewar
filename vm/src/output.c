@@ -17,8 +17,6 @@ void	show_winner(t_vm *vm)
 	if (vm->last_say_live)
 		ft_printf("Contestant %d, \"%s\", has won !\n",
 					vm->last_say_live, vm->bot[vm->last_say_live - 1]->name);
-	else
-		ft_printf("ALL GAME OVER!!!\n");
 }
 
 void	print_map(t_vm *vm)
@@ -50,4 +48,26 @@ void	print_adv(t_vm *vm, int start, int end)
 			ft_printf("%02x ", vm->map[(start + i) % MEM_SIZE]);
 		ft_printf("\n");
 	}
+}
+
+void	ft_show_alive_kars_tmp(t_vm *vm)
+{
+	t_kar	*kar;
+
+	kar = vm->kar;
+	ft_printf("\tALIVE KARS: ");
+	while (kar)
+	{
+		ft_printf("#%d - %d[%02x] ", kar->id, kar->pos, vm->map[kar->pos]);
+		if (!kar->next)
+			break ;
+		kar = kar->next;
+	}
+	ft_printf("ALIVE KARS backwards: ");
+	while (kar)
+	{
+		ft_printf("[%d] ", kar->id);
+		kar = kar->back;
+	}
+	ft_printf("\n");
 }

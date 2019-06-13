@@ -43,8 +43,10 @@ void				vm_xor(t_vm *vm, t_kar *kar)
 			(vm->v_fl == 4 || vm->v_fl == 30) ? v_flag_4_or_30(kar, args) : 0;
 		}
 	}
-	print_adv(vm, kar->pos, kar->pos = (kar->pos +
-		step_for_not_valid(kod, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE);
+	// print_adv(vm, kar->pos, kar->pos = (kar->pos +
+		// step_for_not_valid(kod, kar, g_op[kar->op_id].num_arg)) % MEM_SIZE);
+	print_adv(vm, kar->pos, kar->pos += step_for_not_valid(kod, kar, g_op[kar->op_id].num_arg));
+	kar->pos = kar->pos % MEM_SIZE;
 }
 
 

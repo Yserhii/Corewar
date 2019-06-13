@@ -13,8 +13,6 @@
 #include "op.h"
 #include "asm.h"
 
-// ./corewar ../../../projects_hub/corewar_my/vm_champs/load.cor
-
 void	new_file(t_asm *head, char *file)
 {
 	char	*name;
@@ -31,6 +29,7 @@ void	new_file(t_asm *head, char *file)
 	}
 	name = ft_strjoin(name, "cor");
 	head->fd_cor = open(name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	ft_printf("Writing output program to %s\n", name);
 	free(name);
 }
 

@@ -15,7 +15,12 @@
 
 
 //  make && ./test/asm_orig test/bot_test.s && ./corewar -v 30 -dump 30000 test/bot_test.cor test/bot_test.cor> out.txt && ./test/corewar_orig -v 30 -d 30000 test/bot_test.cor test/bot_test.cor> out_orig.txt && diff out.txt out_orig.txt > diff.txt
-
+// make && ./corewar test/bot_test.cor -v 30 test/bot_test_2.cor helltrain.cor> out.txt && ./test/corewar_test -v 30 test/bot_test.cor test/bot_test_2.cor helltrain.cor> out_orig.txt
+// make && ./corewar -v 30 -dump 80000 helltrain.cor> out.txt && ./test/corewar_test -v 30 -dump 80000 helltrain.cor > out_orig.txt
+// make && ./test/asm_orig test/bot_test.s  &&./corewar -v 30 -dump 1500 test/bot_test.cor > out.txt && ./test/corewar_test -v 30 -dump 1500 test/bot_test.cor > out_orig.txt
+// diff out.txt out_orig.txt > diff.txt
+// make && ./test/asm_orig test/bot_test.s && ./test/asm_orig test/bot_test_2.s && ./corewar -v 30 test/bot_test.cor test/bot_test_2.cor > out.txt && ./test/corewar_test -v 30 test/bot_test.cor test/bot_test_2.cor > out_orig.txt
+//make && ./test/asm_orig test/bot_test.s && ./test/asm_orig test/bot_test_2.s && ./corewar -v 30 test/bot_test.cor test/bot_test_2.cor | cat -e > out.txt && ./test/corewar_test -v 30 test/bot_test.cor test/bot_test_2.cor | cat -e > out_orig.txt
 
 int count_alive_kar(t_vm *vm)
 {

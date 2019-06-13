@@ -17,14 +17,18 @@ void	vm_live(t_vm *vm, t_kar *kar)
 	int		arg;
 
 	arg = take_arg(vm, (kar->pos + 1), 4);
-	if ((int)kar->bot_id == ABS(arg))
+	if (arg < 0 && (int)kar->bot_id == ABS(arg))
+	{
+		// XXX
 		vm->last_say_live = kar->bot_id;
+	}
 	kar->live = vm->cycles_from_start;
 	vm->num_of_life++;
 	if (vm->v_fl == 4 || vm->v_fl == 30)
+		// ft_printf("P% 5d | live %d --- [%d] = %s\n", kar->id, arg, kar->bot_id ,vm->bot[kar->bot_id - 1]->name);
 		ft_printf("P% 5d | live %d\n", kar->id, arg);
-	print_adv(vm, kar->pos, kar->pos = (kar->pos +
-					g_op[kar->op_id].dir_size + 1) % MEM_SIZE);
+	print_adv(vm, kar->pos, kar->pos +=	g_op[kar->op_id].dir_size + 1);
+	kar->pos = kar->pos % MEM_SIZE;
 }
 
 

@@ -28,8 +28,9 @@ char	*rem_name(char *line, int *i, t_asm *head)
 			r = get_next_line(head->fd_s, &line);
 			head->name[j++] = '\n';
 			*i = 0;
-		}if (j > PROG_NAME_LENGTH)
-            error("The name is too long\n", NULL);
+		}
+		if (j >= PROG_NAME_LENGTH)
+			error("Champion name too long (Max length 128)\n", NULL);
 		head->name[j++] = line[*i];
 	}
 	if (r <= 0)
@@ -81,8 +82,8 @@ char	*rem_comment(char *line, int *i, t_asm *head)
 			head->comment[j++] = '\n';
 			(*i) = 0;
 		}
-        if (j > COMMENT_LENGTH)
-            error("The comment is too long\n", NULL);
+		if (j >= COMMENT_LENGTH)
+			error("Comment too long (Max length 2048)\n", NULL);
 		head->comment[j++] = line[*i];
 	}
 	if (r <= 0)
@@ -134,9 +135,5 @@ char	*read_name_comment(t_asm *head)
 		error("No champion name\n", NULL);
 	if (head->comment == NULL)
 		error("No comment\n", NULL);
-	if (ft_strlen(head->name) > PROG_NAME_LENGTH)
-		error("Champion name too long (Max length 128)\n", NULL);
-	if (ft_strlen(head->comment) > COMMENT_LENGTH)
-		error("Comment too long (Max length 2048)\n", NULL);
 	return (line);
 }

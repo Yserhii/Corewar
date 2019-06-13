@@ -33,10 +33,10 @@ void	vm_lfork(t_vm *vm, t_kar *kar)
 	vm->kar->back = new;
 	vm->kar = new;
 	op_recognize(vm, new);
-	new->cicles_to_wait > 0 ? new->cicles_to_wait-- : 0;
 	if (vm->v_fl == 4 || vm->v_fl == 30)
 		ft_printf("P% 5d | lfork %d (%d)\n", kar->id, dir, kar->pos + dir);
-	print_adv(vm, kar->pos, kar->pos = (kar->pos + 2 + 1) % MEM_SIZE);
+	print_adv(vm, kar->pos, kar->pos += (g_op[kar->op_id].dir_size + 1));
+	kar->pos = kar->pos % MEM_SIZE;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////

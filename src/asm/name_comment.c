@@ -22,14 +22,14 @@ char	*rem_name(char *line, int *i, t_asm *head)
 	r = 1;
 	while (line[++(*i)] != '"' && r > 0)
 	{
-		if (line[*i] == '\0')
+		while (line[*i] == '\0' && j < PROG_NAME_LENGTH && r > 0)
 		{
 			free(line);
 			r = get_next_line(head->fd_s, &line);
-			head->name[j++] = '\n';
-			*i = 0;
+			head->comment[j++] = '\n';
+			(*i) = 0;
 		}
-		if (j >= PROG_NAME_LENGTH)
+		if (j + 1 >= PROG_NAME_LENGTH)
 			error("Champion name too long (Max length 128)\n", NULL);
 		head->name[j++] = line[*i];
 	}
@@ -75,7 +75,7 @@ char	*rem_comment(char *line, int *i, t_asm *head)
 	r = 1;
 	while (line[++(*i)] != '"' && r > 0)
 	{
-		if (line[*i] == '\0')
+		while (line[*i] == '\0' && j < COMMENT_LENGTH && r > 0)
 		{
 			free(line);
 			r = get_next_line(head->fd_s, &line);

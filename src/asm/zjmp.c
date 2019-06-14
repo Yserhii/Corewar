@@ -13,11 +13,12 @@
 #include "op.h"
 #include "asm.h"
 
-void	valid_zjmp(t_token *token)
+void	valid_zjmp(t_token *token, t_asm *head)
 {
 	token = token->next;
 	if (token->type != DIR && token->type != DIR_L)
 		error("Bad argument for operation zjmp", token->name);
+	token->type == DIR_L ? label_pos(head, token->name + 1) : 0;
 	token = token->next;
 	if (token && token->type != OP && token->type != LABEL)
 		error("Too many arguments for zjmp\n", NULL);

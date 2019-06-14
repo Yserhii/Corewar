@@ -13,7 +13,7 @@
 #include "op.h"
 #include "asm.h"
 
-void	valid_st(t_token *token)
+void	valid_st(t_token *token, t_asm *head)
 {
 	token = token->next;
 	if (token->type != REG)
@@ -23,6 +23,7 @@ void	valid_st(t_token *token)
 		error("Too few arguments for st\n", NULL);
 	if (token->type != REG && token->type != IND && token->type != IND_L)
 		error("Bad argument for operation st", token->name);
+	token->type == IND_L ? label_pos(head, token->name) : 0;
 	token = token->next;
 	if (token && token->type != OP && token->type != LABEL)
 		error("Too many arguments for st\n", NULL);

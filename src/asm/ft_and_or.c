@@ -41,11 +41,16 @@ void	and_or_error(char *name, int nb, int fl)
 	}
 }
 
-void	valid_and_or(t_token *token, int nb)
+void	valid_and_or(t_token *token, int nb, t_asm *head)
 {
-	token = token->next->next;
+	token = token->next;
+	token->type == DIR_L ? label_pos(head, token->name + 1) : 0;
+	token->type == IND_L ? label_pos(head, token->name) : 0;
+	token = token->next;
 	if (!token || token->type == OP || token->type == LABEL)
 		and_or_error(NULL, nb, 1);
+	token->type == DIR_L ? label_pos(head, token->name + 1) : 0;
+	token->type == IND_L ? label_pos(head, token->name) : 0;
 	token = token->next;
 	if (!token || token->type == OP
 	|| token->type == LABEL)

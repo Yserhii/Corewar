@@ -13,7 +13,7 @@
 #include "op.h"
 #include "asm.h"
 
-void	valid_fork(t_token *token, int nb)
+void	valid_fork(t_token *token, int nb, t_asm *head)
 {
 	token = token->next;
 	if (token->type != DIR && token->type != DIR_L)
@@ -22,6 +22,7 @@ void	valid_fork(t_token *token, int nb)
 			error("Bad argument for operation fork", token->name);
 		error("Bad argument for operation lfork", token->name);
 	}
+	token->type == DIR_L ? label_pos(head, token->name + 1) : 0;
 	token = token->next;
 	if (token && token->type != OP && token->type != LABEL)
 	{

@@ -84,6 +84,8 @@ void		while_for_read_valid_av(int ac, char **av, t_vm *vm, int *fd_tmp)
 			vm->ncurs = 1;
 		else if (!ft_strcmp("-a", av[i]))
 			vm->a_fl = 1;
+		else if (!ft_strcmp("-64", av[i]))
+			vm->oct64_fl = 1;
 		else if (!ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && ++j <= 4)
 			j = valid_cor(av[i], j, fd_tmp);
 		else

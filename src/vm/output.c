@@ -22,14 +22,19 @@ void	show_winner(t_vm *vm)
 void	print_map(t_vm *vm)
 {
 	int	i;
+	int	oct;
 
+	if (vm->oct64_fl)
+		oct = 64;
+	else
+		oct = 32;
 	i = -1;
 	while (++i < MEM_SIZE)
 	{
-		if (!(i % 64))
+		if (!(i % oct))
 			ft_printf("0x%04x : ", i);
 		ft_printf("%02x ", vm->map[i]);
-		if (!((i + 1) % 64) && i != 0)
+		if (!((i + 1) % oct) && i != 0)
 			ft_printf("\n");
 	}
 }

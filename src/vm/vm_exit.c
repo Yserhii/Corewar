@@ -29,7 +29,6 @@ void	vm_exit_bot(int n, t_bot *bot)
 		ft_printf("{red}Invalid name, bot id = [%d]{eoc}\n", bot->id);
 	else if (n == 6)
 		ft_printf("{red}Invalid magic header, bot id = [%d]{eoc}\n", bot->id);
-	system("leaks -q corewar > leaks.txt");
 	exit(1);
 }
 
@@ -58,6 +57,5 @@ void	vm_exit(int n)
 		ft_printf("{red}Malloc error{eoc}\n");
 	else if (n == 10)
 		ft_printf("{red}Can't read file with bot{eoc}\n");
-	system("leaks -q corewar > leaks.txt");
 	exit(1);
 }

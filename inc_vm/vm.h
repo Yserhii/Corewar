@@ -51,6 +51,7 @@ typedef struct		s_vm
 	int				nbr_cycles;
 	int				v_fl;
 	int				a_fl;
+	int				leaks_fl;
 	int				oct64_fl;
 	int				ncurs;
 	int				fd[5];

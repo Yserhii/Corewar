@@ -39,20 +39,14 @@ void	print_map_vis(t_vm *vm, WINDOW *win)
 		i = -1;
 		wattron(win, COLOR_PAIR(bot + 1));
 		while (++i < MEM_SIZE)
-		{
 			if (vm->inf_vis[i] == bot + 1)
-			{
 				mvwprintw(win, i / 64, (i % 64) * 3, "%02x", vm->map[i]);
-			}
-		}
 		wattroff(win, COLOR_PAIR(bot + 1));
 	}
 	i = -1;
 	while (++i < MEM_SIZE)
-	{
 		if (vm->inf_vis[i] == 0)
 			mvwprintw(win, i / 64, (i % 64) * 3, "%02x", vm->map[i]);
-	}
 }
 
 void	print_kar(t_vm *vm, WINDOW *win)
@@ -97,6 +91,8 @@ void	print_menu(t_vm *vm, WINDOW *win)
 
 void	visualisation(t_vm *vm)
 {
+	int		key;
+
 	box(vm->vis->menu, 0, 0);
 	print_map_vis(vm, vm->vis->map);
 	print_kar(vm, vm->vis->map);
@@ -106,13 +102,17 @@ void	visualisation(t_vm *vm)
 	wrefresh(vm->vis->map);
 	wrefresh(vm->vis->menu);
 	nodelay(stdscr, TRUE);
-	if (getch() == 32)
+	key = getch();
+	if (key == 27)
+		end_visual();
+	if (key == 32)
 	{
 		mvwprintw(vm->vis->menu, 3, 5, "* PAUSED *");
 		refresh();
 		wrefresh(vm->vis->menu);
-		while (getch() != 32)
-			;
+		while ((key = getch()) != 32)
+			if (key == 27)
+				end_visual();
 		mvwprintw(vm->vis->menu, 3, 5, "          ");
 	}
 }

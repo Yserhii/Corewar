@@ -27,6 +27,7 @@ void	fun_for_help(void)
 	ft_printf("            - 30 : Show all levels at once\n");
 	ft_printf("-a        : print output in aff operation\n");
 	ft_printf("-64       : print output 64 octets\n");
+	ft_printf("-leaks    : write leaks in leaks.txt\n");
 	ft_printf("-ncurs    : Ncurses output mode{eoc}\n");
 	exit(1);
 }
@@ -45,5 +46,7 @@ int		main(int ac, char **av)
 	if (vm->ncurs)
 		init_visual(vm);
 	battle(vm);
+	if (vm->leaks_fl)
+		system("leaks -q corewar > leaks.txt");
 	return (0);
 }

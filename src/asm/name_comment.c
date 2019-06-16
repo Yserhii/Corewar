@@ -26,7 +26,7 @@ char	*rem_name(char *line, int *i, t_asm *head)
 		{
 			free(line);
 			r = get_next_line(head->fd_s, &line);
-			head->comment[j++] = '\n';
+			head->name[j++] = '\n';
 			(*i) = 0;
 		}
 		if (j + 1 >= PROG_NAME_LENGTH)

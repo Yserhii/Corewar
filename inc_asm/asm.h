@@ -99,14 +99,14 @@ char				*what_op(char *str);
 void				valid_code(t_asm *head);
 void				valid_add(t_token *token);
 void				valid_aff(t_token *token);
-void				valid_fork(t_token *token, int nb);
-void				valid_and_or(t_token *token, int nb);
-void				valid_ld(t_token *token, int nb);
-void				valid_ldi(t_token *token, int nb);
-void				valid_live(t_token *token);
-void				valid_st(t_token *token);
-void				valid_sti(t_token *token);
+void				valid_fork(t_token *token, int nb, t_asm *head);
+void				valid_and_or(t_token *token, int nb, t_asm *head);
+void				valid_ld(t_token *token, int nb, t_asm *head);
+void				valid_ldi(t_token *token, int nb, t_asm *head);
+void				valid_live(t_token *token, t_asm *head);
+void				valid_st(t_token *token, t_asm *head);
+void				valid_sti(t_token *token, t_asm *head);
 void				valid_sub(t_token *token);
-void				valid_zjmp(t_token *token);
+void				valid_zjmp(t_token *token, t_asm *head);
 
 #endif

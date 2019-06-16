@@ -35,7 +35,7 @@ SRC_VM :=			main.c read_valid_av.c read_valid_bot.c\
 					op/vm_sti.c op/vm_sub.c op/vm_xor.c\
 					op/vm_zjmp.c op/op_make_and_add_func.c\
 					op/op_make_args.c\
-					visual/visual.c visual/start_menu.c
+					visual/visual.c visual/start_menu.c visual/vis_extra.c
 
 SRC_ASM := 			main_asm.c check.c ft_write.c name_comment.c parse_code.c \
 					tokens.c hex_converter.c live.c hex_code.c add.c aff.c \

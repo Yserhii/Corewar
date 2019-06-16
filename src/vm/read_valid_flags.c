@@ -73,7 +73,6 @@ void		while_for_read_valid_av(int ac, char **av, t_vm *vm, int *fd_tmp)
 	i = 0;
 	j = -1;
 	while (++i < ac)
-	{
 		if (!ft_strcmp("-dump", av[i]))
 			i = valid_dump(av, vm, i, ac);
 		else if (!ft_strcmp("-n", av[i]))
@@ -86,9 +85,10 @@ void		while_for_read_valid_av(int ac, char **av, t_vm *vm, int *fd_tmp)
 			vm->a_fl = 1;
 		else if (!ft_strcmp("-64", av[i]))
 			vm->oct64_fl = 1;
+		else if (!ft_strcmp("-leaks", av[i]))
+			vm->leaks_fl = 1;
 		else if (!ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && ++j <= 4)
 			j = valid_cor(av[i], j, fd_tmp);
 		else
 			vm_exit(8);
-	}
 }

@@ -18,8 +18,10 @@
 
 typedef struct		s_vis
 {
-	WINDOW		*map;
-	WINDOW		*menu;
+	WINDOW			*map;
+	WINDOW			*menu;
 }					t_vis;
+
+void				end_visual();
 
 #endif

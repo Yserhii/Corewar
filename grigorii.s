@@ -88,7 +88,7 @@ ii4ld:
 	ld		%2883523, r3
 	ld		%0, r16
 ii4l:
-	live	%4930423	
+	live	%4930423
 	ld		%0, r16
 	zjmp	%:coco
 

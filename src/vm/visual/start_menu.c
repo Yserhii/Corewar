@@ -69,8 +69,8 @@ int			menu(WINDOW *win, int x, int y)
 	{
 		show_menu(win, position, x, y);
 		key = getch();
-		if (key == 65 || key == 66)
-			position = (key == 65 ? 0 : 1);
+		if (key == 258 || key == 259)
+			position = (key == 259 ? 0 : 1);
 		else if (key == 10 && position == 1)
 			break ;
 		else if (key == 10 && position == 0)
@@ -90,6 +90,7 @@ int			start_menu(void)
 	y = 50;
 	initscr();
 	curs_set(0);
+	keypad(stdscr, TRUE);
 	start_color();
 	init_pair(1, COLOR_BLACK, COLOR_WHITE);
 	win = newwin(y, x, 0, 0);

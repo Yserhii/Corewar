@@ -80,7 +80,7 @@ int		check_ind(char *line)
 		error("Syntax error", line);
 	if (line[0] == '-')
 	{
-		if (!ft_allnum(line + 1))
+		if (!ft_allnum(line + 1) || line[1] == '\0')
 			error("Bad argument", line);
 	}
 	else

@@ -29,7 +29,7 @@ char	*rem_name(char *line, int *i, t_asm *head)
 			head->name[j++] = '\n';
 			(*i) = 0;
 		}
-		if (j + 1 >= PROG_NAME_LENGTH)
+		if (j >= PROG_NAME_LENGTH)
 			error("Champion name too long (Max length 128)\n", NULL);
 		head->name[j++] = line[*i];
 	}

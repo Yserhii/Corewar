@@ -19,7 +19,7 @@ void	check_file(char *file)
 
 	i = ft_strlen(file);
 	if (file[i - 1] != 's' || file[i - 2] != '.')
-		error("Usage: ./asm <sourcefile.s>\n", NULL);
+		exit(ft_printf("{cyan}Usage: ./asm <sourcefile.s>{eoc}\n"));
 }
 
 int		empty_line(char *line)

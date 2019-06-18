@@ -73,10 +73,9 @@ void		while_for_read_valid_av(int ac, char **av, t_vm *vm, int *fd_tmp)
 	i = 0;
 	j = -1;
 	while (++i < ac)
-		if (!ft_strcmp("-dump", av[i]))
-			i = valid_dump(av, vm, i, ac);
-		else if (!ft_strcmp("-n", av[i]))
-			i = valid_n_id(ac, av, vm, i);
+		if (!ft_strcmp("-dump", av[i]) || !ft_strcmp("-n", av[i]))
+			i = (!ft_strcmp("-n", av[i]) ? valid_n_id(ac, av, vm, i)
+											: valid_dump(av, vm, i, ac));
 		else if (!ft_strcmp("-v", av[i]))
 			i = valid_v_fl(ac, av, vm, i);
 		else if (!ft_strcmp("-ncurs", av[i]))
@@ -87,6 +86,8 @@ void		while_for_read_valid_av(int ac, char **av, t_vm *vm, int *fd_tmp)
 			vm->oct64_fl = 1;
 		else if (!ft_strcmp("-leaks", av[i]))
 			vm->leaks_fl = 1;
+		else if (!ft_strcmp("-lld", av[i]))
+			vm->lld_fl = 1;
 		else if (!ft_strcmp(ft_strrchr(av[i], '.'), ".cor") && ++j <= 4)
 			j = valid_cor(av[i], j, fd_tmp);
 		else

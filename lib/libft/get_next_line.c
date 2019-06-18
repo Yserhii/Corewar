@@ -35,6 +35,8 @@ static void		check_new_line(t_list *list, char **buf)
 	s = ft_strlen((char *)list->content);
 	if (((char *)list->content)[s - 1] == '\n')
 		g_new_line = 1;
+	else if (((char *)list->content)[0] != '\0')
+		g_new_line = 0;
 	free(*buf);
 }
 

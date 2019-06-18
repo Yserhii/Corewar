@@ -38,7 +38,7 @@ void				vm_lld(t_vm *vm, t_kar *kar)
 		else
 		{
 			ind = kar->pos + (short)take_arg(vm, (kar->pos + 2), 2);
-			dir = take_arg(vm, (ind % MEM_SIZE), 4);
+			dir = take_arg(vm, (ind % MEM_SIZE), !vm->lld_fl ? 4 : 2);
 		}
 		reg_size = (kod[0] == DIR_CODE ? 6 : 4);
 		if ((int)vm->map[(kar->pos + reg_size) % MEM_SIZE] > 0 &&

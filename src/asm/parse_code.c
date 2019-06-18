@@ -103,6 +103,8 @@ void	parse_code(t_asm *head, char *line)
 			make_label(head, line);
 		else if (!empty_line(line))
 			make_tokens(head, line);
+		if (empty_line(line) && line[0] != '\0')
+			g_new_line = 1;
 		free(line);
 	}
 	free(line);

@@ -43,7 +43,7 @@ void		read_valid_av(int ac, char **av, t_vm *vm)
 {
 	int		fd_tmp[5];
 
-	if (ac == 1 || ac > 22)
+	if (ac == 1 || ac > 23)
 		vm_exit(8);
 	if (ac == 2 && !ft_strcmp("--help", av[1]))
 		fun_for_help();

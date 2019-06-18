@@ -29,16 +29,16 @@ void	new_file(t_asm *head, char *file)
 	}
 	name = ft_strjoin(name, "cor");
 	head->fd_cor = open(name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	ft_printf("Writing output program to %s\n", name);
+	ft_printf("{green}Writing output program to %s{eoc}\n", name);
 	free(name);
 }
 
 void	error(char *str, char *line)
 {
 	if (line == NULL)
-		ft_printf("%s", str);
+		ft_printf("{red}%s", str);
 	else
-		ft_printf("%s [%s]\n", str, line);
+		ft_printf("{red}%s [%s]{eoc}\n", str, line);
 	exit(0);
 }
 
@@ -52,7 +52,7 @@ int		main(int argc, char **argv)
 	head.b_pos = 0;
 	head.label = NULL;
 	if (argc != 2)
-		error("Usage: ./asm <sourcefile.s>\n", NULL);
+		exit(ft_printf("{cyan}Usage: ./asm <sourcefile.s>{eoc}\n"));
 	check_file(argv[1]);
 	head.fd_s = open(argv[1], O_RDONLY);
 	parse_code(&head, read_name_comment(&head));

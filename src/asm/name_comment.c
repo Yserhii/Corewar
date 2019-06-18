@@ -73,19 +73,23 @@ char	*rem_comment(char *line, int *i, t_asm *head)
 
 	j = 0;
 	r = 1;
-	while (line[++(*i)] != '"' && r > 0)
+	while (line[*i] != '"' && r > 0)
 	{
-		while (line[*i] == '\0' && j < COMMENT_LENGTH && r > 0)
+		while (line[*i] == '\0' && j <= COMMENT_LENGTH && r > 0)
 		{
 			free(line);
 			r = get_next_line(head->fd_s, &line);
-			head->comment[j++] = '\n';
+			head->comment[j] = '\n';
+			j++;
 			(*i) = 0;
 		}
-		if (j >= COMMENT_LENGTH)
+		if (j > COMMENT_LENGTH && line[*i] != '"')
 			error("Comment too long (Max length 2048)\n", NULL);
-		head->comment[j++] = line[*i];
+		if (line[*i] != '"')
+			head->comment[j++] = line[(*i)++];
 	}
+	if (j > COMMENT_LENGTH)
+		error("Comment too long (Max length 2048)\n", NULL);
 	if (r <= 0)
 		error("Syntax error in comment\n", NULL);
 	return (line);
@@ -112,6 +116,7 @@ char	*save_comment(char *line, t_asm *head, int i)
 	}
 	if (!line[i])
 		error("Syntax error", line);
+	i++;
 	line = rem_comment(line, &i, head);
 	while (line[++i])
 		if (line[i] != ' ' && line[i] != '\t')

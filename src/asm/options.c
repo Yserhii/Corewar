@@ -37,7 +37,8 @@ char	*name_operation(char **str)
 		error("Invalid instruction", *str);
 	tmp = *str;
 	if (*(tmp + ft_strlen(res)) != ' ' && *(tmp + ft_strlen(res))
-	!= DIRECT_CHAR && *(tmp + ft_strlen(res)) != '\t')
+	!= DIRECT_CHAR && *(tmp + ft_strlen(res)) != '\t' &&
+	*(tmp + ft_strlen(res)) != '-')
 		error("Syntax error", *str);
 	*str = ft_strdup(*str + ft_strlen(res));
 	return (res);

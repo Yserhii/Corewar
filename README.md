@@ -14,9 +14,17 @@ https://github.com/Yserhii/Corewar && cd Corewar && make
 - Create a bot, that simulates the operation of a program (grigorii.s)
 
 ## How use:
-- asm:
+- Asm:
   - ./asm [sourcefile.s] (sourcefile with with bot information)
-- corewar:
+- Corewar:
   <div align="center">
     <img src="https://github.com/Yserhii/Corewar/blob/master/sourse/manual.png" width="100%" />
   </div>
+## Additional files:
+- Grigorii.s (our bot)
+- Champs (folder with additional bots)
+ ## Project authors:
+- yserhii
+- yhliboch
+- okuchko
+- omaltsev

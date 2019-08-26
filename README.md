@@ -15,6 +15,6 @@ https://github.com/Yserhii/Corewar && cd Corewar && make
 
 ## How use:
 - asm:
--- asdasd
+ - asdasd
 
 

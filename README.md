@@ -15,6 +15,8 @@ https://github.com/Yserhii/Corewar && cd Corewar && make
 
 ## How use:
 - asm:
-  - asdasd
-
-
+  - ./asm [sourcefile.s] (sourcefile with with bot information)
+- corewar:
+  <div align="center">
+    <img src="https://github.com/Yserhii/Corewar/blob/master/sourse/manual.png" width="100%" />
+  </div>

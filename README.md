@@ -2,7 +2,7 @@
 
 How to start:
 ```bash
-https://github.com/Yserhii/Corewar && cd Corewar && make
+git clone https://github.com/Yserhii/Corewar.git && cd Corewar && make
 ```
 <div align="center">
   <img src="https://github.com/Yserhii/Corewar/blob/master/sourse/Part_1.gif" width="100%" />

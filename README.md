@@ -24,7 +24,7 @@ git clone https://github.com/Yserhii/Corewar.git && cd Corewar && make
 - Grigorii.s (our bot)
 - Champs (folder with additional bots)
  ## Project authors:
-- yserhii
-- yhliboch
-- okuchko
-- omaltsev
+- Yserhii
+- Ygliboch
+- Kuchko
+- Maltsevoff
